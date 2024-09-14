@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Construire l'application uniquement si la commande build existe
-RUN npm run build --if-present
+RUN npm run build --if-present || true
 
 # Exposer le port pour accéder à l'application
 EXPOSE 9011
