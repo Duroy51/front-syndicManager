@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build --if-present
 
 # Exposer le port pour accéder à l'application
-EXPOSE 9010
+EXPOSE 9011
 
 # Lancer l'application en mode "preview"
 CMD [ "npm", "run", "preview" ]
