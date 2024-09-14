@@ -13,7 +13,7 @@ COPY . .
 # Comment the line below if you want to run the dev mode bbbbbbbb
 RUN npm run build
 
-EXPOSE 9010
+EXPOSE 9011
 
 CMD [ "npm", "run", "preview" ]
 
