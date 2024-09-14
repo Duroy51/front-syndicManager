@@ -2,20 +2,26 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package.json .
+# Copier uniquement les fichiers nécessaires pour l'installation des dépendances
+COPY package.json package-lock.json ./
 
+# Nettoyer le cache npm pour éviter les problèmes
+RUN npm cache clean --force
+
+# Installer toutes les dépendances en une seule commande
 RUN npm install
 
-RUN npm i react-icons && npm i jquery && npm i slick-carousel
-
+# Copier tout le code de l'application dans le conteneur
 COPY . .
 
-# Comment the line below if you want to run the dev mode bbbbbbbb
-RUN npm run build
+# Construire l'application uniquement si la commande build existe
+RUN npm run build --if-present
 
-EXPOSE 9011
+# Exposer le port pour accéder à l'application
+EXPOSE 9010
 
+# Lancer l'application en mode "preview"
 CMD [ "npm", "run", "preview" ]
 
-# Use the below command for local development if you want to see changes while working
+# Utiliser cette commande pour le mode développement local si tu souhaites voir les changements en temps réel
 # CMD [ "npm", "run", "dev" ]
