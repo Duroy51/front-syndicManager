@@ -13,7 +13,7 @@ RUN npm install
 
 # Copier tout le code de l'application dans le conteneur
 COPY . .
-
+ENV CI=false
 # Construire l'application uniquement si la commande build existe
 RUN npm run build --if-present || true
 
