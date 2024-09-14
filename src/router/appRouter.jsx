@@ -5,17 +5,22 @@ import { Circles } from 'react-loader-spinner';
 
 
 
+
 const LoginPage = React.lazy(async () => ({
     default: (await import("../components/Authentication/Login/LoginPage")).LoginPage
 }))
 const RegisterPage = React.lazy(async () => ({
     default: (await import("../components/Authentication/Register/RegisterPage")).RegisterPage
 }))
+const WelcomePage = React.lazy(async () => ({
+    default: (await import("../components/welcomePage/welcomePage")).WelcomePage
+}))
 
 export const AppRoutesPaths = {
 
     loginPage: "/login",
-    registerPage: "/register"
+    registerPage: "/register",
+    welcomePage: "/"
 
 }
 
@@ -43,6 +48,7 @@ export function AppRoute() {
 
                 <Route path={AppRoutesPaths.loginPage} element={<LoginPage/>}/>
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
+                <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
 
             </Routes>
         </React.Suspense>
