@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import LoginPage from "./components/Authentication/Login/LoginPage";
 import {AppRoute} from "./router/appRouter";
 import {BrowserRouter} from "react-router-dom";
 
