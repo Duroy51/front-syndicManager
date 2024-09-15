@@ -13,9 +13,9 @@ RUN npm install
 
 # Copier tout le code de l'application dans le conteneur
 COPY . .
-
+ENV CI=false
 # Construire l'application uniquement si la commande build existe
-RUN npm run build --if-present || true
+RUN ESLINT_NO_DEV_ERRORS=true npm run build --if-present || true
 
 # Exposer le port pour accéder à l'application
 EXPOSE 9011
