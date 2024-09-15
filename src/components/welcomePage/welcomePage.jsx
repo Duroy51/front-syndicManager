@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from 'react'
 
-import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Users, Briefcase, Shield, ChevronDown, BarChart, Star, Zap, Smile } from 'lucide-react'
+import { Users, Briefcase, Shield, BarChart, Star, Zap, Smile } from 'lucide-react'
 
 export const WelcomePage = () => {
-    const [currentSlide, setCurrentSlide] = useState(0)
+    const [, setCurrentSlide] = useState(0)
     const { scrollY } = useScroll()
-    const y1 = useTransform(scrollY, [0, 300], [0, -300])
+    useTransform(scrollY, [0, 300], [0, -300]);
     const y2 = useTransform(scrollY, [300, 600], [300, 0])
     const y3 = useTransform(scrollY, [600, 900], [300, 0])
     const y4 = useTransform(scrollY, [900, 1200], [300, 0])

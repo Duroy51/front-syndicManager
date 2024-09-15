@@ -68,7 +68,7 @@ export const LoginPage = () => {
                             </Form.Label>
                         </div>
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-blue-600 hover:text-blue-700">
+                            <a href="/login" className="font-medium text-blue-600 hover:text-blue-700">
                                 Mot de passe oublié ?
                             </a>
                         </div>

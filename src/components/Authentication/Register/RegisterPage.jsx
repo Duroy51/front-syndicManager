@@ -152,11 +152,11 @@ export const RegisterPage = () => {
                         <Form.Check id="terms" />
                         <Form.Label htmlFor="terms" className="text-sm text-gray-600">
                             J'accepte les{' '}
-                            <a href="#" className="text-blue-600 hover:underline">
+                            <a href="/login" className="text-blue-600 hover:underline">
                                 conditions d'utilisation
                             </a>{' '}
                             et la{' '}
-                            <a href="#" className="text-blue-600 hover:underline">
+                            <a href="/login" className="text-blue-600 hover:underline">
                                 politique de confidentialité
                             </a>
                         </Form.Label>
