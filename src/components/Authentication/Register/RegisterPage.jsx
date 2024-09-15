@@ -27,7 +27,7 @@ export const RegisterPage = () => {
 
         try {
             // Envoi de la requête POST au backend
-            const response = await fetch('https://syndicmanager-production.up.railway.app:9010/register', {
+            const response = await fetch('http://syndicmanager-production.up.railway.app:9010/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
