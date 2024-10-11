@@ -16,11 +16,26 @@ const WelcomePage = React.lazy(async () => ({
     default: (await import("../components/welcomePage/welcomePage")).WelcomePage
 }))
 
+const HomePage = React.lazy(async () => ({
+    default: (await import("../components/HomePage/HomePage")).HomePage
+}))
+
+const CreateSyndicat = React.lazy(async () => ({
+    default: (await import("../components/CreateSyndicatPage/CreateSyndicat")).CreateSyndicat
+}))
+
+const SyndicatApp = React.lazy(async () => ({
+    default: (await import("../components/Syndicat-App/SyndicatApp/Syndicat-App")).SyndicatApp
+}))
+
 export const AppRoutesPaths = {
 
     loginPage: "/login",
     registerPage: "/register",
-    welcomePage: "/"
+    welcomePage: "/",
+    homePage: "/home",
+    createSyndicat: "/home/createSyndicat",
+    syndicatApp: "/syndicat-app"
 
 }
 
@@ -49,6 +64,9 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.loginPage} element={<LoginPage/>}/>
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
+                <Route path={AppRoutesPaths.homePage} element={<HomePage/>}/>
+                <Route path={AppRoutesPaths.createSyndicat} element={<CreateSyndicat/>}/>
+                <Route path={AppRoutesPaths.syndicatApp} element={<SyndicatApp/>}/>
 
             </Routes>
         </React.Suspense>
