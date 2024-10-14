@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const HomePage = () =>{
     const [userSyndicates, setUserSyndicates] = useState([
-        { id: 1, name: "Syndicat des Enseignants", members: 1200, isAdmin: true },
-        { id: 2, name: "Syndicat des Infirmiers", members: 800, isAdmin: false },
+        { id: 1, name: "Syndicat des Taximans", members: 1200, isAdmin: true },
+        { id: 2, name: "Syndicat des Polytechniciens", members: 800, isAdmin: false },
         { id: 3, name: "Syndicat des Ingénieurs", members: 1500, isAdmin: true },
-        { id: 4, name: "Syndicat des Artistes", members: 500, isAdmin: false },
+        { id: 4, name: "Syndicat des Conducteurs de Moto", members: 500, isAdmin: false },
     ])
 
     const controls = useAnimation()
@@ -66,7 +66,7 @@ export const HomePage = () =>{
                         animate={{ scale: [1, 1.02, 1] }}
                         transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
                     >
-                        Bienvenue sur SyndiManager
+                        Bienvenue sur SyndicManager
                     </motion.h2>
                     <p className="text-xl text-blue-600 relative z-10">Gérez vos syndicats en toute simplicité</p>
                 </motion.section>
@@ -91,6 +91,7 @@ export const HomePage = () =>{
                                 className={`p-3 rounded-md flex justify-between items-center ${
                                     syndicate.isAdmin ? 'bg-blue-200' : 'bg-blue-100'
                                 }`}
+                                onClick={() => navigate('/syndicat-app')}
                             >
                 <span className="flex items-center">
                   {syndicate.isAdmin && <Shield className="mr-2 text-blue-600" size={16} />}

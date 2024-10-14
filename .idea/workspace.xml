@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/CreateSyndicatPage/CreateSyndicat.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Cotisations.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Evenement/Evenement.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Partenaire/Partenaires.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Vote/VoteSpace.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Apercus/Apercus.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Cotisations/Cotisations.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Dépenses/Depenses.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/appRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/appRouter.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomePage/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomePage/HomePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Cotisations.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Finances.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Evenement/Evenement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Evenement/Evenement.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +91,8 @@
       <workItem from="1726517617824" duration="1554000" />
       <workItem from="1728281758901" duration="98000" />
       <workItem from="1728543211936" duration="25064000" />
-      <workItem from="1728642374110" duration="5244000" />
+      <workItem from="1728642374110" duration="6124000" />
+      <workItem from="1728821372676" duration="10408000" />
     </task>
     <servers />
   </component>

@@ -1,0 +1,75 @@
+import {Eye, EyeOff, FileText, Plus} from "lucide-react";
+import React, {useState} from "react";
+import {motion} from "framer-motion";
+
+
+export const Apercus = () => {
+
+
+    const [showBalance, setShowBalance] = useState(false)
+    const financialData = {
+        balance: 150000,
+        income: 50000,
+        expenses: 30000,
+        membershipFees: 45000,
+        donations: 5000,
+    }
+    const recentTransactions = [
+        { id: 1, description: 'Cotisations mensuelles', amount: 15000, type: 'income' },
+        { id: 2, description: 'Frais de location de salle', amount: -500, type: 'expense' },
+        { id: 3, description: 'Don de soutien', amount: 1000, type: 'income' },
+        { id: 4, description: 'Achat de fournitures de bureau', amount: -200, type: 'expense' },
+        { id: 5, description: 'Remboursement de frais', amount: -150, type: 'expense' },
+    ]
+
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-lg font-semibold mb-4">Solde actuel</h3>
+                <div className="flex items-center justify-between">
+                                <span className="text-3xl font-bold">
+                                    {showBalance
+                                        ? `${financialData.balance.toLocaleString()} €`
+                                        : '••••••• €'
+                                    }
+                                </span>
+                    <button
+                        onClick={() => setShowBalance(!showBalance)}
+                        className="text-blue-600 hover:text-blue-800"
+                    >
+                        {showBalance ? <EyeOff/> : <Eye/>}
+                    </button>
+                </div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-lg font-semibold mb-4">Revenus vs Dépenses</h3>
+                <div className="flex justify-between items-center">
+                    <div>
+                        <p className="text-green-600">Revenus</p>
+                        <p className="text-2xl font-semibold">{financialData.income.toLocaleString()} €</p>
+                    </div>
+                    <div>
+                        <p className="text-red-600">Dépenses</p>
+                        <p className="text-2xl font-semibold">{financialData.expenses.toLocaleString()} €</p>
+                    </div>
+                </div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+                <h3 className="text-lg font-semibold mb-4">Transactions récentes</h3>
+                <ul className="space-y-3">
+                    {recentTransactions.map(transaction => (
+                        <li key={transaction.id} className="flex justify-between items-center border-b pb-2">
+                            <span>{transaction.description}</span>
+                            <span className={transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}>
+                                            {transaction.type === 'income' ? '+' : '-'}{Math.abs(transaction.amount).toLocaleString()} €
+                                        </span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+        </div>
+
+
+    )
+}

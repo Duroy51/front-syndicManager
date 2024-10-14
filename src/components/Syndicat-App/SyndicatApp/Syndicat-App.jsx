@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {EventsList} from "../Evenement/Evenement";
 import {ChatBox} from "../Chat/ChatBox";
 import {VotesList} from "../Vote/VoteSpace";
-import {ContributionsList} from "../Cotisations/Cotisations";
+import {ContributionsList, Finances} from "../Cotisations/Finances";
 import {PartnershipsList} from "../Partenaire/Partenaires";
 import { Calendar, MessageSquare, Vote, CreditCard, Handshake, Home, Bell, User, LogOut, ChevronRight, Search } from 'lucide-react'
 import {useNavigate} from "react-router-dom";
@@ -29,7 +29,7 @@ import {useNavigate} from "react-router-dom";
                 case 'votes':
                     return <VotesList />
                 case 'contributions':
-                    return <ContributionsList />
+                    return <Finances />
                 case 'partnerships':
                     return  <PartnershipsList />
                 default:
@@ -47,7 +47,7 @@ import {useNavigate} from "react-router-dom";
                     className={`w-64 bg-white shadow-lg flex flex-col z-20 ${isSidebarOpen ? '' : 'absolute inset-y-0 left-0'}`}
                 >
                     <div className="p-6 border-b border-gray-200">
-                        <h1 className="text-2xl font-bold text-blue-600">Syndicat App</h1>
+                        <h1 className="text-2xl font-bold text-blue-600">Syndicat des Taxi</h1>
                     </div>
                     <div className="flex-grow overflow-y-auto">
                         <nav className="mt-6">
@@ -100,22 +100,11 @@ import {useNavigate} from "react-router-dom";
                                     </h2>
                                 </div>
                                 <div className="flex items-center">
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            placeholder="Rechercher..."
-                                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent sm:text-sm"
-                                        />
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <Search className="h-5 w-5 text-gray-400" />
-                                        </div>
-                                    </div>
+
                                     <button className="ml-4 bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                         <Bell className="h-6 w-6" />
                                     </button>
-                                    <button className="ml-4 bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                        <User className="h-6 w-6" />
-                                    </button>
+
                                 </div>
                             </div>
                         </div>

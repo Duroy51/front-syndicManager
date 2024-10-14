@@ -137,7 +137,7 @@ export const EventsList = () => {
                 {event.isUpcoming && (
                     <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden">
                         <div className="absolute top-0 right-0 -mt-4 -mr-16 w-48 h-12 bg-red-500 text-white text-sm font-bold text-center leading-12 transform rotate-45">
-                            À venir
+
                         </div>
                     </div>
                 )}
