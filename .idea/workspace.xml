@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Apercus/Apercus.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Cotisations/Cotisations.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Dépenses/Depenses.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Membres/Membres.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Footer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Header.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App2.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HomePage/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomePage/HomePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Cotisations.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Cotisations/Finances.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Evenement/Evenement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Evenement/Evenement.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
