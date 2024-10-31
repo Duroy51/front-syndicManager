@@ -127,36 +127,42 @@ export const EventsList = () => {
         }
 
         return (
+            
             <motion.div
                 layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
+                exit={{opacity: 0, y: -20}}
                 className="bg-white rounded-lg shadow-lg overflow-hidden mb-6 relative w-full transition-shadow duration-300 hover:shadow-xl"
             >
+
                 {event.isUpcoming && (
                     <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden">
-                        <div className="absolute top-0 right-0 -mt-4 -mr-16 w-48 h-12 bg-red-500 text-white text-sm font-bold text-center leading-12 transform rotate-45">
+
+                        <div
+                            className="absolute top-0 right-0 -mt-4 -mr-16 w-48 h-12 bg-red-500 text-white text-sm font-bold text-center leading-12 transform rotate-45">
 
                         </div>
                     </div>
                 )}
 
                 <div className="p-6">
+
                     <div className="flex items-center mb-4">
-                        <img src={event.author.profileImage} alt={event.author.name} className="w-12 h-12 rounded-full mr-4 object-cover border-2 border-blue-500" />
+                        <img src={event.author.profileImage} alt={event.author.name}
+                             className="w-12 h-12 rounded-full mr-4 object-cover border-2 border-blue-500"/>
                         <div>
                             <h3 className="font-bold text-xl text-gray-800 mb-1">{event.title}</h3>
                             <div className="flex items-center text-sm text-gray-600">
-                                <User className="w-4 h-4 mr-1" />
+                                <User className="w-4 h-4 mr-1"/>
                                 <span>{event.author.name}</span>
                                 <span className="mx-2">•</span>
-                                <Calendar className="w-4 h-4 mr-1" />
+                                <Calendar className="w-4 h-4 mr-1"/>
                                 <span>{event.startDate.toLocaleDateString()}</span>
                             </div>
                         </div>
                         <button className="ml-auto text-gray-400 hover:text-gray-600 transition-colors duration-200">
-                            <MoreHorizontal className="w-5 h-5" />
+                            <MoreHorizontal className="w-5 h-5"/>
                         </button>
                     </div>
                     <p className="text-gray-700 mb-4">
@@ -170,12 +176,15 @@ export const EventsList = () => {
                     </p>
                     <div className="flex flex-wrap items-center text-sm text-gray-600 mb-4">
                         <div className="flex items-center mr-4 mb-2">
-                            <Clock className="w-4 h-4 mr-1 text-blue-500" />
-                            <span>{event.startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {event.endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                            <Clock className="w-4 h-4 mr-1 text-blue-500"/>
+                            <span>{event.startDate.toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })} - {event.endDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>
                         </div>
                         {event.location && (
                             <div className="flex items-center mb-2">
-                                <MapPin className="w-4 h-4 mr-1 text-blue-500" />
+                                <MapPin className="w-4 h-4 mr-1 text-blue-500"/>
                                 <span>{event.location}</span>
                             </div>
                         )}
@@ -184,15 +193,16 @@ export const EventsList = () => {
                         onClick={() => setSelectedEvent(event)}
                         className="flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-200"
                     >
-                        <Users className="w-5 h-5 mr-2" />
+                        <Users className="w-5 h-5 mr-2"/>
                         {event.participants.length} participants
                     </button>
                 </div>
                 {event.images && event.images.length > 0 && (
                     <div className="relative h-64 bg-gray-200">
-                        <img src={event.images[0]} alt="Event" className="w-full h-full object-cover" />
+                        <img src={event.images[0]} alt="Event" className="w-full h-full object-cover"/>
                         {event.images.length > 1 && (
-                            <button className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm hover:bg-opacity-70 transition-colors duration-200">
+                            <button
+                                className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm hover:bg-opacity-70 transition-colors duration-200">
                                 +{event.images.length - 1} photos
                             </button>
                         )}
@@ -200,12 +210,12 @@ export const EventsList = () => {
                 )}
                 <div className="p-6 bg-gray-50 border-t border-gray-200">
                     <motion.button
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.98 }}
+                        whileHover={{scale: 1.03}}
+                        whileTap={{scale: 0.98}}
                         onClick={handleParticipate}
                         className={`w-full py-3 ${isParticipating ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg transition duration-200 flex items-center justify-center font-semibold text-lg shadow-md`}
                     >
-                        <Calendar className="w-5 h-5 mr-2" />
+                        <Calendar className="w-5 h-5 mr-2"/>
                         {isParticipating ? "Vous participez à l'événement" : "Participer à l'événement"}
                     </motion.button>
                 </div>
@@ -213,7 +223,7 @@ export const EventsList = () => {
         )
     }
 
-    const ParticipantsList = ({ event, onClose }) => {
+    const ParticipantsList = ({event, onClose }) => {
         return (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white rounded-lg p-6 max-w-md w-full">

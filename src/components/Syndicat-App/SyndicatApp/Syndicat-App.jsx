@@ -5,15 +5,17 @@ import {
     Home, Bell, ChevronRight, Search, LogOut, Facebook,
     Twitter, Linkedin, Mail, Settings, HelpCircle, User,
     Menu, X, AlertCircle, CheckCircle, TrendingUp, Users,
-    MessageCircle, Info
+    MessageCircle, Info, Building
 } from 'lucide-react'
 import {EventsList} from "../Evenement/Evenement";
 import {VotesList} from "../Vote/VoteSpace";
 import {ChatBox} from "../Chat/ChatBox";
 import {Finances} from "../Cotisations/Finances";
-import {PartnershipsList} from "../Partenaire/Partenaires";
+import {Partnerships} from "../Partenaire/Partenaires";
 import {useNavigate} from "react-router-dom";
 import {MemberManagement} from "../../Membres/Membres";
+import {Publications} from "../s'exprimer/Publication";
+
 
 export const SyndicatApp = () => {
     const [activeSection, setActiveSection] = useState('événements')
@@ -38,7 +40,7 @@ export const SyndicatApp = () => {
             case 'événements':
                 return <EventsList />
             case 'exprimer':
-                return <h1>S'exprimer</h1>
+                return <Publications></Publications>
             case 'chat':
                 return <ChatBox />
             case 'votes':
@@ -46,7 +48,7 @@ export const SyndicatApp = () => {
             case 'contributions':
                 return <Finances />
             case 'partnerships':
-                return <PartnershipsList />
+                return <Partnerships />
             case 'about':
                 return <h1>About</h1>
             default:
@@ -74,6 +76,8 @@ export const SyndicatApp = () => {
                             >
                                 {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                             </motion.button>
+                            <Building className="h-8 w-8 text-sky-400" />
+
                             <motion.h1
                                 className="ml-2 text-2xl font-bold leading-7 sm:text-3xl sm:truncate"
                                 initial={{ opacity: 0 }}
@@ -102,7 +106,7 @@ export const SyndicatApp = () => {
                             >
                                 <Bell className="h-6 w-6" />
                             </motion.button>
-                            {/*<motion.button
+                            <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                                 className="bg-white p-2 rounded-full text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -116,7 +120,7 @@ export const SyndicatApp = () => {
                                 onClick={() => {}}
                             >
                                 <LogOut className="h-6 w-6" />
-                            </motion.button>*/}
+                            </motion.button>
                         </div>
                     </div>
                 </div>

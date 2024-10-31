@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Membres/Membres.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Footer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Header.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +16,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="JSX File" />
       </list>
     </option>
@@ -46,8 +40,10 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ELITEBOOK 8570P/Desktop/SyndicManager/frontend/src/assets&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -56,11 +52,15 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ELITEBOOK 8570P\Desktop\SyndicManager\frontend\src\assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ELITEBOOK 8570P\Desktop\SyndicManager\frontend\src\components" />
     </key>
@@ -91,6 +91,12 @@
       <workItem from="1728543211936" duration="25064000" />
       <workItem from="1728642374110" duration="6124000" />
       <workItem from="1728821372676" duration="10408000" />
+      <workItem from="1729513157586" duration="1672000" />
+      <workItem from="1730015775488" duration="2017000" />
+      <workItem from="1730105257911" duration="955000" />
+      <workItem from="1730182873735" duration="1843000" />
+      <workItem from="1730338659498" duration="19523000" />
+      <workItem from="1730408617449" duration="124000" />
     </task>
     <servers />
   </component>
