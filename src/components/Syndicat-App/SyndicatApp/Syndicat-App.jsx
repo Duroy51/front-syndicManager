@@ -5,7 +5,7 @@ import {
     Home, Bell, ChevronRight, Search, LogOut, Facebook,
     Twitter, Linkedin, Mail, Settings, HelpCircle, User,
     Menu, X, AlertCircle, CheckCircle, TrendingUp, Users,
-    MessageCircle, Info, Building
+    MessageCircle, Info, Building, BadgeCheck
 } from 'lucide-react'
 import {EventsList} from "../Evenement/Evenement";
 import {VotesList} from "../Vote/VoteSpace";
@@ -111,7 +111,7 @@ export const SyndicatApp = () => {
                                 whileTap={{ scale: 0.9 }}
                                 className="bg-white p-2 rounded-full text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             >
-                                <User className="h-6 w-6" />
+                                <BadgeCheck  className="h-6 w-6" />
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.1 }}

@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="" />
+    <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox2.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox3.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Profil/Profil.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Profil/Profil.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/appRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/appRouter.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +64,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;npm.start.executor&quot;: &quot;Run&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\ELITEBOOK 8570P\\Desktop\\SyndicManager\\frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -96,7 +107,10 @@
       <workItem from="1730105257911" duration="955000" />
       <workItem from="1730182873735" duration="1843000" />
       <workItem from="1730338659498" duration="19523000" />
-      <workItem from="1730408617449" duration="124000" />
+      <workItem from="1730408614030" duration="3233000" />
+      <workItem from="1730505904073" duration="591000" />
+      <workItem from="1730701425822" duration="11366000" />
+      <workItem from="1730782854478" duration="3694000" />
     </task>
     <servers />
   </component>

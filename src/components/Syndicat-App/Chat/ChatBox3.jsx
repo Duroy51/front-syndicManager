@@ -1,3 +1,4 @@
+'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -103,7 +104,7 @@ const Message = ({ message, isSent, isGroup }) => (
 )
 
 // Main Chat Interface component
-export const ChatBox = () => {
+export default function ChatInterface() {
     const [view, setView] = useState('list') // 'list', 'chat', 'search'
     const [chats, setChats] = useState([
         { id: 'group', name: 'Chat de Groupe du Syndicat', avatar: '/placeholder.svg?height=48&width=48', lastMessage: 'Alice: Bonjour à tous !', lastMessageTime: '10:30', online: true, isGroup: true },
