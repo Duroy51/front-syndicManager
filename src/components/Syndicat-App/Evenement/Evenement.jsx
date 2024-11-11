@@ -133,7 +133,8 @@ export const EventsList = () => {
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 exit={{opacity: 0, y: -20}}
-                className="bg-white rounded-lg shadow-lg overflow-hidden mb-6 relative w-full transition-shadow duration-300 hover:shadow-xl"
+                className="bg-white rounded-lg shadow-lg overflow-hidden mb-6 relative w-full max-w-xl mx-auto transition-shadow duration-300 hover:shadow-xl"
+
             >
 
                 {event.isUpcoming && (

@@ -14,18 +14,56 @@ import profile from '../../../images/bproo.png'
 const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
     const [newComment, setNewComment] = useState('')
     const [commentImage, setCommentImage] = useState(null)
-    const [likedComments, setLikedComments] = useState({}); // État pour stocker les "likes" par commentaire
-    const [emojiPickerVisible, setEmojiPickerVisible] = useState(false); // État pour afficher/masquer le picker d'emojis
+    const [likedComments, setLikedComments] = useState({});
+    const [replyToComment, setReplyToComment] = useState(null)
+
+    const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
     const fileInputRef = useRef(null)
+
+       // Nouvelle structure pour gérer les états des commentaires
+       const [comments, setComments] = useState(post.comments.map(comment => ({
+        ...comment,
+        liked: false,
+        likes: 0,
+        replies: [],
+        showReplies: false
+    })))
     
     const handleSubmitComment = () => {
         if (newComment.trim() || commentImage) {
-            onAddComment({
+            const newCommentObj = {
+                id: Date.now(), // Identifiant unique
                 author: { name: "Vous", avatar: "/placeholder.svg?height=32&width=32" },
                 content: newComment,
                 image: commentImage,
-                timestamp: "À l'instant"
-            })
+                timestamp: "À l'instant",
+                liked: false,
+                likes: 0,
+                replies: [],
+                showReplies: false
+            } 
+            if (replyToComment) {
+                // Ajouter une réponse à un commentaire existant
+                const updatedComments = comments.map(comment => {
+                    if (comment.id === replyToComment.id) {
+                        return {
+                            ...comment,
+                            replies: [...comment.replies, {
+                                ...newCommentObj,
+                                isReply: true
+                            }]
+                        }
+                    }
+                    return comment
+                })
+                setComments(updatedComments)
+                setReplyToComment(null)
+            } else {
+                // Ajouter un nouveau commentaire
+                setComments([...comments, newCommentObj])
+            }
+
+            onAddComment([...comments, newCommentObj])
             setNewComment('')
             setCommentImage(null)
         }
@@ -42,14 +80,44 @@ const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
         }
     }
 
-    const handleLikeComment = (index) => {
-        setLikedComments((prevLikes) => ({
-            ...prevLikes,
-            [index]: !prevLikes[index] // Inverse l'état "aimé" du commentaire sélectionné
-        }));
-    };
+    const handleLikeComment = (commentId, isReply = false, parentCommentId = null) => {
+        setComments(prevComments => 
+            prevComments.map(comment => {
+                if (isReply && parentCommentId === comment.id) {
+                    return {
+                        ...comment,
+                        replies: comment.replies.map(reply => 
+                            reply.id === commentId
+                                ? { ...reply, liked: !reply.liked, likes: reply.likes + (reply.liked ? -1 : 1) }
+                                : reply
+                        )
+                    }
+                }
+                if (!isReply && comment.id === commentId) {
+                    return {
+                        ...comment,
+                        liked: !comment.liked,
+                        likes: comment.likes + (comment.liked ? -1 : 1)
+                    }
+                }
+                return comment
+            })
+        )
+    }
+
+    const handleToggleReplies = (commentId) => {
+        setComments(prevComments =>
+            prevComments.map(comment =>
+                comment.id === commentId
+                    ? { ...comment, showReplies: !comment.showReplies }
+                    : comment
+            )
+        )
+    }
+ 
+
     const handleEmojiClick = (emoji) => {
-        setNewComment((prev) => prev + emoji); // Ajoute l'emoji sélectionné au commentaire
+        setNewComment((prev) => prev + emoji);
         setEmojiPickerVisible(false);
     };
 
@@ -66,8 +134,9 @@ const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                         initial={{ scale: 0.9, y: 20 }}
                         animate={{ scale: 1, y: 0 }}
                         exit={{ scale: 0.9, y: 20 }}
-                        className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+                        className="bg-white rounded-lg w-full max-w-2xl h-[90vh] flex flex-col"
                     >
+                        {/* En-tête fixe */}
                         <div className="p-4 border-b flex justify-between items-center">
                             <h2 className="text-xl font-semibold">Publication</h2>
                             <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full">
@@ -75,57 +144,103 @@ const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                             </button>
                         </div>
 
-                        <div className="p-4 border-b">
-                            <div className="flex items-center mb-3">
-                                <img src={post.author.avatar} alt={post.author.name} className="w-10 h-10 rounded-full mr-3" />
-                                <div>
-                                    <h3 className="font-semibold">{post.author.name}</h3>
-                                    <div className="text-sm text-gray-500 flex items-center">
-                                        <Clock className="w-4 h-4 mr-1" />
-                                        <span>{post.timestamp}</span>
+                        {/* Zone de défilement principale */}
+                        <div className="flex-1 overflow-y-auto">
+                            {/* Contenu de la publication */}
+                            <div className="p-4 border-b">
+                                <div className="flex items-center mb-3">
+                                    <img src={post.author.avatar} alt={post.author.name} className="w-10 h-10 rounded-full mr-3" />
+                                    <div>
+                                        <h3 className="font-semibold">{post.author.name}</h3>
+                                        <div className="text-sm text-gray-500 flex items-center">
+                                            <Clock className="w-4 h-4 mr-1" />
+                                            <span>{post.timestamp}</span>
+                                        </div>
                                     </div>
                                 </div>
+                                <p className="text-gray-700">{post.content}</p>
+                                {post.image && (
+                                    <div className="mt-3">
+                                        <img 
+                                            src={post.image} 
+                                            alt="Post content" 
+                                            className="rounded-lg w-full max-h-[50vh] object-contain"
+                                        />
+                                    </div>
+                                )}
                             </div>
-                            <p className="text-gray-700">{post.content}</p>
-                            {post.image && (
-                                <img src={post.image} alt="Post content" className="mt-3 rounded-lg w-full" />
-                            )}
+
+                            {/* Commentaires */}
+                            <div className="p-4">
+                                {comments.map((comment) => (
+                                    <div key={comment.id} className="flex mb-4">
+                                        <img src={comment.author.avatar} alt={comment.author.name} className="w-8 h-8 rounded-full mr-2" />
+                                        <div className="flex-1">
+                                            <div className="bg-gray-100 rounded-2xl px-4 py-2">
+                                                <p className="font-semibold text-sm">{comment.author.name}</p>
+                                                <p className="text-sm">{comment.content}</p>
+                                                {comment.image && (
+                                                    <img src={comment.image} alt="Comment" className="mt-2 rounded-lg max-w-full h-auto" />
+                                                )}
+                                            </div>
+                                            <div className="flex gap-4 mt-1 text-sm text-gray-500 px-4">
+                                                <button 
+                                                    className={`hover:text-gray-700 ${comment.liked ? 'text-blue-500' : ''}`}
+                                                    onClick={() => handleLikeComment(comment.id)}
+                                                >
+                                                       J'aime {comment.likes > 0 && `(${comment.likes})`}
+                                                </button>
+                                                <button 
+                                                className="hover:text-gray-700"
+                                                onClick={() => setReplyToComment(comment)}
+                                                >
+                                                    Répondre
+                                                </button>
+                                                {comment.replies.length > 0 && (
+                                                        <button 
+                                                            className="hover:text-gray-700"
+                                                            onClick={() => handleToggleReplies(comment.id)}
+                                                        >
+                                                            {comment.showReplies ? 'Masquer les réponses' : `Voir les réponses (${comment.replies.length})`}
+                                                        </button>
+                                                    )}
+                                            </div>
+
+                                                     {/* Affichage des réponses */}
+                                                     {comment.showReplies && comment.replies.map((reply) => (
+                                                    <div key={reply.id} className="ml-8 mt-2 flex">
+                                                        <img src={reply.author.avatar} alt={reply.author.name} className="w-6 h-6 rounded-full mr-2" />
+                                                        <div className="flex-1">
+                                                            <div className="bg-gray-100 rounded-2xl px-4 py-2">
+                                                                <p className="font-semibold text-sm">{reply.author.name}</p>
+                                                                <p className="text-sm">{reply.content}</p>
+                                                            </div>
+                                                            <div className="flex gap-4 mt-1 text-sm text-gray-500 px-4">
+                                                                <button 
+                                                                    className={`hover:text-gray-700 ${reply.liked ? 'text-blue-500 font-semibold' : ''}`}
+                                                                    onClick={() => handleLikeComment(reply.id, true, comment.id)}
+                                                                >
+                                                                    J'aime {reply.likes > 0 && `(${reply.likes})`}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                             </div>   
+                                        </div>
+                                
+                                ))}
+                            </div>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-4">
-                            {post.comments.map((comment, index) => (
-                                <div key={index} className="flex mb-4">
-                                    <img src={comment.author.avatar} alt={comment.author.name} className="w-8 h-8 rounded-full mr-2" />
-                                    <div className="flex-1">
-                                        <div className="bg-gray-100 rounded-2xl px-4 py-2">
-                                            <p className="font-semibold text-sm">{comment.author.name}</p>
-                                            <p className="text-sm">{comment.content}</p>
-                                            {comment.image && (
-                                                <img src={comment.image} alt="Comment" className="mt-2 rounded-lg max-w-full h-auto" />
-                                            )}
-                                        </div>
-                                        <div className="flex gap-4 mt-1 text-sm text-gray-500 px-4">
-                                            {/* <button className="hover:text-gray-700">J'aime</button> */}
-                                            <button 
-                                                className={`hover:text-gray-700 ${likedComments[index] ? 'text-blue-500' : ''}`}
-                                                onClick={() => handleLikeComment(index)}
-                                            >
-                                                {likedComments[index] ? "J'aime" : "J'aime"} {/* Texte du bouton */}
-                                            </button>
-                                            <button className="hover:text-gray-700">Répondre</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="p-4 border-t">
-                            {commentImage && (
-                                <div className="mb-2 relative">
-                                    <img src={commentImage} alt="Upload preview" className="max-h-32 rounded" />
-                                    <button
-                                        onClick={() => setCommentImage(null)}
-                                        className="absolute top-1 right-1 bg-gray-800 bg-opacity-50 rounded-full p-1 hover:bg-opacity-70"
+                        {/* Zone de commentaire fixe en bas */}
+                        <div className="p-4 border-t bg-white">
+                            {replyToComment && (
+                                 <div className="mb-2 text-sm text-gray-500 flex justify-between items-center">
+                                    <span>Répondre à {replyToComment.author.name}</span>
+                                    <button 
+                                        onClick={() => setReplyToComment(null)}
+                                        className="text-gray-400 hover:text-gray-600"
                                     >
                                         <X className="w-4 h-4 text-white" />
                                     </button>
@@ -147,8 +262,9 @@ const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                                         }}
                                     />
                                     <div className="flex gap-2 ml-2">
-                                        <button className="p-1 hover:bg-gray-200 rounded-full"
-                                        onClick={() => setEmojiPickerVisible(!emojiPickerVisible)}
+                                        <button 
+                                            className="p-1 hover:bg-gray-200 rounded-full"
+                                            onClick={() => setEmojiPickerVisible(!emojiPickerVisible)}
                                         >
                                             <Smile className="w-5 h-5 text-gray-500" />
                                         </button>
@@ -175,8 +291,7 @@ const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                                 </div>
                             </div>
 
-                                  {/* Emoji Picker */}
-                                  {emojiPickerVisible && (
+                            {emojiPickerVisible && (
                                 <div className="absolute bottom-16 left-4 bg-white shadow-md rounded-lg p-2">
                                     <button onClick={() => handleEmojiClick("😊")}>😊</button>
                                     <button onClick={() => handleEmojiClick("😂")}>😂</button>
@@ -184,7 +299,6 @@ const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                                     <button onClick={() => handleEmojiClick("👍")}>👍</button>
                                 </div>
                             )}
-
                         </div>
                     </motion.div>
                 </motion.div>
