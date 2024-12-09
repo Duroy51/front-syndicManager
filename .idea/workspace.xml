@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f9cbd21-70ca-4b89-9c5e-b43bdb70a5a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox2.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox3.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Profil/Profil.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/Chat/ChatBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Profil/Profil.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Syndicat-App/SyndicatApp/Syndicat-App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/appRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/appRouter.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Authentication/Login/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Authentication/Login/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Authentication/Register/RegisterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Authentication/Register/RegisterPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Syndicat-App/Profil/Profil.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/welcomePage/welcomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/welcomePage/welcomePage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +49,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;3587a20c&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/ELITEBOOK 8570P/Desktop/SyndicManager/frontend/src/assets&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -111,6 +108,9 @@
       <workItem from="1730505904073" duration="591000" />
       <workItem from="1730701425822" duration="11366000" />
       <workItem from="1730782854478" duration="3694000" />
+      <workItem from="1733733518726" duration="1776000" />
+      <workItem from="1733742865412" duration="761000" />
+      <workItem from="1733744317176" duration="423000" />
     </task>
     <servers />
   </component>

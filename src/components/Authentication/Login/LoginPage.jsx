@@ -1,90 +1,188 @@
-import { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import Button from 'react-bootstrap/Button';
-import { Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {AppRoutesPaths} from "../../../router/appRouter";
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useForm } from 'react-hook-form'
+import { Building, Mail, Lock } from 'lucide-react'
 
 
-export const LoginPage = () => {
-    const [showPassword, setShowPassword] = useState(false)
+const Input = ({ icon: Icon, ...props }) => (
+    <div className="relative mb-4">
+        <input
+            {...props}
+            className="w-full px-4 py-3 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 pl-12"
+        />
+        <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400" size={20} />
+    </div>
+)
 
+const Button = ({ children, ...props }) => (
+    <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-full px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        {...props}
+    >
+        {children}
+    </motion.button>
+)
+
+const AnimatedText = ({ texts }) => {
+    const [index, setIndex] = useState(0)
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setIndex((prevIndex) => (prevIndex + 1) % texts.length)
+        }, 5000)
+        return () => clearInterval(timer)
+    }, [texts])
 
     return (
-        <div className="min-h-screen bg-white flex items-center justify-center p-4">
-            <div className="bg-blue-50 rounded-lg shadow-lg p-8 w-full max-w-md">
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-blue-600">Connexion</h1>
-                    <p className="text-gray-600 mt-2">Bienvenue sur SyndicManager</p>
+        <AnimatePresence mode="wait">
+            <motion.p
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="text-2xl font-light text-white text-center"
+            >
+                {texts[index]}
+            </motion.p>
+        </AnimatePresence>
+    )
+}
+
+export const LoginPage = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const onSubmit = async (data) => {
+        setIsLoading(true)
+        try {
+            // Implement your login logic here
+            console.log(data)
+            // If successful, redirect to dashboard or show success message
+        } catch (error) {
+            console.error('Login error:', error)
+            // Handle error (show error message to user)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleGoogleSignIn = async () => {
+        try {
+            // Redirect to the Google OAuth route
+            window.location.href = '/api/auth/google'
+        } catch (error) {
+            console.error('Google sign-in error:', error)
+            // Handle error (show error message to user)
+        }
+    }
+
+    const animatedTexts = [
+        "Bienvenue sur SyndicManager",
+        "Gérez votre syndicat efficacement",
+        "Simplifiez vos processus administratifs",
+        "Restez connecté avec vos membres",
+        "Prenez des décisions éclairées"
+    ]
+
+    return (
+        <div className="min-h-screen flex bg-white">
+            <div className="w-1/2 bg-gradient-to-br from-blue-600 to-blue-800 flex flex-col justify-center items-center p-12 relative overflow-hidden">
+                <div className="absolute inset-0 bg-blue-700 opacity-20">
+                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="white" strokeWidth="0.5"/>
+                        <path d="M0,50 Q50,0 100,50 Q50,100 0,50 Z" fill="none" stroke="white" strokeWidth="0.5"/>
+                    </svg>
                 </div>
-                <form className="space-y-6">
-                    <div className="space-y-2">
-                        <Form.Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                            Adresse e-mail
-                        </Form.Label>
-                        <Form.Control
-                            id="email"
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-white text-center relative z-10"
+                >
+                    <div className="flex justify-center mb-8">
+                        <Building size={80} className="text-white" />
+                    </div>
+                    <h1 className="text-5xl font-bold mb-8">SyndicManager</h1>
+                    <AnimatedText texts={animatedTexts} />
+                </motion.div>
+            </div>
+            <div className="w-1/2 p-12 overflow-y-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+                        Connexion à SyndicManager
+                    </h2>
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                        <Input
+                            icon={Mail}
                             type="email"
-                            placeholder="vous@exemple.com"
-                            required
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Adresse e-mail"
+                            {...register("email", {
+                                required: "L'email est requis",
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Adresse e-mail invalide"
+                                }
+                            })}
                         />
-                    </div>
-                    <div className="space-y-2">
-                        <Form.Label htmlFor="password" className="text-sm font-medium text-gray-700">
-                            Mot de passe
-                        </Form.Label>
-                        <div className="relative">
-                            <Form.Control
-                                id="password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="••••••••"
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
-                            >
-                                {showPassword ? (
-                                    <EyeOff className="h-5 w-5" />
-                                ) : (
-                                    <Eye className="h-5 w-5" />
-                                )}
-                            </button>
+                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+
+                        <Input
+                            icon={Lock}
+                            type="password"
+                            placeholder="Mot de passe"
+                            {...register("password", {
+                                required: "Le mot de passe est requis"
+                            })}
+                        />
+                        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                />
+                                <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
+                                    Se souvenir de moi
+                                </label>
+                            </div>
+                            <div className="text-sm">
+                                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                                    Mot de passe oublié ?
+                                </a>
+                            </div>
                         </div>
+
+                        <Button type="submit" disabled={isLoading}>
+                            {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+                        </Button>
+                    </form>
+
+                    <div className="mt-6 text-center">
+                        <p className="text-gray-600 mb-4">Ou connectez-vous avec</p>
+                        <Button onClick={handleGoogleSignIn} className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
+                            Se connecter avec Google
+                        </Button>
                     </div>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                            />
-                            <Form.Label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                                Se souvenir de moi
-                            </Form.Label>
-                        </div>
-                        <div className="text-sm">
-                            <a href="/login" className="font-medium text-blue-600 hover:text-blue-700">
-                                Mot de passe oublié ?
+
+                    <div className="mt-8 text-center">
+                        <p className="text-gray-600">
+                            Pas encore de compte ?{' '}
+                            <a href="/register" className="text-blue-500 hover:underline">
+                                Inscrivez-vous ici
                             </a>
-                        </div>
+                        </p>
                     </div>
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
-                        Se connecter
-                    </Button>
-                </form>
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-600">
-                        Vous n'avez pas de compte ?{' '}
-                        <a href={AppRoutesPaths.registerPage} className="font-medium text-blue-600 hover:text-blue-700">
-                            S'inscrire
-                        </a>
-                    </p>
-                </div>
+                </motion.div>
             </div>
         </div>
     )
