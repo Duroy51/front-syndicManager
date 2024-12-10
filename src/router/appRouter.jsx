@@ -28,9 +28,7 @@ const SyndicatApp = React.lazy(async () => ({
     default: (await import("../components/Syndicat-App/SyndicatApp/Syndicat-App")).SyndicatApp
 }))
 
-const Profil = React.lazy(async () => ({
-    default: (await import("../components/Syndicat-App/Profil/Profil.tsx")).Profile
-}))
+
 
 export const AppRoutesPaths = {
 
@@ -40,7 +38,7 @@ export const AppRoutesPaths = {
     homePage: "/home",
     createSyndicat: "/home/createSyndicat",
     syndicatApp: "/syndicat-app",
-    profil: "/syndicat-app/profil"
+
 
 }
 
@@ -72,7 +70,7 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.homePage} element={<HomePage/>}/>
                 <Route path={AppRoutesPaths.createSyndicat} element={<CreateSyndicat/>}/>
                 <Route path={AppRoutesPaths.syndicatApp} element={<SyndicatApp/>}/>
-                <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
+
 
             </Routes>
         </React.Suspense>

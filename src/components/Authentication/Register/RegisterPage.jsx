@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { Building, Mail, Lock, Calendar, User } from 'lucide-react'
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+
+
 
 
 const Input = ({ icon: Icon, ...props }) => (
@@ -57,6 +61,45 @@ export const RegisterPage = () => {
     const [isLoading, setIsLoading] = useState(false)
     const password = React.useRef({})
     password.current = watch("password", "")
+
+
+    const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com';
+    const CLIENT_SECRET = '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';
+
+    const login = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            console.log('Google login successful', tokenResponse);
+
+            try {
+                // Échange le code d'autorisation contre des tokens
+                const tokens = await axios.post('https://oauth2.googleapis.com/token', {
+                    code: tokenResponse.code,
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                    redirect_uri: window.location.origin,
+                    grant_type: 'authorization_code',
+                });
+
+                console.log('Tokens:', tokens.data);
+
+                // Envoie l'ID token au backend
+                const backendResponse = await axios.post('http://localhost:8001/googleLoginSuccess', {
+                    tokenId: tokens.data.id_token
+                });
+
+                console.log('Backend response:', backendResponse.data);
+
+                // Gérer la connexion réussie (par exemple, stocker le token, mettre à jour l'état de l'app)
+                // localStorage.setItem('token', backendResponse.data.token);
+                // setUser(backendResponse.data.user);
+                // navigate('/dashboard');
+
+            } catch (error) {
+                console.error('Erreur lors de la connexion Google:', error);
+            }
+        },
+        flow: 'auth-code',
+    });
 
     const onSubmit = async (data) => {
         setIsLoading(true)
@@ -191,7 +234,7 @@ export const RegisterPage = () => {
 
                     <div className="mt-6 text-center">
                         <p className="text-gray-600 mb-4">Ou inscrivez-vous avec</p>
-                        <Button onClick={handleGoogleSignIn} className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
+                        <Button onClick={() => login()} className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
                             S'inscrire avec Google
                         </Button>
