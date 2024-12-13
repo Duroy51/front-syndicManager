@@ -83,7 +83,7 @@ export const RegisterPage = () => {
                 console.log('Tokens:', tokens.data);
 
                 // Envoie l'ID token au backend
-                const backendResponse = await axios.post('http://localhost:8001/googleLoginSuccess', {
+                const backendResponse = await axios.post('https://dev-gloswitch.bandesoft.com/api/user/googleLoginSuccess', {
                     tokenId: tokens.data.id_token
                 });
 
