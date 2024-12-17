@@ -2,6 +2,8 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Building, ArrowRight, Users, BarChart, MessageCircle, Shield, ChevronRight, Star } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
+
 
 const Button = ({ children, primary = false, className = '' }) => (
     <button
@@ -56,7 +58,10 @@ const Testimonial = ({ quote, author, role }) => (
     </motion.div>
 )
 
+
 export const WelcomePage = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="bg-gray-50">
             {/* Hero Section */}
@@ -75,7 +80,7 @@ export const WelcomePage = () => {
                                 La solution complète et gratuite pour la gestion moderne des syndicats
                             </p>
                             <div className="flex space-x-4">
-                                <Button primary>Commencer gratuitement</Button>
+                                <Button primary onClick={() => navigate('/register')}>Commencer gratuitement</Button>
                                 <Button>En savoir plus</Button>
                             </div>
                         </motion.div>
@@ -233,7 +238,7 @@ export const WelcomePage = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Button primary className="text-lg px-8 py-3">
+                        <Button primary className="text-lg px-8 py-3"  onClick={() => navigate('/register')}>
                             Commencer gratuitement <ArrowRight className="inline-block ml-2" />
                         </Button>
                     </motion.div>

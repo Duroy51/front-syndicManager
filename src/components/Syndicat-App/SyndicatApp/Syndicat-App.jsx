@@ -110,6 +110,7 @@ export const SyndicatApp = () => {
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                                 className="bg-white p-2 rounded-full text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                onClick={() => navigate('/syndicat-app/profil')}
                             >
                                 <BadgeCheck  className="h-6 w-6" />
                             </motion.button>

@@ -28,7 +28,9 @@ const SyndicatApp = React.lazy(async () => ({
     default: (await import("../components/Syndicat-App/SyndicatApp/Syndicat-App")).SyndicatApp
 }))
 
-
+const Profil = React.lazy(async () => ({
+    default: (await import("../components/Syndicat-App/Profil/Profil.jsx")).Profile
+}))
 
 export const AppRoutesPaths = {
 
