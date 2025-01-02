@@ -6,6 +6,7 @@ import { useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
+import Swal from 'sweetalert2'
 
 const Alert = ({ children }) => (
     <div className="flex items-center p-2 mt-1 text-sm text-red-800 bg-red-100 rounded-md">
@@ -113,8 +114,8 @@ export const RegisterPage = () => {
     const navigate = useNavigate()
     const password = watch('password', '')
 
-    const CLIENT_ID = '137734019377-nnq12325retn9n23nfnis326j008u2pm.apps.googleusercontent.com'
-    const CLIENT_SECRET = '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'
+    const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com'
+    const CLIENT_SECRET = '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'
 
     const handleAxiosError = useCallback((error) => {
         if (error.response?.status === 422) {
@@ -201,57 +202,79 @@ export const RegisterPage = () => {
         }))
     }
 
+
     const onSubmit = async (data) => {
-        const toastLoadingId = toast.loading('Inscription en cours...')
-        setIsLoading(true)
+        setIsLoading(true);
 
         try {
+            // Envoi de la requête au serveur
             const response = await axios.post('http://localhost:9000/api/register', {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,
                 dateOfBirth: data.dateOfBirth,
                 password: data.password,
-            })
+            });
 
-            if (response.data && response.data.token) {
-                saveUserSession(response.data.user, response.data.token)
+            console.log('Réponse complète du serveur:', response);
 
-                toast.success('Inscription réussie ! Redirection...', {
-                    id: toastLoadingId,
-                })
+            const responseData = response?.data;
+            const tokenData = responseData?.data?.token;
 
-                setTimeout(() => {
-                    navigate('/home')
-                }, 2000)
+            if (tokenData?.Bearer) {
+                const token = tokenData.Bearer;
+
+                saveUserSession(data.email, token);
+
+                // Affichage d'un pop-up de succès
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Inscription réussie !',
+                    text: responseData.text || 'Votre compte a été créé avec succès.',
+                    confirmButtonText: 'Ok',
+                }).then(() => {
+                    // Affichage d'un second pop-up de chargement
+                    Swal.fire({
+                        title: 'Redirection en cours...',
+                        text: 'Veuillez patienter un instant.',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
+
+                    // Ajout d'un délai avant la redirection
+                    setTimeout(() => {
+                        Swal.close(); // Fermer le pop-up de chargement
+                        navigate('/home'); // Redirection
+                    }, 2000); // 2 secondes
+                });
             } else {
-                throw new Error('Token non reçu du serveur')
+                // Si le token est absent
+                throw new Error('Le token est manquant dans la réponse du serveur.');
             }
         } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error)
+            console.error('Erreur lors de l\'inscription:', error);
 
-            if (error.response?.data?.errors) {
-                const backendErrors = error.response.data.errors
-
-                Object.entries(backendErrors).forEach(([field, messages]) => {
-                    setError(field, {
-                        type: 'backend',
-                        message: Array.isArray(messages) ? messages[0] : messages
-                    })
-                })
-
-                toast.error('Veuillez corriger les erreurs dans le formulaire', {
-                    id: toastLoadingId,
-                })
-            } else {
-                toast.error('Une erreur est survenue. Veuillez réessayer.', {
-                    id: toastLoadingId,
-                })
-            }
+            // Gestion des erreurs avec un pop-up d'erreur
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.response?.data?.text || 'Une erreur est survenue. Veuillez réessayer.',
+                confirmButtonText: 'Ok',
+            });
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
+
+
+
+
+
+
+
 
     return (
         <div className="min-h-screen flex bg-white">

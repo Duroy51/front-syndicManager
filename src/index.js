@@ -8,7 +8,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <GoogleOAuthProvider clientId="137734019377-nnq12325retn9n23nfnis326j008u2pm.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com">
     <React.StrictMode>
         <BrowserRouter>
           <div className='min-h-screen overflow-y-auto overflow-x-hidden'>

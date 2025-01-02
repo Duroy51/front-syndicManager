@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { Building, Mail, Lock } from 'lucide-react'
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useGoogleLogin} from "@react-oauth/google";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 
-const Input = ({ icon: Icon, ...props }) => (
+const Input = React.forwardRef(({ icon: Icon, ...props }, ref) => (
     <div className="relative mb-4">
         <input
             {...props}
+            ref={ref} // Assurez-vous de transmettre la ref ici
             className="w-full px-4 py-3 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 pl-12"
         />
         <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400" size={20} />
     </div>
-)
+));
 
 const Button = ({ children, ...props }) => (
     <motion.button
@@ -51,33 +57,152 @@ const AnimatedText = ({ texts }) => {
     )
 }
 
+
+
 export const LoginPage = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors }, watch, setError } = useForm()
     const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
+
+
+    const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com'
+    const CLIENT_SECRET = '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'
+
+    const handleAxiosError = useCallback((error) => {
+        if (error.response?.status === 422) {
+            // Erreurs de validation
+            const errors = error.response.data.errors
+            Object.keys(errors).forEach(field => {
+                setError(field, {
+                    type: 'backend',
+                    message: errors[field][0]
+                })
+            })
+        }
+        return Promise.reject(error)
+    }, [setError])
+
+    useEffect(() => {
+        const interceptor = axios.interceptors.response.use(
+            response => response,
+            handleAxiosError
+        )
+
+        return () => {
+            axios.interceptors.response.eject(interceptor)
+        }
+    }, [handleAxiosError])
+
+    const handleGoogleSignIn = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            console.log('Google login successful', tokenResponse)
+
+            try {
+                const tokens = await axios.post('https://oauth2.googleapis.com/token', {
+                    code: tokenResponse.code,
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                    redirect_uri: window.location.origin,
+                    grant_type: 'authorization_code',
+                })
+
+                console.log('Tokens:', tokens.data)
+
+                const backendResponse = await axios.post('http://localhost:9000/api/google-login', {
+                    tokenId: tokens.data.id_token
+                })
+
+                console.log('Backend response:', backendResponse.data)
+
+                if (backendResponse.data.token) {
+                    saveUserSession(backendResponse.data.user, backendResponse.data.token)
+                    toast.success('Connexion réussie ! Redirection...')
+                    setTimeout(() => navigate('/dashboard'), 2000)
+                }
+            } catch (error) {
+                console.error('Erreur lors de la connexion Google:', error)
+                toast.error('Erreur lors de la connexion Google. Veuillez réessayer.')
+            }
+        },
+        flow: 'auth-code',
+    })
+
+
+    const saveUserSession = (userData, token) => {
+        const encryptedToken = btoa(token)
+        localStorage.setItem('token', encryptedToken)
+        localStorage.setItem('user', JSON.stringify({
+            id: userData.id,
+            email: userData.email,
+            firstName: userData.firstName,
+            lastName: userData.lastName
+        }))
+    }
+
 
     const onSubmit = async (data) => {
-        setIsLoading(true)
-        try {
-            // Implement your login logic here
-            console.log(data)
-            // If successful, redirect to dashboard or show success message
-        } catch (error) {
-            console.error('Login error:', error)
-            // Handle error (show error message to user)
-        } finally {
-            setIsLoading(false)
-        }
-    }
+        setIsLoading(true);
 
-    const handleGoogleSignIn = async () => {
         try {
-            // Redirect to the Google OAuth route
-            window.location.href = '/api/auth/google'
+            // Envoi de la requête au serveur
+            const response = await axios.post('http://localhost:9000/api/login', {
+                email: data.email,
+                password: data.password,
+            });
+
+            console.log('Réponse complète du serveur:', response);
+
+            const responseData = response?.data;
+            const tokenData = responseData?.data?.token;
+
+            if (tokenData?.Bearer) {
+                const token = tokenData.Bearer;
+
+                saveUserSession(data.email, token);
+
+                // Affichage d'un pop-up de succès
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Inscription réussie !',
+                    text: responseData.text || 'Votre compte a été créé avec succès.',
+                    confirmButtonText: 'Ok',
+                }).then(() => {
+                    // Affichage d'un second pop-up de chargement
+                    Swal.fire({
+                        title: 'Redirection en cours...',
+                        text: 'Veuillez patienter un instant.',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
+
+                    // Ajout d'un délai avant la redirection
+                    setTimeout(() => {
+                        Swal.close(); // Fermer le pop-up de chargement
+                        navigate('/home'); // Redirection
+                    }, 2000); // 2 secondes
+                });
+            } else {
+                // Si le token est absent
+                throw new Error('Le token est manquant dans la réponse du serveur.');
+            }
         } catch (error) {
-            console.error('Google sign-in error:', error)
-            // Handle error (show error message to user)
+            console.error('Erreur lors de l\'inscription:', error);
+
+            // Gestion des erreurs avec un pop-up d'erreur
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.response?.data?.text || 'Une erreur est survenue. Veuillez réessayer.',
+                confirmButtonText: 'Ok',
+            });
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
+
 
     const animatedTexts = [
         "Bienvenue sur SyndicManager",

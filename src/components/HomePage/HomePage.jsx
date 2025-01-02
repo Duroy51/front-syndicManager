@@ -1,198 +1,173 @@
-import { useState, useEffect } from 'react'
-import { motion, useAnimation } from 'framer-motion'
-import { Search, Plus, ChevronRight, User, Users, Calendar, Bell, MessageCircle, Settings, ArrowRight, Info, Shield } from 'lucide-react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Bell, Building, ChevronDown } from 'lucide-react';
+import DashboardSection from './DashboardSection';
+import SearchSection from './SearchSection';
 
+const userSyndicats = [
+    { id: 1, name: "Syndicat des Travailleurs du Numérique", members: 1500, newMessages: 3 },
+    { id: 2, name: "Union des Développeurs Indépendants", members: 750, newMessages: 1 },
+    { id: 3, name: "Collectif des Designers UX/UI", members: 1200, newMessages: 0 }
+];
 
+const allSyndicats = [
+    ...userSyndicats,
+    { id: 4, name: "Association des Data Scientists", members: 980, newMessages: 5 },
+    { id: 5, name: "Syndicat des Ingénieurs en IA", members: 600, newMessages: 2 }
+];
 
-export const HomePage = () =>{
-    const [userSyndicates, setUserSyndicates] = useState([
-        { id: 1, name: "Syndicat des Taximans", members: 1200, isAdmin: true },
-        { id: 2, name: "Syndicat des Polytechniciens", members: 800, isAdmin: false },
-        { id: 3, name: "Syndicat des Ingénieurs", members: 1500, isAdmin: true },
-        { id: 4, name: "Syndicat des Conducteurs de Moto", members: 500, isAdmin: false },
-    ])
+const notifications = [
+    { id: 1, content: "Nouvelle réunion planifiée pour le Syndicat des Travailleurs du Numérique", time: "Il y a 1 heure" },
+    { id: 2, content: "Votre demande d'adhésion à l'Union des Développeurs Indépendants a été acceptée", time: "Il y a 3 heures" },
+    { id: 3, content: "Nouveau sondage disponible dans le Collectif des Designers UX/UI", time: "Il y a 1 jour" }
+];
 
-    const controls = useAnimation()
-    const navigate = useNavigate();
+export const HomePage  = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [activeTab, setActiveTab] = useState('mes-syndicats');
+    const [showUserMenu, setShowUserMenu] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [lastReadNotification, setLastReadNotification] = useState(0);
 
     useEffect(() => {
-        controls.start(i => ({
-            opacity: 1,
-            y: 0,
-            transition: { delay: i * 0.1 }
-        }))
-    }, [])
+        const handleSearch = () => {
+            if (searchTerm) {
+                setIsLoading(true);
+                setTimeout(() => setIsLoading(false), 800);
+            }
+        };
+        const debounce = setTimeout(handleSearch, 300);
+        return () => clearTimeout(debounce);
+    }, [searchTerm]);
+
+    const unreadNotifications = notifications.length - lastReadNotification;
 
     return (
-        <div className="min-h-screen bg-blue-50">
-            <nav className="bg-blue-600 text-white p-4 sticky top-0 z-10">
-                <div className="container mx-auto flex justify-between items-center">
-                    <motion.h1
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="text-2xl font-bold flex items-center"
-                    >
-                        <Users className="mr-2" /> SyndicManager
-                    </motion.h1>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="bg-white text-blue-600 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors flex items-center"
-                    >
-                        <User className="mr-2" /> Mon Profil
-                    </motion.button>
-                </div>
-            </nav>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+            {/* Header */}
+            <header className="bg-white shadow-lg sticky top-0 z-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                            <Building className="h-8 w-8 text-blue-600 mr-2" />
+                            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                SyndicManager
+                            </h1>
+                        </div>
 
-            <main className="container mx-auto mt-8 px-4">
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center mb-12 relative overflow-hidden py-20"
-                >
-                    <motion.div
-                        animate={{
-                            y: [0, -10, 0],
-                            transition: { repeat: Infinity, duration: 5, ease: "easeInOut" }
-                        }}
-                        className="absolute inset-0 z-0"
-                    >
-                        <div className="absolute inset-0 bg-blue-200 opacity-50 transform rotate-3 scale-110"></div>
-                    </motion.div>
-                    <motion.h2
-                        className="text-4xl font-bold text-blue-800 mb-4 relative z-10"
-                        animate={{ scale: [1, 1.02, 1] }}
-                        transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-                    >
-                        Bienvenue sur SyndicManager
-                    </motion.h2>
-                    <p className="text-xl text-blue-600 relative z-10">Gérez vos syndicats en toute simplicité</p>
-                </motion.section>
+                        <div className="flex items-center space-x-4">
+                            {/* Notifications */}
+                            <div className="relative">
+                                <button
+                                    onClick={() => setShowNotifications(!showNotifications)}
+                                    className="relative p-2 text-gray-500 hover:text-blue-600 focus:outline-none transition-colors duration-200"
+                                >
+                                    <Bell className="h-6 w-6" />
+                                    {unreadNotifications > 0 && (
+                                        <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                      {unreadNotifications}
+                    </span>
+                                    )}
+                                </button>
 
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={controls}
-                    custom={0}
-                    className="bg-white rounded-lg shadow-lg p-6 mb-8"
-                >
-                    <h3 className="text-2xl font-semibold text-blue-800 mb-4 flex items-center">
-                        <Users className="mr-2" /> Mes Syndicats
-                    </h3>
-                    <ul className="space-y-2">
-                        {userSyndicates.map((syndicate, index) => (
-                            <motion.li
-                                key={syndicate.id}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={controls}
-                                custom={index + 1}
-                                whileHover={{ scale: 1.02 }}
-                                className={`p-3 rounded-md flex justify-between items-center ${
-                                    syndicate.isAdmin ? 'bg-blue-200' : 'bg-blue-100'
-                                }`}
-                                onClick={() => navigate('/syndicat-app')}
-                            >
-                <span className="flex items-center">
-                  {syndicate.isAdmin && <Shield className="mr-2 text-blue-600" size={16} />}
-                    {syndicate.name}
-                </span>
-                                <div className="flex items-center">
-                                    <Users className="mr-2 text-blue-600" size={16} />
-                                    <span className="text-blue-600 mr-4">{syndicate.members}</span>
-                                    <ChevronRight className="text-blue-600" />
-                                </div>
-                            </motion.li>
-                        ))}
-                    </ul>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-full flex items-center hover:bg-blue-700 transition-colors"
-                        
-                        onClick={() => navigate('/home/createSyndicat')}
-                    >
-                        <Plus className="mr-2" /> Créer un nouveau syndicat
-                    </motion.button>
-                </motion.section>
+                                {showNotifications && (
+                                    <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl">
+                                        <div className="p-4 border-b">
+                                            <h3 className="text-lg font-semibold">Notifications</h3>
+                                        </div>
+                                        <div className="max-h-96 overflow-y-auto">
+                                            {notifications.map((notif) => (
+                                                <div key={notif.id} className="p-4 hover:bg-gray-50">
+                                                    <p className="text-sm">{notif.content}</p>
+                                                    <p className="text-xs text-gray-500 mt-1">{notif.time}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
 
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={controls}
-                    custom={4}
-                    className="bg-white rounded-lg shadow-lg p-6 mb-8"
-                >
-                    <h3 className="text-2xl font-semibold text-blue-800 mb-4 flex items-center">
-                        <Search className="mr-2" /> Rechercher des Syndicats
-                    </h3>
-                    <motion.div
-                        className="flex items-center bg-blue-100 rounded-full p-2"
-                        whileHover={{ boxShadow: "0 0 0 2px rgba(59, 130, 246, 0.5)" }}
-                    >
-                        <Search className="text-blue-600 mr-2" />
-                        <input
-                            type="text"
-                            placeholder="Nom du syndicat..."
-                            className="bg-transparent flex-grow focus:outline-none"
-                        />
-                    </motion.div>
-                </motion.section>
+                            {/* User Menu */}
+                            <div className="relative">
+                                <button
+                                    onClick={() => setShowUserMenu(!showUserMenu)}
+                                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100"
+                                >
+                                    <img
+                                        className="h-8 w-8 rounded-full object-cover"
+                                        src="/api/placeholder/32/32"
+                                        alt="User"
+                                    />
+                                    <span className="text-sm font-medium">John Doe</span>
+                                    <ChevronDown className="h-4 w-4" />
+                                </button>
 
-                <motion.section
-                    initial={{ opacity: 0 }}
-                    animate={controls}
-                    custom={5}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-                >
-                    {[
-                        { icon: Calendar, title: "Gestion Simplifiée", description: "Gérez facilement vos syndicats et leurs membres." },
-                        { icon: Bell, title: "Communication Efficace", description: "Restez en contact avec tous les membres de vos syndicats." },
-                        { icon: MessageCircle, title: "Suivi des Activités", description: "Suivez toutes les activités et événements de vos syndicats." },
-                    ].map((feature, index) => (
-                        <motion.div
-                            key={index}
-                            whileHover={{ y: -5, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
-                            className="bg-white p-6 rounded-lg shadow-md transition-shadow"
-                        >
-                            <feature.icon className="text-blue-600 mb-2" size={32} />
-                            <h4 className="text-xl font-semibold text-blue-800 mb-2">{feature.title}</h4>
-                            <p className="text-blue-600">{feature.description}</p>
-                        </motion.div>
-                    ))}
-                </motion.section>
-
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={controls}
-                    custom={6}
-                    className="bg-blue-100 rounded-lg p-8 mb-8"
-                >
-                    <h3 className="text-2xl font-bold text-blue-800 mb-4 flex items-center">
-                        <Info className="mr-2" /> En savoir plus sur SyndiManager
-                    </h3>
-                    <p className="text-blue-600 mb-4">
-                        Découvrez comment SyndiManager peut transformer la gestion de vos syndicats et améliorer la communication entre les membres.
-                    </p>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold flex items-center hover:bg-blue-700 transition-colors"
-                    >
-                        Explorer les fonctionnalités <ArrowRight className="ml-2" />
-                    </motion.button>
-                </motion.section>
-            </main>
-
-            <footer className="bg-blue-800 text-white py-8">
-                <div className="container mx-auto text-center">
-                    <p>&copy; 2023 SyndiManager. Tous droits réservés.</p>
-                    <div className="mt-4 flex justify-center space-x-4">
-                        <motion.a href="#" whileHover={{ y: -2 }}><MessageCircle /></motion.a>
-                        <motion.a href="#" whileHover={{ y: -2 }}><Settings /></motion.a>
-                        <motion.a href="#" whileHover={{ y: -2 }}><Bell /></motion.a>
+                                {showUserMenu && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl">
+                                        <div className="p-2">
+                                            <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 rounded">
+                                                Mon profil
+                                            </button>
+                                            <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 rounded">
+                                                Paramètres
+                                            </button>
+                                            <div className="border-t my-2" />
+                                            <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded">
+                                                Déconnexion
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </footer>
+            </header>
+
+            {/* Main Content */}
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {/* Navigation Tabs */}
+                <div className="mb-8">
+                    <div className="border-b border-gray-200">
+                        <nav className="flex -mb-px">
+                            <button
+                                onClick={() => setActiveTab('mes-syndicats')}
+                                className={`py-4 px-6 font-medium text-sm ${
+                                    activeTab === 'mes-syndicats'
+                                        ? 'border-b-2 border-blue-500 text-blue-600'
+                                        : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                }`}
+                            >
+                                Tableau de bord
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('recherche')}
+                                className={`ml-8 py-4 px-6 font-medium text-sm ${
+                                    activeTab === 'recherche'
+                                        ? 'border-b-2 border-blue-500 text-blue-600'
+                                        : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                }`}
+                            >
+                                Rechercher
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+
+                {activeTab === 'mes-syndicats' ? (
+                    <DashboardSection syndicats={userSyndicats} />
+                ) : (
+                    <SearchSection
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        isLoading={isLoading}
+                        allSyndicats={allSyndicats}
+                        userSyndicats={userSyndicats}
+                    />
+                )}
+            </main>
         </div>
-    )
-}
+    );
+};
+
+
