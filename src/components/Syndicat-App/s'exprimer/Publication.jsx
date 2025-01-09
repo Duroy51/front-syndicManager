@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import timeAgo from '../../../utils/timeAgo'
 import profile from '../../../images/bproo.png'
+import axios from "axios";
 
 // ... (CommentModal Component reste le même)
 // CommentModal Component
@@ -490,51 +491,44 @@ const VideoPreview = ({ onClose }) => {
 }
 
 export const Publications = () => {
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            author: { name: "Jean Dupont", avatar: "/placeholder.svg?height=40&width=40" },
-            content: "Aujourd'hui, nous avons eu une réunion productive sur les nouvelles mesures de sécurité. Qu'en pensez-vous ?",
-            image: profile,
-            timestamp: "Il y a 2 heures",
-            createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-            likes: 15,
-            comments: [
-                { author: { name: "Marie Martin", avatar: "/placeholder.svg?height=32&width=32" }, content: "Excellente initiative ! J'ai hâte de voir les résultats." },
-                { author: { name: "Luc Dubois", avatar: "/placeholder.svg?height=32&width=32" }, content: "Pouvons-nous avoir plus de détails sur ces mesures ?" }
-            ]
-        },
-        {
-            id: 2,
-            author: { name: "Sophie Lefebvre", avatar: "/placeholder.svg?height=40&width=40" },
-            content: "Rappel : la formation sur les nouveaux outils de communication aura lieu demain à 14h. N'oubliez pas de vous inscrire !",
-            timestamp: "Il y a 5 heures",
-            image:'',
-            likes: 8,
-            comments: []
-        }
-    ])
-
+    
+    const [posts, setPosts] = useState([]);
     const [showNewPostModal, setShowNewPostModal] = useState(false)
     const [showCamera, setShowCamera] = useState(false)
     const [newPostContent, setNewPostContent] = useState('')
     const [newPostImage, setNewPostImage] = useState(null)
     const fileInputRef = useRef(null)
 
-    const handleNewPost = () => {
-        if (newPostContent.trim() || newPostImage) {
-            const newPost = {
-                id: posts.length + 1,
-                author: { name: "Vous", avatar: "/placeholder.svg?height=40&width=40" },
-                content: newPostContent,
-                image: newPostImage,
-                timestamp: "À l'instant",
-                createdAt: new Date(),
-                likes: 0,
-                comments: []
+     // Récupérer les publications depuis le backend
+     useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get("http://localhost:9000/api/publications/all");
+                setPosts(response.data); // Mettre à jour les publications
+            } catch (error) {
+                console.error("Erreur lors de la récupération des publications :", error);
             }
-            setPosts([newPost, ...posts])
-            handleCancelPost()
+        };
+
+        fetchPosts();
+    }, []);
+
+    const handleNewPost = async() => {
+        if (newPostContent.trim() || newPostImage) {
+            try {
+                const newPost = {
+                    content: newPostContent,
+                    image: newPostImage, // Ajouter le traitement de l'image côté backend si nécessaire
+                };
+
+                const response = await axios.post("http://localhost:9000/api/publications/create", newPost);
+                setPosts([response.data, ...posts]); // Ajouter la nouvelle publication
+                setNewPostContent('');
+                setNewPostImage(null);
+                handleCancelPost();
+            } catch (error) {
+                console.error("Erreur lors de la création de la publication :", error);
+            }
         }
     }
 
