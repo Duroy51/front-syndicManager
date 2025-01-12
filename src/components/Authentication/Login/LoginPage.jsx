@@ -219,72 +219,7 @@ export const LoginPage = () => {
     const [isSDKLoaded, setIsSDKLoaded] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
 
-    useEffect(() => {
-        console.log('Début du chargement du SDK Apple');
-        const script = document.createElement('script');
-        script.src = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js';
-        script.async = true;
-        script.onload = () => {
-            console.log('SDK Apple chargé avec succès');
-            setIsSDKLoaded(true);
-        };
-        document.body.appendChild(script);
-
-        return () => {
-            console.log('Nettoyage : suppression du script Apple');
-            document.body.removeChild(script);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (isSDKLoaded) {
-            initializeAppleSignIn();
-        }
-    }, [isSDKLoaded]);
-
-    const initializeAppleSignIn = () => {
-        console.log('Initialisation de Apple Sign In');
-        try {
-            window.AppleID.auth.init({
-                clientId: 'com.bandesoft.dev-gloswitch',
-                scope: 'name email',
-                redirectURI: 'https://dev-gloswitch.bandesoft.com/register',
-                state: 'origin:web',
-                usePopup: true
-            });
-            console.log('Apple Sign In initialisé avec succès');
-            setIsInitialized(true);
-        } catch (error) {
-            console.error('Erreur lors de l\'initialisation de Apple Sign In:', error);
-        }
-    };
-
-    const handleAppleSignIn = async () => {
-        console.log('Tentative de connexion avec Apple');
-        if (!isInitialized) {
-            console.error('Apple Sign In n\'est pas encore initialisé');
-            return;
-        }
-
-        try {
-            const data = await window.AppleID.auth.signIn();
-            console.log('Apple Sign In réussi', data);
-
-            // Envoi du code d'autorisation au backend
-            console.log('Envoi du code d\'autorisation au backend');
-            const response = await axios.post('/user/oauth/apple/login', {code: data.authorization.code});
-            console.log('Réponse du backend:', response.data);
-
-            // Gérez la réponse du backend ici (par exemple, stockez le token dans le localStorage)
-        } catch (error) {
-            console.error('Erreur pendant Apple Sign In:', error);
-            if (error.error === 'user_trigger_new_signin_flow') {
-                console.log('L\'utilisateur a déclenché un nouveau flux de connexion. Cela peut être normal si l\'utilisateur a annulé la première tentative.');
-            }
-        }
-    };
-
-
+    
 
     return (
         <div className="min-h-screen flex bg-white">
