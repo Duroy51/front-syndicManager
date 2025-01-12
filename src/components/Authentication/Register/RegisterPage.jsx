@@ -157,7 +157,7 @@ export const RegisterPage = () => {
 
                 console.log('Tokens:', tokens.data)
 
-                const backendResponse = await axios.post('http://localhost:9000/api/google-login', {
+                const backendResponse = await axios.post('http://localhost:9005/api/google-login', {
                     tokenId: tokens.data.id_token
                 })
 
@@ -208,7 +208,7 @@ export const RegisterPage = () => {
 
         try {
             // Envoi de la requête au serveur
-            const response = await axios.post('http://localhost:9000/api/register', {
+            const response = await axios.post('http://localhost:9005/api/register', {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,

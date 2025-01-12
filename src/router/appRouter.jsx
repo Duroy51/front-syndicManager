@@ -2,7 +2,7 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
 import { Circles } from 'react-loader-spinner';
-
+import AuthGuard from '../helpers/AuthGuard';
 
 
 
@@ -65,17 +65,37 @@ export function AppRoute() {
     return (
         <React.Suspense fallback={<CenteredSpinner/>}>
             <Routes>
-
+                {/* Routes publiques */}
                 <Route path={AppRoutesPaths.loginPage} element={<LoginPage/>}/>
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
-                <Route path={AppRoutesPaths.homePage} element={<HomePage/>}/>
-                <Route path={AppRoutesPaths.createSyndicat} element={<CreateSyndicat/>}/>
-                <Route path={AppRoutesPaths.syndicatApp} element={<SyndicatApp/>}/>
 
-
+                {/* Routes protégées */}
+                <Route
+                    path={AppRoutesPaths.homePage}
+                    element={
+                        <AuthGuard>
+                            <HomePage/>
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path={AppRoutesPaths.createSyndicat}
+                    element={
+                        <AuthGuard>
+                            <CreateSyndicat/>
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path={AppRoutesPaths.syndicatApp}
+                    element={
+                        <AuthGuard>
+                            <SyndicatApp/>
+                        </AuthGuard>
+                    }
+                />
             </Routes>
         </React.Suspense>
-    )
-
+    );
 }

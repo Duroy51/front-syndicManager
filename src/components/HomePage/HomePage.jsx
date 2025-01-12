@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Bell, Building, ChevronDown } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import SearchSection from './SearchSection';
+import {getToken, getFirstNameToken, getLastNameToken} from "../../services/AccountService"
 
 const userSyndicats = [
     { id: 1, name: "Syndicat des Travailleurs du Numérique", members: 1500, newMessages: 3 },
@@ -29,6 +30,15 @@ export const HomePage  = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [lastReadNotification, setLastReadNotification] = useState(0);
 
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+
+    useEffect(() => {
+        const firstName = getFirstNameToken();
+        const lastName = getLastNameToken();
+        setFirstName(firstName);
+        setLastName(lastName);
+    }, []);
     useEffect(() => {
         const handleSearch = () => {
             if (searchTerm) {
@@ -98,7 +108,7 @@ export const HomePage  = () => {
                                         src="/api/placeholder/32/32"
                                         alt="User"
                                     />
-                                    <span className="text-sm font-medium">John Doe</span>
+                                    <span className="text-sm font-medium">{firstName} {lastName}</span>
                                     <ChevronDown className="h-4 w-4" />
                                 </button>
 
