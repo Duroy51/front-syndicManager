@@ -15,17 +15,18 @@ export const CreateSyndicat = () => {
         logo: null
     })
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target
-        setFormData(prev => ({ ...prev, [name]: value }))
-    }
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, files } = e.target
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+    
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
         if (files) {
-            setFormData(prev => ({ ...prev, [name]: files[0] }))
+            setFormData(prev => ({ ...prev, [name]: files[0] }));
         }
-    }
+    };
+    
 
     const nextStep = () => setStep(prev => Math.min(prev + 1, 3))
     const prevStep = () => setStep(prev => Math.max(prev - 1, 1))
