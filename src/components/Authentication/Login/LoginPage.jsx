@@ -7,6 +7,9 @@ import axios from "axios";
 import {useGoogleLogin} from "@react-oauth/google";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import {decodeToken, saveToken, getFirstNameToken, getLastNameToken} from "../../../services/AccountService"
+
+export const  AppleID = "P3WHTNR897.gloswitch";
 
 
 const Input = React.forwardRef(({ icon: Icon, ...props }, ref) => (
@@ -108,7 +111,7 @@ export const LoginPage = () => {
 
                 console.log('Tokens:', tokens.data)
 
-                const backendResponse = await axios.post('http://localhost:9000/api/google-login', {
+                const backendResponse = await axios.post('http://localhost:9005/api/google-login', {
                     tokenId: tokens.data.id_token
                 })
 
@@ -145,7 +148,7 @@ export const LoginPage = () => {
 
         try {
             // Envoi de la requête au serveur
-            const response = await axios.post('http://localhost:9000/api/login', {
+            const response = await axios.post('http://localhost:9005/api/login', {
                 email: data.email,
                 password: data.password,
             });
@@ -155,11 +158,12 @@ export const LoginPage = () => {
             const responseData = response?.data;
             const tokenData = responseData?.data?.token;
 
+
+
             if (tokenData?.Bearer) {
                 const token = tokenData.Bearer;
-
-                saveUserSession(data.email, token);
-
+                console.log(decodeToken(token));
+                saveToken(token);
                 // Affichage d'un pop-up de succès
                 Swal.fire({
                     icon: 'success',
@@ -211,6 +215,11 @@ export const LoginPage = () => {
         "Restez connecté avec vos membres",
         "Prenez des décisions éclairées"
     ]
+
+    const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
+
+    
 
     return (
         <div className="min-h-screen flex bg-white">
@@ -286,14 +295,14 @@ export const LoginPage = () => {
                             </div>
                         </div>
 
-                        <Button type="submit" disabled={isLoading}>
+                        <Button type="submit" disabled={isLoading} onClick={handleSubmit(onSubmit)}>
                             {isLoading ? 'Connexion en cours...' : 'Se connecter'}
                         </Button>
                     </form>
 
                     <div className="mt-6 text-center">
                         <p className="text-gray-600 mb-4">Ou connectez-vous avec</p>
-                        <Button onClick={handleGoogleSignIn} className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
+                        <Button  className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
                             Se connecter avec Google
                         </Button>
