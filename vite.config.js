@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   esbuild: {
-    loader: 'tsx', // Traite les fichiers .jsx comme du TypeScript
+    loader: 'jsx', // Traite les fichiers .jsx comme du TypeScript
     include: /src\/.*\.[jt]sx?$/, // Inclut tous les fichiers .js, .jsx, .ts, .tsx dans src/
     exclude: /node_modules/, // Exclut node_modules
   },

@@ -135,9 +135,9 @@ export const SyndicatApp = () => {
                     transition={{duration: 0.3}}
                     className={`w-64 bg-white shadow-lg flex flex-col z-20 ${isSidebarOpen ? '' : 'absolute inset-y-0 left-0'}`}
                 >
-                    {/*<div className="p-6 border-b border-gray-200">
+                    <div className="p-6 border-b border-gray-200">
                         <h1 className="text-2xl font-bold text-blue-600">Syndicat des Taxi</h1>
-                    </div>*/}
+                    </div>
                     <div className="flex-grow overflow-y-auto">
                         <nav className="mt-6">
                             {navItems.map((item) => (
@@ -158,7 +158,7 @@ export const SyndicatApp = () => {
                             ))}
                         </nav>
                     </div>
-                    {/*<div className="p-4 border-t border-gray-200">
+                    <div className="p-4 border-t border-gray-200">
                         <motion.button
                             whileHover={{scale: 1.05}}
                             whileTap={{scale: 0.95}}
@@ -168,7 +168,7 @@ export const SyndicatApp = () => {
                             <Home className="mr-2 h-4 w-4"/>
                             Acceuil
                         </motion.button>
-                    </div>*/}
+                    </div>
                 </motion.div>
 
                 {/* Main content */}

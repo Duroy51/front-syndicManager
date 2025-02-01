@@ -5,14 +5,21 @@ import {jwtDecode} from 'jwt-decode'; // Optionnel, si tu utilises JWT
 import axios from 'axios';
 
 const TOKEN_KEY = 'token'; // Clé pour le stockage du token dans localStorage
-
+const TOKEN_SYND = 'token2';
 /**
  * Sauvegarde le token dans le stockage local.
  * @param {string} token - Le token d'authentification.
  */
 export const saveToken = (token) => {
+
     localStorage.setItem(TOKEN_KEY, token);
 };
+
+
+export const saveOrganisationToken = (token) => {
+    localStorage.setItem(TOKEN_SYND, token);
+};
+
 
 /**
  * Récupère le token depuis le stockage local.
@@ -139,7 +146,7 @@ export const getLastNameToken = () => {
     if (!token) return null;
 
     const decoded = decodeToken(token);
-    return decoded?.prenom || null;
+    return decoded?.Prenom || null;
 };
 
 /**

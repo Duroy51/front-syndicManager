@@ -90,9 +90,9 @@ export function AppRoute() {
                 <Route
                     path={AppRoutesPaths.syndicatApp}
                     element={
-                        <AuthGuard>
+                        
                             <SyndicatApp/>
-                        </AuthGuard>
+                        
                     }
                 />
             </Routes>

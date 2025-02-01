@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, forwardRef } from 'react'
+import { React, useState, useEffect, useCallback, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { Building, Mail, Lock, Calendar, User, AlertCircle } from 'lucide-react'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
+// eslint-disable-next-line react/prop-types
 const Alert = ({ children }) => (
     <div className="flex items-center p-2 mt-1 text-sm text-red-800 bg-red-100 rounded-md">
         <AlertCircle className="w-4 h-4 mr-2" />
@@ -41,6 +42,7 @@ const AnimatedText = ({ texts }) => {
     )
 }
 
+// eslint-disable-next-line react/prop-types
 const PasswordStrengthIndicator = ({ password }) => {
     const getStrength = (pwd) => {
         let strength = 0
@@ -71,6 +73,7 @@ const PasswordStrengthIndicator = ({ password }) => {
     )
 }
 
+// eslint-disable-next-line react/prop-types
 const Input = forwardRef(({ icon: Icon, error, ...props }, ref) => (
     <div className="relative mb-4">
         <input
@@ -434,7 +437,7 @@ export const RegisterPage = () => {
                                 alt="Google"
                                 className="w-5 h-5 mr-2 inline-block"
                             />
-                            S'inscrire avec Google
+                            S&#39;inscrire avec Google
                         </Button>
                     </div>
 
