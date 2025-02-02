@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, MapPin, Clock, User, Image as ImageIcon, MoreHorizontal, Plus, Users, X } from 'lucide-react'
-
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, MapPin, Clock, User, Image as ImageIcon, MoreHorizontal, Plus, Users, X, Heart, Share2, MessageCircle } from 'lucide-react';
 export const EventsList = () => {
-    const [selectedEvent, setSelectedEvent] = useState(null)
-
-    const events = [
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [events, setEvents] = useState([
         {
             id: 1,
             title: "Assemblée Générale Annuelle",
@@ -15,9 +13,9 @@ export const EventsList = () => {
             endDate: new Date("2023-06-15T17:00:00"),
             author: {
                 name: "Marie Dupont",
-                profileImage: "/placeholder.svg?height=100&width=100"
+                profileImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
             },
-            images: ["/placeholder.svg?height=400&width=600", "/placeholder.svg?height=400&width=600"],
+            images: ["https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=1200&h=600&fit=crop"],
             isUpcoming: true,
             participants: [
                 { name: "Jean Dupont" },
@@ -35,9 +33,9 @@ export const EventsList = () => {
             endDate: new Date("2023-07-10T18:00:00"),
             author: {
                 name: "Pierre Martin",
-                profileImage: "/placeholder.svg?height=100&width=100"
+                profileImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop"
             },
-            images: ["/placeholder.svg?height=400&width=600"],
+            images: ["https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&h=600&fit=crop"],
             isUpcoming: true,
             participants: [
                 { name: "Lucie Moreau" },
@@ -54,8 +52,9 @@ export const EventsList = () => {
             endDate: new Date("2023-08-05T20:00:00"),
             author: {
                 name: "Sophie Lefebvre",
-                profileImage: "/placeholder.svg?height=100&width=100"
+                profileImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
             },
+            images: ["https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200&h=600&fit=crop"],
             isUpcoming: true,
             participants: [
                 { name: "Antoine Dubois" },
@@ -74,9 +73,9 @@ export const EventsList = () => {
             endDate: new Date("2023-09-21T17:00:00"),
             author: {
                 name: "Jean Dubois",
-                profileImage: "/placeholder.svg?height=100&width=100"
+                profileImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
             },
-            images: ["/placeholder.svg?height=400&width=600"],
+            images: ["https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=1200&h=600&fit=crop"],
             isUpcoming: false,
             participants: [
                 { name: "Marie Dupont" },
@@ -94,8 +93,9 @@ export const EventsList = () => {
             endDate: new Date("2023-10-15T16:00:00"),
             author: {
                 name: "Lucie Moreau",
-                profileImage: "/placeholder.svg?height=100&width=100"
+                profileImage: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&h=150&fit=crop"
             },
+            images: ["https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop"],
             isUpcoming: false,
             participants: [
                 { name: "Jean Dupont" },
@@ -103,161 +103,233 @@ export const EventsList = () => {
                 { name: "Thomas Bernard" },
                 { name: "Camille Roux" },
                 { name: "Antoine Dubois" },
-                { name: "Antoine Dubois" },
-                { name: "Antoine Dubois" },
-                { name: "Antoine Dubois" },
-                { name: "Antoine Dubois" },
-                { name: "Antoine Dubois" },
-                { name: "Antoine Dubois" },
             ]
         }
-    ]
+    ]);
 
     const EventCard = ({ event }) => {
-        const [isExpanded, setIsExpanded] = useState(false)
-        const [isParticipating, setIsParticipating] = useState(false)
+        const [isExpanded, setIsExpanded] = useState(false);
+        const [isParticipating, setIsParticipating] = useState(false);
+        const [isLiked, setIsLiked] = useState(false);
 
         const handleParticipate = () => {
-            setIsParticipating(!isParticipating)
+            setIsParticipating(!isParticipating);
             if (!isParticipating) {
-                event.participants.push({ name: "Vous" })
+                event.participants.push({ name: "Vous" });
             } else {
-                event.participants = event.participants.filter(p => p.name !== "Vous")
+                event.participants = event.participants.filter(p => p.name !== "Vous");
             }
-        }
+        };
 
         return (
-            
             <motion.div
                 layout
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                exit={{opacity: 0, y: -20}}
-                className="bg-white rounded-lg shadow-lg overflow-hidden mb-6 relative w-full max-w-xl mx-auto transition-shadow duration-300 hover:shadow-xl"
-
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 relative w-full max-w-2xl mx-auto transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
             >
-
                 {event.isUpcoming && (
-                    <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden">
-
-                        <div
-                            className="absolute top-0 right-0 -mt-4 -mr-16 w-48 h-12 bg-red-500 text-white text-sm font-bold text-center leading-12 transform rotate-45">
-
-                        </div>
+                    <div className="absolute top-4 right-4 z-10">
+                        <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
+                            À venir
+                        </span>
                     </div>
                 )}
 
-                <div className="p-6">
-
-                    <div className="flex items-center mb-4">
-                        <img src={event.author.profileImage} alt={event.author.name}
-                             className="w-12 h-12 rounded-full mr-4 object-cover border-2 border-blue-500"/>
-                        <div>
-                            <h3 className="font-bold text-xl text-gray-800 mb-1">{event.title}</h3>
+                <div className="p-8">
+                    <div className="flex items-center mb-6">
+                        <div className="relative">
+                            <img 
+                                src={event.author.profileImage} 
+                                alt={event.author.name}
+                                className="w-14 h-14 rounded-full object-cover ring-4 ring-blue-100"
+                            />
+                            <div className="absolute -bottom-1 -right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-white"></div>
+                        </div>
+                        <div className="ml-4 flex-grow">
+                            <h3 className="font-bold text-2xl text-gray-800 mb-1 hover:text-blue-600 transition-colors duration-200">
+                                {event.title}
+                            </h3>
                             <div className="flex items-center text-sm text-gray-600">
-                                <User className="w-4 h-4 mr-1"/>
-                                <span>{event.author.name}</span>
+                                <User className="w-4 h-4 mr-1 text-blue-500"/>
+                                <span className="font-medium">{event.author.name}</span>
                                 <span className="mx-2">•</span>
-                                <Calendar className="w-4 h-4 mr-1"/>
-                                <span>{event.startDate.toLocaleDateString()}</span>
+                                <Calendar className="w-4 h-4 mr-1 text-blue-500"/>
+                                <span>{event.startDate.toLocaleDateString('fr-FR', { 
+                                    day: 'numeric',
+                                    month: 'long',
+                                    year: 'numeric'
+                                })}</span>
                             </div>
                         </div>
-                        <button className="ml-auto text-gray-400 hover:text-gray-600 transition-colors duration-200">
-                            <MoreHorizontal className="w-5 h-5"/>
-                        </button>
                     </div>
-                    <p className="text-gray-700 mb-4">
-                        {isExpanded ? event.description : `${event.description.slice(0, 100)}...`}
-                        <button
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            className="text-blue-500 hover:text-blue-600 ml-2 font-medium"
-                        >
-                            {isExpanded ? 'Voir moins' : 'Voir plus'}
-                        </button>
-                    </p>
-                    <div className="flex flex-wrap items-center text-sm text-gray-600 mb-4">
-                        <div className="flex items-center mr-4 mb-2">
-                            <Clock className="w-4 h-4 mr-1 text-blue-500"/>
-                            <span>{event.startDate.toLocaleTimeString([], {
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            })} - {event.endDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>
+
+                    <div className="prose prose-blue max-w-none mb-6">
+                        <p className="text-gray-700 leading-relaxed">
+                            {isExpanded ? event.description : `${event.description.slice(0, 150)}...`}
+                            <button
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                className="ml-2 text-blue-500 hover:text-blue-700 font-medium focus:outline-none"
+                            >
+                                {isExpanded ? 'Voir moins' : 'Voir plus'}
+                            </button>
+                        </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-4 mb-6">
+                        <div className="flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+                            <Clock className="w-5 h-5 mr-2 text-blue-500"/>
+                            <span className="text-blue-800 font-medium">
+                                {event.startDate.toLocaleTimeString('fr-FR', { 
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })} - {event.endDate.toLocaleTimeString('fr-FR', {
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </span>
                         </div>
                         {event.location && (
-                            <div className="flex items-center mb-2">
-                                <MapPin className="w-4 h-4 mr-1 text-blue-500"/>
-                                <span>{event.location}</span>
+                            <div className="flex items-center px-4 py-2 bg-purple-50 rounded-lg">
+                                <MapPin className="w-5 h-5 mr-2 text-purple-500"/>
+                                <span className="text-purple-800 font-medium">{event.location}</span>
                             </div>
                         )}
                     </div>
-                    <button
-                        onClick={() => setSelectedEvent(event)}
-                        className="flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-200"
-                    >
-                        <Users className="w-5 h-5 mr-2"/>
-                        {event.participants.length} participants
-                    </button>
-                </div>
-                {event.images && event.images.length > 0 && (
-                    <div className="relative h-64 bg-gray-200">
-                        <img src={event.images[0]} alt="Event" className="w-full h-full object-cover"/>
-                        {event.images.length > 1 && (
-                            <button
-                                className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm hover:bg-opacity-70 transition-colors duration-200">
-                                +{event.images.length - 1} photos
-                            </button>
-                        )}
+
+                    {event.images && event.images.length > 0 && (
+                        <div className="relative rounded-xl overflow-hidden mb-6">
+                            <img 
+                                src={event.images[0]} 
+                                alt="Event" 
+                                className="w-full h-80 object-cover transform hover:scale-105 transition-transform duration-500"
+                            />
+                            {event.images.length > 1 && (
+                                <button className="absolute bottom-4 right-4 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg text-sm hover:bg-opacity-90 transition-colors duration-200 backdrop-blur-sm">
+                                    +{event.images.length - 1} photos
+                                </button>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="flex items-center justify-between mb-6">
+                        <button
+                            onClick={() => setSelectedEvent(event)}
+                            className="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        >
+                            <Users className="w-5 h-5 mr-2"/>
+                            <span className="font-medium">{event.participants.length} participants</span>
+                        </button>
+                        
+                        <div className="flex items-center gap-4">
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => setIsLiked(!isLiked)}
+                                className={`p-2 rounded-full ${isLiked ? 'text-red-500 bg-red-50' : 'text-gray-400 hover:text-red-500 hover:bg-red-50'} transition-colors duration-200`}
+                            >
+                                <Heart className="w-6 h-6" fill={isLiked ? "currentColor" : "none"} />
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="p-2 rounded-full text-gray-400 hover:text-blue-500 hover:bg-blue-50 transition-colors duration-200"
+                            >
+                                <Share2 className="w-6 h-6" />
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="p-2 rounded-full text-gray-400 hover:text-green-500 hover:bg-green-50 transition-colors duration-200"
+                            >
+                                <MessageCircle className="w-6 h-6" />
+                            </motion.button>
+                        </div>
                     </div>
-                )}
-                <div className="p-6 bg-gray-50 border-t border-gray-200">
+
                     <motion.button
-                        whileHover={{scale: 1.03}}
-                        whileTap={{scale: 0.98}}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={handleParticipate}
-                        className={`w-full py-3 ${isParticipating ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg transition duration-200 flex items-center justify-center font-semibold text-lg shadow-md`}
+                        className={`w-full py-4 rounded-xl transition duration-200 flex items-center justify-center font-semibold text-lg shadow-lg ${
+                            isParticipating 
+                                ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700' 
+                                : 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700'
+                        }`}
                     >
-                        <Calendar className="w-5 h-5 mr-2"/>
+                        <Calendar className="w-6 h-6 mr-2"/>
                         {isParticipating ? "Vous participez à l'événement" : "Participer à l'événement"}
                     </motion.button>
                 </div>
             </motion.div>
-        )
-    }
+        );
+    };
 
-    const ParticipantsList = ({event, onClose }) => {
+    const ParticipantsList = ({ event, onClose }) => {
         return (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg p-6 max-w-md w-full">
-                    <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-bold">Participants</h3>
-                        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
+                onClick={onClose}
+            >
+                <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl"
+                    onClick={e => e.stopPropagation()}
+                >
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-2xl font-bold text-gray-800">Participants</h3>
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={onClose}
+                            className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100"
+                        >
                             <X className="w-6 h-6" />
-                        </button>
+                        </motion.button>
                     </div>
-                    <ul className="max-h-96 overflow-y-auto">
+                    <div className="max-h-96 overflow-y-auto">
                         {event.participants.map((participant, index) => (
-                            <li key={index} className="py-2 border-b last:border-b-0">
-                                {participant.name}
-                            </li>
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                className="flex items-center py-3 px-4 hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                            >
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-medium">
+                                    {participant.name.charAt(0)}
+                                </div>
+                                <span className="ml-3 font-medium text-gray-700">{participant.name}</span>
+                            </motion.div>
                         ))}
-                    </ul>
-                </div>
-            </div>
-        )
-    }
+                    </div>
+                </motion.div>
+            </motion.div>
+        );
+    };
 
     return (
-        <div className="max-w-4xl mx-auto py-8 px-4">
-            <div className="mb-8 flex flex-col sm:flex-row items-center justify-between">
+        <div className="max-w-4xl mx-auto py-12 px-4">
+            <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-12 flex flex-col sm:flex-row items-center justify-between"
+            >
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full inline-flex items-center text-lg transition duration-200 shadow-md"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 px-8 rounded-xl inline-flex items-center text-lg transition duration-200 shadow-lg"
                 >
                     <Plus className="mr-2 h-5 w-5" />
                     Créer un événement
                 </motion.button>
-            </div>
+            </motion.div>
 
             <AnimatePresence>
                 {events.map((event) => (
@@ -265,9 +337,11 @@ export const EventsList = () => {
                 ))}
             </AnimatePresence>
 
-            {selectedEvent && (
-                <ParticipantsList event={selectedEvent} onClose={() => setSelectedEvent(null)} />
-            )}
+            <AnimatePresence>
+                {selectedEvent && (
+                    <ParticipantsList event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+                )}
+            </AnimatePresence>
         </div>
-    )
-}
+    );
+};
