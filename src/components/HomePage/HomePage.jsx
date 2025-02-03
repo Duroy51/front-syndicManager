@@ -27,6 +27,7 @@ import {
 import {AcceuilSection} from "@/components/HomePage/AcceuilSection.jsx";
 import {getFirstNameToken, getLastNameToken} from "@/services/AccountService.js";
 import {MesSyndicats} from "@/components/HomePage/MesSyndicatSection.jsx";
+import {Explorer} from "./ExploreSection.jsx";
 
 const associations = [
     { id: 1, name: "Syndicat des Enseignants", members: 1200 },
@@ -71,7 +72,7 @@ export const HomePage = () => {
             case 'syndicats':
                 return <MesSyndicats></MesSyndicats>
             case 'explorer':
-                return <h1>Explorer</h1>
+                return <Explorer></Explorer>
             case 'parametres':
                 return <h1>Parametres</h1>
         }

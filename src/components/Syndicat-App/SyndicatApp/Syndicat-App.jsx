@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Calendar, MessageSquare, Vote, CreditCard, Handshake,
@@ -15,6 +15,7 @@ import { Partnerships } from "../Partenaire/Partenaires";
 import { useNavigate } from "react-router-dom";
 import { MemberManagement } from "../../Membres/Membres";
 import { Publications } from "../s'exprimer/Publication";
+import {getFirstNameToken, getOrganisationName} from "../../../services/AccountService.js";
 
 const NotificationBadge = ({ count }) => (
     <motion.div
@@ -67,6 +68,12 @@ export const SyndicatApp = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const navigate = useNavigate();
+    const [organisationName, setOrganisationName] = useState(null);
+
+    useEffect(() => {
+        const organisationName = getOrganisationName();
+        setOrganisationName(organisationName);
+    }, []);
 
     const navItems = [
         { id: 'membres', icon: Users, label: 'Membres', badge: 12 },
@@ -222,18 +229,21 @@ export const SyndicatApp = () => {
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
                 <motion.div
-                    initial={{ x: isSidebarOpen ? 0 : -300 }}
-                    animate={{ x: isSidebarOpen ? 0 : -300 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{x: isSidebarOpen ? 0 : -300}}
+                    animate={{x: isSidebarOpen ? 0 : -300}}
+                    transition={{duration: 0.3}}
                     className={`w-64 bg-white shadow-xl flex flex-col z-20 ${isSidebarOpen ? '' : 'absolute inset-y-0 left-0'}`}
                 >
+                    <div className="p-6 border-b border-gray-200">
+                        <h1 className="text-2xl font-bold text-blue-600">{organisationName}</h1>
+                    </div>
                     <div className="flex-grow overflow-y-auto py-6">
                         <nav className="px-4 space-y-3">
                             {navItems.map((item) => (
                                 <motion.button
                                     key={item.id}
-                                    whileHover={{ scale: 1.02, x: 5 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    whileHover={{scale: 1.02, x: 5}}
+                                    whileTap={{scale: 0.98}}
                                     className={`group flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-300 ${
                                         activeSection === item.id
                                             ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
@@ -264,18 +274,30 @@ export const SyndicatApp = () => {
                             ))}
                         </nav>
                     </div>
+                    <div className="p-4 border-t border-gray-200">
+                        <motion.button
+                            whileHover={{scale: 1.05}}
+                            whileTap={{scale: 0.95}}
+                            className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            onClick={() => navigate('/home')}
+                        >
+                            <Home className="mr-2 h-4 w-4"/>
+                            Acceuil
+                        </motion.button>
+                    </div>
+
                 </motion.div>
 
                 {/* Main content */}
                 <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
                     <div className="max-w-7xl mx-auto">
-                        <AnimatePresence mode="wait">
+                    <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeSection}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.2 }}
+                                initial={{opacity: 0, y: 20}}
+                                animate={{opacity: 1, y: 0}}
+                                exit={{opacity: 0, y: -20}}
+                                transition={{duration: 0.2}}
                             >
                                 {renderContent()}
                             </motion.div>
@@ -329,7 +351,7 @@ export const SyndicatApp = () => {
             </div>
 
             {/* Footer */}
-            <footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-6">
+            {/*<footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                         <div className="text-center md:text-left">
@@ -359,7 +381,7 @@ export const SyndicatApp = () => {
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer>*/}
         </div>
     );
 };

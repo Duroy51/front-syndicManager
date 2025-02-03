@@ -5,7 +5,7 @@ import {jwtDecode} from 'jwt-decode'; // Optionnel, si tu utilises JWT
 import axios from 'axios';
 
 const TOKEN_KEY = 'token'; // Clé pour le stockage du token dans localStorage
-const TOKEN_SYND = 'token2';
+const TOKEN_SYND = 'organisationToken';
 /**
  * Sauvegarde le token dans le stockage local.
  * @param {string} token - Le token d'authentification.
@@ -29,11 +29,19 @@ export const getToken = () => {
     return localStorage.getItem(TOKEN_KEY);
 };
 
+export const getOrganisationToken = () => {
+    return localStorage.getItem(TOKEN_SYND);
+};
+
 /**
  * Supprime le token du stockage local.
  */
 export const removeToken = () => {
     localStorage.removeItem(TOKEN_KEY);
+};
+
+export const removeOrganisationToken = () => {
+    localStorage.removeItem(TOKEN_SYND);
 };
 
 /**
@@ -181,3 +189,50 @@ export const isTokenExpired = () => {
     const expirationDate = getTokenExpiration();
     return expirationDate ? Date.now() > expirationDate.getTime() : true;
 };
+
+
+/**
+ * Suite de méthodes pour gérer la connexion à un syndicat donné
+ *
+ */
+
+export const getOrganisationName = () => {
+    const token = getOrganisationToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.name || null;
+};
+
+export const getOrganisationDescription = () => {
+    const token = getOrganisationToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.description || null;
+};
+
+export const getOrganisationDomain = () => {
+    const token = getOrganisationToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.domain || null;
+};
+
+export const getUserRole = () => {
+    const token = getOrganisationToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.role || null;
+};
+
+export const getOrganisationId = () => {
+    const token = getOrganisationToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.organisationId || null;
+};
+

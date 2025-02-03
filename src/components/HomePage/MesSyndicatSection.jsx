@@ -6,14 +6,10 @@ import {BusinessActorForm} from "@/components/HomePage/BusinessActorForm/Busines
 // Mock data for demonstration
 import {apiClient} from '../../services/AxiosConfig.js';
 import {getUserIdFromToken} from "../../services/AccountService.js";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
+import * as responseData from "framer-motion/m";
 
-const mockSyndicats = [
-    { id: 1, name: "Syndicat des Enseignants", members: 1250, type: "Éducation", trend: "up" },
-    { id: 2, name: "Union des Travailleurs de la Santé", members: 3780, type: "Santé", trend: "down" },
-    { id: 3, name: "Syndicat des Transports Publics", members: 2100, type: "Transport", trend: "stable" },
-    { id: 4, name: "Association des Ingénieurs", members: 950, type: "Technologie", trend: "up" },
-    { id: 5, name: "Syndicat de l'Industrie Alimentaire", members: 1800, type: "Industrie", trend: "up" },
-]
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -36,11 +32,14 @@ const itemVariants = {
 export const MesSyndicats = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [syndicats, setSyndicats] = useState([]);
+    const [loading, setLoading] = useState(false);
+
 
     const [isBusinessFormOpen, setIsBusinessFormOpen] = useState(false);
     const openBusinessActorForm = () => setIsBusinessFormOpen(true);
     const closeBusinessActorForm = () => setIsBusinessFormOpen(false);
     const UserId = getUserIdFromToken();
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchSyndicats = async () => {
             try {
@@ -62,18 +61,56 @@ export const MesSyndicats = () => {
     }, []);
 
 
+    const handleJoinSyndicat = async (organisationId) => {
+        setLoading(true);
+        try {
+            const response = await apiClient.get("/organisation/connect", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+                params: {
+                    userId: UserId,
+                    organisationId: organisationId
+                }
+            });
+
+            if (response.data.data && response.data.data.organisationToken) {
+                localStorage.setItem("organisationToken", response.data.data.organisationToken.Bearer);
+                setLoading(false);
+                navigate("/syndicat-app");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Inscription réussie !',
+                    text: response.data.data.text || 'Votre compte a été créé avec succès.',
+                    confirmButtonText: 'Ok',
+                });
+            } else {
+                throw new Error("Token non reçu !");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la connexion au syndicat :", error);
+            setLoading(false);
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "Une erreur est survenue lors de la communication avec le serveur",
+                confirmButtonText: 'Ok',
+            });
+        }
+    };
+
     const filteredSyndicats = syndicats.filter((syndicat) =>
         syndicat.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-            {/*<div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8">
                 <div className="container mx-auto px-4">
                     <h1 className="text-4xl font-bold mb-2">Mes Syndicats</h1>
                     <p className="text-xl opacity-90">Gérez et explorez vos affiliations syndicales</p>
                 </div>
-            </div>*/}
+            </div>
 
             <div className="container mx-auto px-4 py-8">
                 <motion.div
@@ -169,7 +206,8 @@ export const MesSyndicats = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-gray-50 px-6 py-4">
+                            <div onClick={() => handleJoinSyndicat(syndicat.id)}
+                                className="bg-gray-50 px-6 py-4">
                                 <button className="w-full bg-blue-500 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:bg-blue-600">
                                     Voir les détails
                                     <ChevronRight className="ml-2 h-4 w-4" />
@@ -179,7 +217,15 @@ export const MesSyndicats = () => {
                     ))}
                 </motion.div>
             </div>
+            {loading && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <p className="text-lg font-semibold">Connexion en cours...</p>
+                    </div>
+                </div>
+            )}
         </div>
+
     )
 }
 
