@@ -1,6 +1,9 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import { Users, FileText, Tag, Briefcase, ChevronRight, AlertCircle } from "lucide-react"
+import Swal from "sweetalert2";
+import {apiClient} from '../../../services/AxiosConfig.js';
+import {getUserIdFromToken} from "../../../services/AccountService.js";
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -39,9 +42,44 @@ export const OrganisationForm = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const UserId = getUserIdFromToken();
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // Handle form submission here
+
+        try {
+            const response = await apiClient.post('/organisation/create', {
+                    name: formData.name,
+                    description: formData.description,
+                    type: formData.type,
+                    domain: formData.domain,
+                    userId: UserId
+                }
+            );
+            console.log("Réponse du serveur:", response.data);
+            const responseData = response?.data;
+
+            if (response.data.value === "200") {
+                await Swal.fire({
+                    icon: "success",
+                    title: "Succès",
+                    text: responseData.text || "Profil complété avec succès !",
+                });
+                // Redirection ou autre action après succès
+            } else {
+                await Swal.fire({
+                    icon: "error",
+                    title: "Erreur",
+                    text: response.data.text,
+                });
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'envoi du formulaire:", error);
+            await Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "Une erreur est survenue. Veuillez réessayer.",
+            });
+        }
         console.log("Form submitted:", formData)
     }
 

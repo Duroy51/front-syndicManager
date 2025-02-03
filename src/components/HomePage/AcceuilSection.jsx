@@ -122,14 +122,14 @@ export const AcceuilSection = () => {
     const openBusinessActorForm = async () => {
         try {
             // Envoyer une requête à la route /verify_business_actor
-            const response = await apiClient.get("/verify_business_actor",
+            const response = await apiClient.get("/organisation/verify_business_actor",
                 {
                     params: {
                         userId: userId }
                 });
 
             // Vérifier la réponse du serveur
-            if (response.data === true) {
+            if (response.data.data === true) {
                 setFormType("Syndicat");
             } else {
                 setFormType("Business");

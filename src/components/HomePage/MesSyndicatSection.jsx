@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import { motion } from "framer-motion"
 import {Users, Search, ChevronRight, Plus, Briefcase, TrendingUp, Calendar, MessageSquare, X} from "lucide-react"
 import {OrganisationForm} from "./OrganisationForm/OrganisationForm.jsx"
 import {BusinessActorForm} from "@/components/HomePage/BusinessActorForm/BusinessActorForm.jsx";
 // Mock data for demonstration
-
+import {apiClient} from '../../services/AxiosConfig.js';
+import {getUserIdFromToken} from "../../services/AccountService.js";
 
 const mockSyndicats = [
     { id: 1, name: "Syndicat des Enseignants", members: 1250, type: "Éducation", trend: "up" },
@@ -34,14 +35,36 @@ const itemVariants = {
 
 export const MesSyndicats = () => {
     const [searchTerm, setSearchTerm] = useState("")
+    const [syndicats, setSyndicats] = useState([]);
 
-    const filteredSyndicats = mockSyndicats.filter((syndicat) =>
-        syndicat.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
     const [isBusinessFormOpen, setIsBusinessFormOpen] = useState(false);
     const openBusinessActorForm = () => setIsBusinessFormOpen(true);
     const closeBusinessActorForm = () => setIsBusinessFormOpen(false);
+    const UserId = getUserIdFromToken();
+    useEffect(() => {
+        const fetchSyndicats = async () => {
+            try {
+                const response = await apiClient.get("/organisation/list_of_my_syndicat", {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}` // Si tu utilises JWT
+                    },
+                    params: {
+                        userId: UserId }
 
+                });
+                setSyndicats(response.data.data); // Stocke la liste récupérée dans l'état
+            } catch (error) {
+                console.error("Erreur lors de la récupération des syndicats :", error);
+            }
+        };
+
+        fetchSyndicats();
+    }, []);
+
+
+    const filteredSyndicats = syndicats.filter((syndicat) =>
+        syndicat.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -122,7 +145,7 @@ export const MesSyndicats = () => {
                                 <div className="flex justify-between items-start mb-4">
                                     <h2 className="text-xl font-semibold text-gray-800">{syndicat.name}</h2>
                                     <span className="text-sm font-medium text-white bg-blue-500 rounded-full px-3 py-1">
-                    {syndicat.type}
+                    {syndicats.type}
                   </span>
                                 </div>
                                 <div className="flex items-center text-gray-600 mb-4">
