@@ -274,10 +274,10 @@ export const MemberManagement = () => {
                                     </motion.button>
                                 </div>
                             </div>
-                            <div className="mt-4 p-4 bg-gray-50 rounded-xl">
+                            {/*<div className="mt-4 p-4 bg-gray-50 rounded-xl">
                                 <h4 className="text-sm font-medium text-gray-700 mb-2">Motivation :</h4>
                                 <p className="text-gray-600">{request.motivation}</p>
-                            </div>
+                            </div>*/}
                         </div>
                     </motion.div>
                 ))}

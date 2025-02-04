@@ -117,8 +117,8 @@ export const RegisterPage = () => {
     const navigate = useNavigate()
     const password = watch('password', '')
 
-    const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com'
-    const CLIENT_SECRET = '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'
+    const CLIENT_ID = '137734019377-nnq12325retn9n23nfnis326j008u2pm.apps.googleusercontent.com'
+    const CLIENT_SECRET = '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'
 
     const handleAxiosError = useCallback((error) => {
         if (error.response?.status === 422) {

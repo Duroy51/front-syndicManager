@@ -80,8 +80,8 @@ export const MesSyndicats = () => {
                 navigate("/syndicat-app");
                 Swal.fire({
                     icon: 'success',
-                    title: 'Inscription réussie !',
-                    text: response.data.data.text || 'Votre compte a été créé avec succès.',
+                    title: 'Vous etes connecté !',
+                    text: response.data.data.text || 'Connexion effectué avec succès',
                     confirmButtonText: 'Ok',
                 });
             } else {

@@ -1,48 +1,71 @@
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Users, Search, ChevronRight, Plus, Calendar, MessageSquare, UserPlus, X } from "lucide-react"
-
-// Mock data for demonstration
-const mockSyndicats = [
-    { id: 1, name: "Syndicat des Enseignants", members: 1250, type: "Éducation", trend: "up" },
-    { id: 2, name: "Union des Travailleurs de la Santé", members: 3780, type: "Santé", trend: "down" },
-    { id: 3, name: "Syndicat des Transports Publics", members: 2100, type: "Transport", trend: "stable" },
-    { id: 4, name: "Association des Ingénieurs", members: 950, type: "Technologie", trend: "up" },
-    { id: 5, name: "Syndicat de l'Industrie Alimentaire", members: 1800, type: "Industrie", trend: "up" },
-]
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Users, Search, ChevronRight, Plus, Calendar, MessageSquare, UserPlus, X } from "lucide-react";
+import {getUserIdFromToken} from "../../services/AccountService.js";
+import apiClient from "../../services/AxiosConfig.js";
 
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-        },
+        transition: { staggerChildren: 0.1 },
     },
-}
+};
 
 const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: {
-        y: 0,
-        opacity: 1,
-    },
-}
+    visible: { y: 0, opacity: 1 },
+};
 
 export const Explorer = () => {
-    const [searchTerm, setSearchTerm] = useState("")
-    const [membershipRequests, setMembershipRequests] = useState({})
+    const [searchTerm, setSearchTerm] = useState("");
+    const [syndicats, setSyndicats] = useState([]);
+    const [membershipRequests, setMembershipRequests] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const filteredSyndicats = mockSyndicats.filter((syndicat) =>
-        syndicat.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
+    // Remplace avec l'ID utilisateur approprié
+    const userId = getUserIdFromToken();
+
+    useEffect(() => {
+        const fetchSyndicats = async () => {
+            try {
+                setLoading(true);
+                const response = await apiClient.get(
+                    `/organisation/list-all`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        },
+                        params: {
+                            page: 0,
+                            size: 10,
+                            userId
+                        }
+                    }
+                );
+                setSyndicats(response.data.data);
+                // eslint-disable-next-line no-unused-vars
+            } catch (err) {
+                setError("Erreur lors du chargement des syndicats.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSyndicats();
+    }, []);
+
+    const filteredSyndicats = syndicats.filter((syndicat) =>
+        syndicat.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const toggleMembershipRequest = (syndicatId) => {
         setMembershipRequests((prev) => ({
             ...prev,
             [syndicatId]: !prev[syndicatId],
-        }))
-    }
+        }));
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -80,6 +103,9 @@ export const Explorer = () => {
                     </motion.button>
                 </motion.div>
 
+                {loading && <p className="text-center text-gray-500">Chargement des syndicats...</p>}
+                {error && <p className="text-center text-red-500">{error}</p>}
+
                 <motion.div
                     className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
                     variants={containerVariants}
@@ -97,33 +123,12 @@ export const Explorer = () => {
                                 <div className="flex justify-between items-start mb-4">
                                     <h2 className="text-xl font-semibold text-gray-800">{syndicat.name}</h2>
                                     <span className="text-sm font-medium text-white bg-blue-500 rounded-full px-3 py-1">
-                    {syndicat.type}
-                  </span>
+                                        {syndicat.type}
+                                    </span>
                                 </div>
                                 <div className="flex items-center text-gray-600 mb-4">
                                     <Users className="h-5 w-5 mr-2 text-blue-500" />
                                     <span>{syndicat.members} membres</span>
-                                    {syndicat.trend === "up" && (
-                                        <motion.div
-                                            initial={{ y: 2 }}
-                                            animate={{ y: -2 }}
-                                            transition={{ yoyo: Number.POSITIVE_INFINITY, duration: 0.5 }}
-                                            className="ml-2 text-green-500"
-                                        >
-                                            ↑
-                                        </motion.div>
-                                    )}
-                                    {syndicat.trend === "down" && (
-                                        <motion.div
-                                            initial={{ y: -2 }}
-                                            animate={{ y: 2 }}
-                                            transition={{ yoyo: Number.POSITIVE_INFINITY, duration: 0.5 }}
-                                            className="ml-2 text-red-500"
-                                        >
-                                            ↓
-                                        </motion.div>
-                                    )}
-                                    {syndicat.trend === "stable" && <div className="ml-2 text-gray-500">→</div>}
                                 </div>
                                 <div className="flex justify-between items-center text-sm text-gray-500">
                                     <div className="flex items-center">
@@ -169,6 +174,5 @@ export const Explorer = () => {
                 </motion.div>
             </div>
         </div>
-    )
-}
-
+    );
+};
