@@ -13,7 +13,7 @@ const RegisterPage = React.lazy(async () => ({
     default: (await import("../components/Authentication/Register/RegisterPage")).RegisterPage
 }))
 const WelcomePage = React.lazy(async () => ({
-    default: (await import("../components/welcomePage/welcomePage")).WelcomePage
+    default: (await import("../components/welcomePage/welcomePageNew.jsx")).LandingPage
 }))
 
 const HomePage = React.lazy(async () => ({
@@ -29,8 +29,9 @@ const SyndicatApp = React.lazy(async () => ({
 }))
 
 const Profil = React.lazy(async () => ({
-    default: (await import("../components/Syndicat-App/Profil/Profil.jsx")).Profile
+    default: (await import("../components/ProfilPage/ProfilPage.jsx")).SyndicatProfile
 }))
+
 
 export const AppRoutesPaths = {
 
@@ -40,7 +41,7 @@ export const AppRoutesPaths = {
     homePage: "/home",
     createSyndicat: "/home/createSyndicat",
     syndicatApp: "/syndicat-app",
-
+    profil:"/profile"
 
 }
 
@@ -69,6 +70,7 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.loginPage} element={<LoginPage/>}/>
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
+                <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
 
                 {/* Routes protégées */}
                 <Route
