@@ -1,48 +1,69 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-    X, Users, Calendar, MessageSquare, Plus, List, Compass, Bell,
-    Briefcase, TrendingUp, Award, FileText, ChevronRight, Shield,
-    Star, Zap, Activity, Target, Gift, Sparkles
+    X,
+    Users,
+    Calendar,
+    MessageSquare,
+    Plus,
+    List,
+    Compass,
+    Bell,
+    Briefcase,
+    TrendingUp,
+    Award,
+    FileText,
+    ChevronRight,
+    Shield,
+    Star,
+    Zap,
+    Activity,
+    Target,
+    Gift,
+    Sparkles
 } from "lucide-react";
-import { getFirstNameToken, getLastNameToken, getUserIdFromToken } from "../../services/AccountService.js";
+import {
+    getFirstNameToken,
+    getLastNameToken,
+    getUserIdFromToken
+} from "../../services/AccountService.js";
 import { BusinessActorForm } from "./BusinessActorForm/BusinessActorForm.jsx";
 import { OrganisationForm } from "@/components/HomePage/OrganisationForm/OrganisationForm.jsx";
-import { apiClient } from '../../services/AxiosConfig.js';
+import { apiClient } from "../../services/AxiosConfig.js";
 
 const stats = [
-    { 
-        title: "Syndicats", 
-        value: 3, 
+    {
+        title: "Syndicats",
+        value: 3,
         trend: "+12%",
-        icon: Users, 
+        icon: Users,
         color: "text-blue-600",
         bgColor: "bg-blue-100",
         gradient: "from-blue-500 to-indigo-600"
     },
-    { 
-        title: "Évènements publiés", 
-        value: 12, 
+    {
+        title: "Évènements publiés",
+        value: 12,
         trend: "+8%",
-        icon: Calendar, 
+        icon: Calendar,
         color: "text-emerald-600",
         bgColor: "bg-emerald-100",
         gradient: "from-emerald-500 to-green-600"
     },
-    { 
-        title: "Messages non lus", 
-        value: 5, 
+    {
+        title: "Messages non lus",
+        value: 5,
         trend: "+15%",
-        icon: MessageSquare, 
+        icon: MessageSquare,
         color: "text-purple-600",
         bgColor: "bg-purple-100",
         gradient: "from-purple-500 to-pink-600"
     },
-    { 
-        title: "Membres actifs", 
-        value: 150, 
+    {
+        title: "Membres actifs",
+        value: 150,
         trend: "+25%",
-        icon: TrendingUp, 
+        icon: TrendingUp,
         color: "text-orange-600",
         bgColor: "bg-orange-100",
         gradient: "from-orange-500 to-red-600"
@@ -50,15 +71,6 @@ const stats = [
 ];
 
 const quickAccess = [
-    {
-        title: "Créer un nouveau syndicat",
-        description: "Lancez votre propre organisation syndicale",
-        icon: Plus,
-        color: "text-emerald-600",
-        bgColor: "bg-emerald-100",
-        borderColor: "border-emerald-200",
-        gradient: "from-emerald-500 to-green-600"
-    },
     {
         title: "Accéder à la liste de mes syndicats",
         description: "Gérez vos syndicats existants",
@@ -168,28 +180,12 @@ const itemVariants = {
     },
 };
 
-const FloatingElement = ({ children, delay = 0 }) => (
-    <motion.div
-        animate={{ 
-            y: [0, -10, 0],
-            rotate: [-1, 1, -1]
-        }}
-        transition={{ 
-            duration: 4,
-            repeat: Infinity,
-            delay 
-        }}
-    >
-        {children}
-    </motion.div>
-);
-
 export const AcceuilSection = () => {
     const [lastName, setLastName] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [isBusinessFormOpen, setIsBusinessFormOpen] = useState(false);
     const [formType, setFormType] = useState(null);
-    const [activeTab, setActiveTab] = useState('activities');
+    const [activeTab, setActiveTab] = useState("activities");
 
     const userId = getUserIdFromToken();
 
@@ -198,7 +194,7 @@ export const AcceuilSection = () => {
     const openBusinessActorForm = async () => {
         try {
             const response = await apiClient.get("/organisation/verify_business_actor", {
-                params: { userId: userId }
+                params: { userId: userId },
             });
 
             setFormType(response.data.data === true ? "Syndicat" : "Business");
@@ -228,6 +224,16 @@ export const AcceuilSection = () => {
                     <p className="text-gray-600 text-lg">
                         Votre tableau de bord syndical personnalisé
                     </p>
+                    {/* Bouton "Devenir Syndicaliste" */}
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={openBusinessActorForm}
+                        className="mt-6 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-full shadow-2xl hover:shadow-2xl transition-all duration-300 inline-flex items-center"
+                    >
+                        <Star className="w-6 h-6 mr-2" />
+                        Devenir Syndicaliste
+                    </motion.button>
                 </motion.div>
 
                 {/* Stats Grid */}
@@ -268,15 +274,7 @@ export const AcceuilSection = () => {
                         <h2 className="text-2xl font-bold text-gray-800">
                             Accès rapide
                         </h2>
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={openBusinessActorForm}
-                            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
-                        >
-                            <Plus className="w-5 h-5 mr-2" />
-                            Nouveau syndicat
-                        </motion.button>
+                        {/* Vous pouvez conserver ou supprimer d'autres boutons ici */}
                     </div>
 
                     <motion.div
@@ -319,17 +317,19 @@ export const AcceuilSection = () => {
                             <div className="h-1 bg-gradient-to-r from-green-500 to-emerald-600" />
                             <div className="p-6">
                                 <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-800">Activités récentes</h2>
+                                    <h2 className="text-2xl font-bold text-gray-800">
+                                        Activités récentes
+                                    </h2>
                                     <div className="flex space-x-2">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
                                             className={`px-4 py-2 rounded-xl transition-colors duration-200 ${
-                                                activeTab === 'activities'
-                                                    ? 'bg-green-500 text-white'
-                                                    : 'text-gray-600 hover:bg-gray-100'
+                                                activeTab === "activities"
+                                                    ? "bg-green-500 text-white"
+                                                    : "text-gray-600 hover:bg-gray-100"
                                             }`}
-                                            onClick={() => setActiveTab('activities')}
+                                            onClick={() => setActiveTab("activities")}
                                         >
                                             <Activity className="w-5 h-5" />
                                         </motion.button>
@@ -337,11 +337,11 @@ export const AcceuilSection = () => {
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
                                             className={`px-4 py-2 rounded-xl transition-colors duration-200 ${
-                                                activeTab === 'notifications'
-                                                    ? 'bg-green-500 text-white'
-                                                    : 'text-gray-600 hover:bg-gray-100'
+                                                activeTab === "notifications"
+                                                    ? "bg-green-500 text-white"
+                                                    : "text-gray-600 hover:bg-gray-100"
                                             }`}
-                                            onClick={() => setActiveTab('notifications')}
+                                            onClick={() => setActiveTab("notifications")}
                                         >
                                             <Bell className="w-5 h-5" />
                                         </motion.button>
@@ -387,7 +387,9 @@ export const AcceuilSection = () => {
                         >
                             <div className="h-1 bg-gradient-to-r from-purple-500 to-pink-600" />
                             <div className="p-6">
-                                <h2 className="text-2xl font-bold text-gray-800 mb-6">Prochains événements</h2>
+                                <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                                    Prochains événements
+                                </h2>
                                 <motion.div
                                     variants={containerVariants}
                                     initial="hidden"
@@ -432,7 +434,7 @@ export const AcceuilSection = () => {
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
                                 className="bg-white rounded-2xl shadow-2xl w-full max-w-7xl max-h-[80vh] overflow-y-auto m-4"
-                                onClick={e => e.stopPropagation()}
+                                onClick={(e) => e.stopPropagation()}
                             >
                                 <div className="relative">
                                     <motion.button
@@ -443,7 +445,6 @@ export const AcceuilSection = () => {
                                     >
                                         <X className="w-5 h-5" />
                                     </motion.button>
-
                                     <div className="p-8">
                                         {formType === "Syndicat" ? (
                                             <OrganisationForm />

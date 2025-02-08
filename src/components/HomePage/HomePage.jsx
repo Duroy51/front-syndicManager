@@ -23,21 +23,24 @@ const navItems = [
         id: "syndicats", 
         icon: Users, 
         label: "Mes Syndicats",
-        gradient: "from-green-500 to-emerald-600",
+        gradient: "from-blue-500 to-indigo-600",
+        /*gradient: "from-green-500 to-emerald-600",*/
         description: "Gérer vos organisations"
     },
     { 
         id: "explorer", 
         icon: Compass, 
         label: "Explorer",
-        gradient: "from-purple-500 to-pink-600",
+        gradient: "from-blue-500 to-indigo-600",
+        /*gradient: "from-purple-500 to-pink-600",*/
         description: "Découvrir de nouveaux syndicats"
     },
     { 
         id: "parametres", 
         icon: Settings, 
         label: "Paramètres",
-        gradient: "from-orange-500 to-red-600",
+        gradient: "from-blue-500 to-indigo-600",
+        /*gradient: "from-orange-500 to-red-600",*/
         description: "Configuration du compte"
     }
 ];
@@ -327,7 +330,7 @@ export const HomePage = () => {
             </div>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-100 py-4">
+            {/*<footer className="bg-white border-t border-gray-100 py-4">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                         <div className="text-center md:text-left">
@@ -347,16 +350,16 @@ export const HomePage = () => {
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer>*/}
 
-            <motion.button
+           {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="fixed bottom-8 right-8 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
             >
                 <PlusCircle className="w-5 h-5 mr-2" />
                 <span className="font-medium">Nouveau Syndicat</span>
-            </motion.button>
+            </motion.button>*/}
         </div>
     );
 };
