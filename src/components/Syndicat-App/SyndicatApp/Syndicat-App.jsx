@@ -1,22 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Calendar, MessageSquare, Vote, CreditCard, Handshake,
-    Home, Bell, ChevronRight, Search, LogOut, Facebook,
-    Twitter, Linkedin, Mail, Settings, HelpCircle, User,
-    Menu, X, AlertCircle, CheckCircle, TrendingUp, Users,
-    MessageCircle, Info, Building, BadgeCheck, Shield
+    Home, Bell, ChevronRight, LogOut, BadgeCheck,
+    Menu, X, AlertCircle, CheckCircle, Users,
+    MessageCircle, Info, Building, Shield
 } from 'lucide-react';
 import { EventsList } from "../Evenement/Evenement";
 import { VotesList } from "../Vote/VoteSpace";
 import { ChatBox } from "../Chat/ChatBox";
 import { Finances } from "../Cotisations/Finances";
 import { Partnerships } from "../Partenaire/Partenaires";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MemberManagement } from "../../Membres/Membres";
 import { Publications } from "../s'exprimer/Publication";
-import {getFirstNameToken, getOrganisationName} from "../../../services/AccountService.js";
 
+// Composant d'affichage du badge de notification
 const NotificationBadge = ({ count }) => (
     <motion.div
         initial={{ scale: 0 }}
@@ -27,6 +26,7 @@ const NotificationBadge = ({ count }) => (
     </motion.div>
 );
 
+// Composant d'une carte de notification
 const NotificationCard = ({ icon: Icon, title, message, time, type }) => {
     const bgColors = {
         info: 'bg-blue-50 border-blue-200',
@@ -63,17 +63,19 @@ const NotificationCard = ({ icon: Icon, title, message, time, type }) => {
     );
 };
 
+/**
+ * Composant principal de l'application du syndicat.
+ *
+ * Le composant récupère via `useLocation` les props transmises (exemple : bannerImage et organisationName).
+ */
 export const SyndicatApp = () => {
+    // Au lieu de masquer totalement la sidebar, on la replie en ne gardant visibles que les icônes.
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
     const [activeSection, setActiveSection] = useState('événements');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const navigate = useNavigate();
-    const [organisationName, setOrganisationName] = useState(null);
-
-    useEffect(() => {
-        const organisationName = getOrganisationName();
-        setOrganisationName(organisationName);
-    }, []);
+    const location = useLocation();
+    const { bannerImage, organisationName } = location.state || {};
 
     const navItems = [
         { id: 'membres', icon: Users, label: 'Membres', badge: 12 },
@@ -171,13 +173,15 @@ export const SyndicatApp = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center py-4">
                         <div className="flex items-center space-x-4">
+                            {/* Bouton de bascule pour mobile (affiché en lg:hidden) :
+                  ici il bascule le mode replié/étendu en utilisant l'icône hamburger */}
                             <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
-                                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                                 className="text-blue-600 focus:outline-none focus:text-blue-800 lg:hidden"
                             >
-                                {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                                <Menu className="h-6 w-6" />
                             </motion.button>
                             <motion.div
                                 initial={{ opacity: 0 }}
@@ -207,10 +211,18 @@ export const SyndicatApp = () => {
                             <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
-                                className="bg-white p-2 rounded-full text-blue-600 hover:bg-blue-50 transition-colors duration-200"
+                                className="bg-white p-1 rounded-full text-blue-600 hover:bg-blue-50 transition-colors duration-200"
                                 onClick={() => navigate('/syndicat-app/profil')}
                             >
-                                <BadgeCheck className="h-6 w-6" />
+                                {bannerImage ? (
+                                    <img
+                                        src={bannerImage}
+                                        alt={organisationName}
+                                        className="w-8 h-8 rounded-full object-cover"
+                                    />
+                                ) : (
+                                    <BadgeCheck className="h-6 w-6" />
+                                )}
                             </motion.button>
 
                             <motion.button
@@ -227,77 +239,107 @@ export const SyndicatApp = () => {
             </motion.header>
 
             <div className="flex flex-1 overflow-hidden">
-                {/* Sidebar */}
+                {/* Sidebar repliable (mode étendu / réduit) */}
                 <motion.div
-                    initial={{x: isSidebarOpen ? 0 : -300}}
-                    animate={{x: isSidebarOpen ? 0 : -300}}
-                    transition={{duration: 0.3}}
-                    className={`w-64 bg-white shadow-xl flex flex-col z-20 ${isSidebarOpen ? '' : 'absolute inset-y-0 left-0'}`}
+                    animate={{ width: isSidebarCollapsed ? 80 : 256 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white shadow-xl flex flex-col z-20"
                 >
-                    <div className="p-6 border-b border-gray-200">
-                        <h1 className="text-2xl font-bold text-blue-600">{organisationName}</h1>
+                    {/* Bouton de bascule placé en haut de la sidebar */}
+                    <div className="p-2 flex justify-end">
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                            className="text-blue-500"
+                        >
+                            <Menu className="h-6 w-6" />
+                        </motion.button>
                     </div>
+
                     <div className="flex-grow overflow-y-auto py-6">
-                        <nav className="px-4 space-y-3">
+                        <nav className="px-2 space-y-3">
                             {navItems.map((item) => (
                                 <motion.button
                                     key={item.id}
-                                    whileHover={{scale: 1.02, x: 5}}
-                                    whileTap={{scale: 0.98}}
-                                    className={`group flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-300 ${
+                                    whileHover={{ scale: 1.02, x: isSidebarCollapsed ? 0 : 5 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => setActiveSection(item.id)}
+                                    className={`group flex items-center w-full px-4 py-3 rounded-xl transition-all duration-300 ${
                                         activeSection === item.id
                                             ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
                                             : 'bg-white text-gray-700 hover:bg-gray-50'
                                     }`}
-                                    onClick={() => setActiveSection(item.id)}
                                 >
-                                    <div className="flex items-center">
-                                        <item.icon
-                                            className={`mr-3 h-5 w-5 ${
-                                                activeSection === item.id
-                                                    ? 'text-white'
-                                                    : 'text-blue-500 group-hover:text-blue-600'
-                                            }`}
-                                        />
-                                        <span className="font-medium">{item.label}</span>
-                                    </div>
-                                    {item.badge && (
-                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                    <item.icon
+                                        className={`h-5 w-5 ${
                                             activeSection === item.id
-                                                ? 'bg-white text-blue-600'
-                                                : 'bg-blue-100 text-blue-600'
-                                        }`}>
-                                            {item.badge}
-                                        </span>
+                                                ? 'text-white'
+                                                : 'text-blue-500 group-hover:text-blue-600'
+                                        }`}
+                                    />
+                                    {/* Affichage conditionnel : libellé et badge uniquement en mode étendu */}
+                                    {!isSidebarCollapsed && (
+                                        <div className="ml-3 flex-1 flex items-center justify-between">
+                                            <span className="font-medium">{item.label}</span>
+                                            {item.badge && (
+                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                                    activeSection === item.id
+                                                        ? 'bg-white text-blue-600'
+                                                        : 'bg-blue-100 text-blue-600'
+                                                }`}>
+                          {item.badge}
+                        </span>
+                                            )}
+                                        </div>
                                     )}
                                 </motion.button>
                             ))}
                         </nav>
                     </div>
+
                     <div className="p-4 border-t border-gray-200">
                         <motion.button
-                            whileHover={{scale: 1.05}}
-                            whileTap={{scale: 0.95}}
-                            className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={() => navigate('/home')}
+                            className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
-                            <Home className="mr-2 h-4 w-4"/>
-                            Acceuil
+                            <Home className="h-4 w-4" />
+                            {!isSidebarCollapsed && (
+                                <>
+                                    <span className="ml-2">Acceuil</span>
+                                    <ChevronRight className="ml-2 h-4 w-4" />
+                                </>
+                            )}
                         </motion.button>
                     </div>
-
                 </motion.div>
 
                 {/* Main content */}
                 <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+                    {/* Bannière affichant l'image de profil transmise */}
+                    {bannerImage && (
+                        <div className="relative mb-6">
+                            <div
+                                className="w-full h-48 bg-cover bg-center rounded-xl"
+                                style={{ backgroundImage: `url(${bannerImage})` }}
+                            >
+                                <div className="w-full h-full bg-black opacity-30 rounded-xl"></div>
+                            </div>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <h1 className="text-white text-3xl font-bold">{organisationName}</h1>
+                            </div>
+                        </div>
+                    )}
                     <div className="max-w-7xl mx-auto">
-                    <AnimatePresence mode="wait">
+                        <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeSection}
-                                initial={{opacity: 0, y: 20}}
-                                animate={{opacity: 1, y: 0}}
-                                exit={{opacity: 0, y: -20}}
-                                transition={{duration: 0.2}}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.2 }}
                             >
                                 {renderContent()}
                             </motion.div>
@@ -305,7 +347,7 @@ export const SyndicatApp = () => {
                     </div>
                 </main>
 
-                {/* Notification Panel */}
+                {/* Panneau de notifications */}
                 <AnimatePresence>
                     {isNotificationOpen && (
                         <motion.div
@@ -349,39 +391,6 @@ export const SyndicatApp = () => {
                     )}
                 </AnimatePresence>
             </div>
-
-            {/* Footer */}
-            {/*<footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-6">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                        <div className="text-center md:text-left">
-                            <h3 className="font-bold text-lg mb-2">SyndicManager</h3>
-                            <p className="text-sm text-blue-100">
-                                &copy; 2023 Syndicat des Taxi. Tous droits réservés.
-                            </p>
-                        </div>
-
-                        <div className="flex space-x-6">
-                            {[
-                                { icon: Facebook, href: '#' },
-                                { icon: Twitter, href: '#' },
-                                { icon: Linkedin, href: '#' },
-                                { icon: Mail, href: '#' }
-                            ].map((social, index) => (
-                                <motion.a
-                                    key={index}
-                                    href={social.href}
-                                    className="text-white hover:text-blue-200 transition-colors duration-200"
-                                    whileHover={{ scale: 1.2, rotate: 5 }}
-                                    whileTap={{ scale: 0.9 }}
-                                >
-                                    <social.icon className="h-5 w-5" />
-                                </motion.a>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </footer>*/}
         </div>
     );
 };

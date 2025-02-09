@@ -152,6 +152,7 @@ export const MesSyndicats = () => {
                     "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
                 trend: "stable",
             },
+            // … autres syndicats …
         ]
         setSyndicats(fakeData)
     }, [])
@@ -159,7 +160,11 @@ export const MesSyndicats = () => {
     const openBusinessActorForm = () => setIsBusinessFormOpen(true)
     const closeBusinessActorForm = () => setIsBusinessFormOpen(false)
 
-    const handleJoinSyndicat = async (organisationId) => {
+    /**
+     * Modification de la fonction pour recevoir l'objet syndicat complet
+     * et transmettre l'URL de l'image via l'objet `state` de la navigation.
+     */
+    const handleJoinSyndicat = async (syndicat) => {
         setLoading(true)
         try {
             await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -167,7 +172,7 @@ export const MesSyndicats = () => {
                 data: {
                     data: {
                         organisationToken: {
-                            Bearer: `fake-organisation-token-${organisationId}`,
+                            Bearer: `fake-organisation-token-${syndicat.id}`,
                         },
                         text: "Connexion effectuée avec succès",
                     },
@@ -176,11 +181,11 @@ export const MesSyndicats = () => {
             if (fakeResponse.data.data && fakeResponse.data.data.organisationToken) {
                 localStorage.setItem("organisationToken", fakeResponse.data.data.organisationToken.Bearer)
                 setLoading(false)
-                navigate("/syndicat-app")
+                // On transmet l'URL de l'image dans state sous la clé bannerImage.
+                navigate("/syndicat-app", { state: { bannerImage: syndicat.image, organisationName: syndicat.name } })
                 Swal.fire({
-                    icon: "success",
+
                     title: "Vous êtes connecté !",
-                    text: fakeResponse.data.data.text || "Connexion effectuée avec succès",
                     confirmButtonText: "Ok",
                 })
             } else {
@@ -222,10 +227,14 @@ export const MesSyndicats = () => {
                     transition={{ duration: 0.5 }}
                     className="text-center mb-12"
                 >
+                    <div className="relative mb-6">
                     <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
                         Mes Syndicats
                     </h1>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">Gérez et explorez vos affiliations syndicales</p>
+                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Gérez et explorez vos affiliations syndicales
+                    </p>
+                    </div>
                 </motion.div>
 
                 <motion.div
@@ -276,21 +285,27 @@ export const MesSyndicats = () => {
                                     className="w-full h-48 object-cover"
                                 />
                                 <div className="absolute top-0 right-0 m-4">
-                  <span className="text-sm font-medium text-white bg-blue-500 rounded-full px-3 py-1">
-                    {syndicat.type}
-                  </span>
+                                    <span className="text-sm font-medium text-white bg-blue-500 rounded-full px-3 py-1">
+                                        {syndicat.type}
+                                    </span>
                                 </div>
                             </div>
                             <div className="p-6">
-                                <h2 className="text-2xl font-semibold text-gray-800 mb-3 line-clamp-2">{syndicat.name}</h2>
+                                <h2 className="text-2xl font-semibold text-gray-800 mb-3 line-clamp-2">
+                                    {syndicat.name}
+                                </h2>
                                 <div className="flex items-center text-gray-600 mb-3">
                                     <Users className="h-5 w-5 mr-2 text-blue-500" />
-                                    <span className="text-sm">{syndicat.members.toLocaleString()} membres</span>
+                                    <span className="text-sm">
+                                        {syndicat.members.toLocaleString()} membres
+                                    </span>
                                     {syndicat.trend === "up" && <TrendingUp className="h-5 w-5 ml-2 text-green-500" />}
                                     {syndicat.trend === "down" && (
                                         <TrendingUp className="h-5 w-5 ml-2 text-red-500 transform rotate-180" />
                                     )}
-                                    {syndicat.trend === "stable" && <div className="h-5 w-5 ml-2 border-t-2 border-gray-400" />}
+                                    {syndicat.trend === "stable" && (
+                                        <div className="h-5 w-5 ml-2 border-t-2 border-gray-400" />
+                                    )}
                                 </div>
                                 <div className="flex items-center text-gray-600 mb-4">
                                     <MapPin className="h-5 w-5 mr-2 text-blue-500" />
@@ -300,9 +315,9 @@ export const MesSyndicats = () => {
                                     <div className="flex items-center">
                                         <Calendar className="h-4 w-4 mr-1" />
                                         <span>
-                      Prochain événement:{" "}
+                                            Prochain événement:{" "}
                                             {new Date(Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString("fr-FR")}
-                    </span>
+                                        </span>
                                     </div>
                                     <div className="flex items-center">
                                         <MessageSquare className="h-4 w-4 mr-1" />
@@ -311,11 +326,12 @@ export const MesSyndicats = () => {
                                 </div>
                             </div>
                             <div className="bg-gray-50 px-6 py-4">
+                                {/* Remplacez l'appel en passant l'objet syndicat complet */}
                                 <motion.button
                                     className="w-full bg-blue-500 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:bg-blue-600"
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.98 }}
-                                    onClick={() => handleJoinSyndicat(syndicat.id)}
+                                    onClick={() => handleJoinSyndicat(syndicat)}
                                 >
                                     Espace Membre
                                     <ChevronRight className="ml-2 h-4 w-4" />
@@ -364,4 +380,3 @@ export const MesSyndicats = () => {
         </div>
     )
 }
-
