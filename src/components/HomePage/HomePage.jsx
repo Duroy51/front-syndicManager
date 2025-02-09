@@ -1,49 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import {
-    Building, Search, Bell, Settings, Home, Users, Compass, PlusCircle,
-    ChevronRight, Calendar, FileText, MessageSquare, Vote, CreditCard,
-    Handshake, LogOut, Menu, X, AlertCircle, CheckCircle, TrendingUp,
-    Shield, Star, Zap, Activity, Gift, Sparkles
-} from "lucide-react";
-import { AcceuilSection } from "@/components/HomePage/AcceuilSection.jsx";
-import { MesSyndicats } from "@/components/HomePage/MesSyndicatSection.jsx";
-import { Explorer } from "./ExploreSection.jsx";
-import { getFirstNameToken, getLastNameToken } from "@/services/AccountService.js";
+    Building,
+    Search,
+    Bell,
+    Settings,
+    Home,
+    Users,
+    Compass,
+    ChevronRight,
+    Calendar,
+    FileText,
+    LogOut,
+    X,
+    AlertCircle,
+    CheckCircle,
+    ChevronLeft,
+} from "lucide-react"
+import { AcceuilSection } from "@/components/HomePage/AcceuilSection.jsx"
+import { MesSyndicats } from "@/components/HomePage/MesSyndicatSection.jsx"
+import { Explorer } from "./ExploreSection.jsx"
+import { getFirstNameToken, getLastNameToken } from "@/services/AccountService.js"
 
 const navItems = [
-    { 
-        id: "dashboard", 
-        icon: Home, 
+    {
+        id: "dashboard",
+        icon: Home,
         label: "Accueil",
         gradient: "from-blue-500 to-indigo-600",
-        description: "Tableau de bord principal"
+        description: "Tableau de bord principal",
     },
-    { 
-        id: "syndicats", 
-        icon: Users, 
+    {
+        id: "syndicats",
+        icon: Users,
         label: "Mes Syndicats",
         gradient: "from-blue-500 to-indigo-600",
         /*gradient: "from-green-500 to-emerald-600",*/
-        description: "Gérer vos organisations"
+        description: "Gérer vos organisations",
     },
-    { 
-        id: "explorer", 
-        icon: Compass, 
+    {
+        id: "explorer",
+        icon: Compass,
         label: "Explorer",
         gradient: "from-blue-500 to-indigo-600",
         /*gradient: "from-purple-500 to-pink-600",*/
-        description: "Découvrir de nouveaux syndicats"
+        description: "Découvrir de nouveaux syndicats",
     },
-    { 
-        id: "parametres", 
-        icon: Settings, 
+    {
+        id: "parametres",
+        icon: Settings,
         label: "Paramètres",
         gradient: "from-blue-500 to-indigo-600",
         /*gradient: "from-orange-500 to-red-600",*/
-        description: "Configuration du compte"
-    }
-];
+        description: "Configuration du compte",
+    },
+]
 
 const notifications = [
     {
@@ -51,30 +62,30 @@ const notifications = [
         description: "Assemblée générale prévue pour demain à 14h",
         time: "Il y a 5 minutes",
         icon: Calendar,
-        gradient: "from-blue-500 to-indigo-600"
+        gradient: "from-blue-500 to-indigo-600",
     },
     {
         title: "Cotisation reçue",
         description: "Paiement confirmé de Jean Dupont",
         time: "Il y a 30 minutes",
         icon: CheckCircle,
-        gradient: "from-green-500 to-emerald-600"
+        gradient: "from-green-500 to-emerald-600",
     },
     {
         title: "Nouveau document partagé",
         description: "Rapport mensuel disponible",
         time: "Il y a 1 heure",
         icon: FileText,
-        gradient: "from-purple-500 to-pink-600"
+        gradient: "from-purple-500 to-pink-600",
     },
     {
         title: "Alerte importante",
         description: "Mise à jour des statuts requise",
         time: "Il y a 2 heures",
         icon: AlertCircle,
-        gradient: "from-orange-500 to-red-600"
-    }
-];
+        gradient: "from-orange-500 to-red-600",
+    },
+]
 
 const NotificationItem = ({ title, description, time, icon: Icon, gradient }) => (
     <motion.div
@@ -93,51 +104,54 @@ const NotificationItem = ({ title, description, time, icon: Icon, gradient }) =>
             <p className="text-sm text-gray-600">{description}</p>
         </div>
     </motion.div>
-);
+)
 
 export const HomePage = () => {
-    const [activeSection, setActiveSection] = useState("dashboard");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [lastName, setLastName] = useState(null);
-    const [firstName, setFirstName] = useState(null);
+    const [activeSection, setActiveSection] = useState("dashboard")
+    const [searchTerm, setSearchTerm] = useState("")
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false)
+    const [lastName, setLastName] = useState(null)
+    const [firstName, setFirstName] = useState(null)
 
     useEffect(() => {
-        setFirstName(getFirstNameToken());
-        setLastName(getLastNameToken());
-    }, []);
+        const savedSection = localStorage.getItem("activeSection")
+        if (savedSection) {
+            setActiveSection(savedSection)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("activeSection", activeSection)
+    }, [activeSection])
+
+    useEffect(() => {
+        setFirstName(getFirstNameToken())
+        setLastName(getLastNameToken())
+    }, [])
 
     const renderContent = () => {
         switch (activeSection) {
-            case 'dashboard':
-                return <AcceuilSection />;
-            case 'syndicats':
-                return <MesSyndicats />;
-            case 'explorer':
-                return <Explorer />;
-            case 'parametres':
+            case "dashboard":
+                return <AcceuilSection />
+            case "syndicats":
+                return <MesSyndicats />
+            case "explorer":
+                return <Explorer />
+            case "parametres":
                 return (
                     <div className="text-center py-12">
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="max-w-md mx-auto"
-                        >
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-md mx-auto">
                             <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                                Paramètres en développement
-                            </h3>
-                            <p className="text-gray-600">
-                                Cette section sera bientôt disponible avec de nouvelles fonctionnalités.
-                            </p>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-2">Paramètres en développement</h3>
+                            <p className="text-gray-600">Cette section sera bientôt disponible avec de nouvelles fonctionnalités.</p>
                         </motion.div>
                     </div>
-                );
+                )
             default:
-                return null;
+                return null
         }
-    };
+    }
 
     return (
         <div className="flex flex-col h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -155,15 +169,11 @@ export const HomePage = () => {
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="text-gray-600 hover:text-blue-600 focus:outline-none lg:hidden"
+                                className="text-gray-600 hover:text-blue-600 focus:outline-none"
                             >
-                                {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                                {isSidebarOpen ? <ChevronLeft className="h-6 w-6" /> : <ChevronRight className="h-6 w-6" />}
                             </motion.button>
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="flex items-center"
-                            >
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center">
                                 <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg">
                                     <Building className="h-8 w-8 text-white" />
                                 </div>
@@ -194,8 +204,8 @@ export const HomePage = () => {
                                 >
                                     <Bell className="h-6 w-6" />
                                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                                        4
-                                    </span>
+                    4
+                  </span>
                                 </motion.button>
                             </div>
 
@@ -206,8 +216,9 @@ export const HomePage = () => {
                             >
                                 {firstName && lastName && (
                                     <span className="font-semibold text-lg">
-                                        {firstName.charAt(0)}{lastName.charAt(0)}
-                                    </span>
+                    {firstName.charAt(0)}
+                                        {lastName.charAt(0)}
+                  </span>
                                 )}
                             </motion.div>
                         </div>
@@ -218,12 +229,10 @@ export const HomePage = () => {
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
                 <motion.nav
-                    initial={{ x: isSidebarOpen ? 0 : -300 }}
-                    animate={{ x: isSidebarOpen ? 0 : -300 }}
+                    initial={{ width: isSidebarOpen ? 256 : 64 }}
+                    animate={{ width: isSidebarOpen ? 256 : 64 }}
                     transition={{ duration: 0.3 }}
-                    className={`w-64 bg-white shadow-xl flex flex-col z-20 ${
-                        isSidebarOpen ? "" : "absolute inset-y-0 left-0"
-                    }`}
+                    className={`bg-white shadow-xl flex flex-col z-20 ${isSidebarOpen ? "" : "absolute inset-y-0 left-0"}`}
                 >
                     <div className="flex-grow overflow-y-auto p-6">
                         <nav className="space-y-4">
@@ -236,20 +245,18 @@ export const HomePage = () => {
                                     className={`w-full p-3 rounded-xl transition-all duration-300 group ${
                                         activeSection === item.id
                                             ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
-                                            : 'bg-white text-gray-600 hover:bg-gray-50'
-                                    }`}
+                                            : "bg-white text-gray-600 hover:bg-gray-50"
+                                    } ${isSidebarOpen ? "flex items-center" : "flex justify-center"}`}
                                 >
-                                    <div className="flex items-center">
-                                        <item.icon className="w-5 h-5 mr-3" />
+                                    <item.icon className={`w-5 h-5 ${isSidebarOpen ? "mr-3" : ""}`} />
+                                    {isSidebarOpen && (
                                         <div className="text-left">
                                             <div className="font-medium">{item.label}</div>
-                                            <div className={`text-xs ${
-                                                activeSection === item.id ? 'text-white/80' : 'text-gray-500'
-                                            }`}>
+                                            <div className={`text-xs ${activeSection === item.id ? "text-white/80" : "text-gray-500"}`}>
                                                 {item.description}
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </motion.button>
                             ))}
                         </nav>
@@ -259,10 +266,10 @@ export const HomePage = () => {
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                            className={`w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center ${isSidebarOpen ? "justify-center" : ""}`}
                         >
-                            <LogOut className="w-5 h-5 mr-2" />
-                            <span className="font-medium">Déconnexion</span>
+                            <LogOut className="w-5 h-5" />
+                            {isSidebarOpen && <span className="font-medium ml-2">Déconnexion</span>}
                         </motion.button>
                     </div>
                 </motion.nav>
@@ -352,7 +359,7 @@ export const HomePage = () => {
                 </div>
             </footer>*/}
 
-           {/* <motion.button
+            {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="fixed bottom-8 right-8 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
@@ -361,5 +368,6 @@ export const HomePage = () => {
                 <span className="font-medium">Nouveau Syndicat</span>
             </motion.button>*/}
         </div>
-    );
-};
+    )
+}
+

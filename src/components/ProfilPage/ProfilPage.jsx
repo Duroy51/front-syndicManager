@@ -292,7 +292,7 @@ const branchOffices = [
     },
 ];
 
-export const SyndicatProfile = () => {
+export const SyndicatProfile = ({syndicat}) => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const membersPerPage = 4;
@@ -308,7 +308,7 @@ export const SyndicatProfile = () => {
             {/* Cover Image */}
             <div className="h-64 md:h-80 w-full relative">
                 <img
-                    src={syndicatData.coverImage || "/placeholder.svg"}
+                    src={syndicat.image || "/placeholder.svg"}
                     alt="Cover"
                     className="w-full h-full object-cover"
                 />
@@ -317,12 +317,12 @@ export const SyndicatProfile = () => {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                                 <img
-                                    src={syndicatData.logo || "/placeholder.svg"}
+                                    src={syndicat.image || "/placeholder.svg"}
                                     alt="Logo"
                                     className="w-24 h-24 rounded-full border-4 border-white"
                                 />
                                 <div className="text-white">
-                                    <h1 className="text-3xl font-bold">{syndicatData.name}</h1>
+                                    <h1 className="text-3xl font-bold">{syndicat.name}</h1>
                                     <p className="text-xl">{syndicatData.category}</p>
                                 </div>
                             </div>

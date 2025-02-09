@@ -212,7 +212,7 @@ export const SyndicatApp = () => {
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                                 className="bg-white p-1 rounded-full text-blue-600 hover:bg-blue-50 transition-colors duration-200"
-                                onClick={() => navigate('/syndicat-app/profil')}
+                                onClick={() => navigate('/profil')}
                             >
                                 {bannerImage ? (
                                     <img
