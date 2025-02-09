@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Users, Search, ChevronRight, UserPlus, X, MapPin, AlertCircle } from "lucide-react"
 import { getUserIdFromToken } from "../../services/AccountService.js"
 import { AdhereSyndicatForm } from "./AdhesionForm/AdhesionForm.jsx"
+import { SyndicatProfile } from "../ProfilPage/ProfilPage.jsx"
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -80,6 +81,7 @@ export const Explorer = () => {
     const [error, setError] = useState(null)
     const [selectedSyndicat, setSelectedSyndicat] = useState(null)
     const [showAdhesionForm, setShowAdhesionForm] = useState(false)
+    const [selectedSyndicatForProfile, setSelectedSyndicatForProfile] = useState(null)
 
     const userId = getUserIdFromToken()
 
@@ -210,6 +212,7 @@ export const Explorer = () => {
                                     className="w-full bg-blue-500 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:bg-blue-600"
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.98 }}
+                                    onClick={() => setSelectedSyndicatForProfile(syndicat)}
                                 >
                                     Voir les détails
                                     <ChevronRight className="ml-2 h-4 w-4" />
@@ -252,6 +255,31 @@ export const Explorer = () => {
                                 </button>
                                 <AdhereSyndicatForm syndicat={selectedSyndicat} />
                             </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {selectedSyndicatForProfile && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+                    >
+                        <motion.div
+                            className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                        >
+                            <button
+                                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                                onClick={() => setSelectedSyndicatForProfile(null)}
+                            >
+                                <X className="h-6 w-6" />
+                            </button>
+                            <SyndicatProfile syndicat={selectedSyndicatForProfile} />
                         </motion.div>
                     </motion.div>
                 )}
