@@ -2,7 +2,7 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
 import { Circles } from 'react-loader-spinner';
-import AuthGuard from '../helpers/AuthGuard';
+import AuthGuard from '../helpers/AuthGuard.jsx';
 
 
 
