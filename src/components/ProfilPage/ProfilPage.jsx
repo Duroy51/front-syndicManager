@@ -1,26 +1,126 @@
-"use client"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Users, Calendar, Mail, Phone, MapPin, ChevronRight, ChevronLeft, ExternalLink, LogIn } from "lucide-react"
+import { Users, Calendar, Mail, Phone, MapPin, ChevronRight, ChevronLeft, ExternalLink, LogIn, 
+    Clock, Globe,  Facebook, Twitter, Instagram, Award, Building, Printer, MapPinned, GraduationCap, 
+    Factory, AlignCenterVertical as Certificate,  Network 
+} from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
-// Mock data for the syndicat
+// Mise à jour des données du syndicat
 const syndicatData = {
     id: 1,
     name: "Syndicat Des Taxi Du Cameroun",
     logo: "/placeholder.svg",
-    coverImage:
-        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
-    description:
-        "Le Syndicat National de l'Éducation est dédié à la protection des droits et à l'amélioration des conditions de travail des chauffeurs dans tout le pays.",
+    coverImage: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
+    description: "Le Syndicat National de l'Éducation est dédié à la protection des droits et à l'amélioration des conditions de travail des chauffeurs dans tout le pays.",
     members: 250000,
     foundedYear: 1950,
     category: "Transport",
-    website: "www.TaxiCam.fr",
-    email: "contact@sne-education.fr",
-    phone: "+237 99 52 02 21",
-    address: "123 Rue Melen, Emia",
+    contact: {
+        phone: "+237 99 52 02 21",
+        fax: "+237 99 52 02 22",
+        email: "contact@sne-education.fr",
+        poBox: "BP 1234",
+        location: "Quartier Melen, Rue 12.234, Yaoundé (En face de la station Total, à 100m du Carrefour Melen, à côté de l'ancien siège de MTN)",
+        website: "www.TaxiCam.fr",
+        operatingHours: "Lundi - Vendredi: 8h00 - 17h00",
+        interventionZone: "Territoire national",
+        socialMedia: {
+            facebook: "facebook.com/TaxiCam",
+            twitter: "twitter.com/TaxiCam",
+            instagram: "instagram.com/TaxiCam"
+        }
+    },
+    services: [
+        {
+            title: "Formations professionnelles",
+            description: "Formation continue des chauffeurs de taxi",
+            icon: GraduationCap
+        },
+        {
+            title: "Fabrication de bâches",
+            description: "Production de bâches personnalisées pour les taxis",
+            icon: Factory
+        }
+    ],
+    certifications: [
+        {
+            title: "Agrément Ministériel N°00123/MINTSS/CAB",
+            year: "2020",
+            description: "Autorisation d'exercice en tant que syndicat professionnel sur le territoire national",
+            issuer: "Ministère du Travail et de la Sécurité Sociale"
+        },
+        {
+            title: "ISO 9001:2015",
+            year: "2022",
+            description: "Certification de management de la qualité",
+            issuer: "Bureau Veritas"
+        },
+        {
+            title: "Prix d'Excellence",
+            year: "2023",
+            description: "Meilleur syndicat de l'année",
+            issuer: "Chambre de Commerce"
+        }
+    ],
+    branches: [
+        {
+            name: "Agence Régionale du Centre",
+            location: "Quartier Melen, Rue 12.234, Yaoundé (En face de la station Total)",
+            contact: "+237 99 52 02 23",
+            director: {
+                name: "Jean-Paul Mbarga",
+                title: "Directeur Régional",
+                phone: "+237 99 52 02 25",
+                email: "jp.mbarga@taxicam.fr"
+            },
+            coverage: "Région du Centre",
+            members: 5000,
+            services: ["Formation", "Assistance juridique", "Support administratif"]
+        },
+        {
+            name: "Agence Régionale du Littoral",
+            location: "Quartier Akwa, Boulevard de la Liberté (À côté de l'ancien cinéma Le Paris)",
+            contact: "+237 99 52 02 24",
+            director: {
+                name: "Marie Ndom",
+                title: "Directrice Régionale",
+                phone: "+237 99 52 02 26",
+                email: "m.ndom@taxicam.fr"
+            },
+            coverage: "Région du Littoral",
+            members: 4500,
+            services: ["Formation", "Assistance juridique", "Support technique"]
+        },
+        {
+            name: "Agence Régionale de l'Ouest",
+            location: "Avenue des Banques, Bafoussam (Face Banque Atlantique)",
+            contact: "+237 99 52 02 27",
+            director: {
+                name: "Pierre Kamdem",
+                title: "Directeur Régional",
+                phone: "+237 99 52 02 28",
+                email: "p.kamdem@taxicam.fr"
+            },
+            coverage: "Région de l'Ouest",
+            members: 3000,
+            services: ["Formation", "Support administratif"]
+        },
+        {
+            name: "Direction Régionale du Sud-Ouest",
+            location: "Main Street, Buea (Opposite Council Building)",
+            contact: "+237 99 52 02 29",
+            director: {
+                name: "John Ewang",
+                title: "Directeur Régional",
+                phone: "+237 99 52 02 30",
+                email: "j.ewang@taxicam.fr"
+            },
+            coverage: "Région du Sud-Ouest",
+            members: 2500,
+            services: ["Formation", "Assistance juridique"]
+        }
+    ]
 }
 
 const stats = [
@@ -28,39 +128,6 @@ const stats = [
     { name: "Délégués", value: "5,000" },
     { name: "Sections locales", value: "500" },
     { name: "Années d'existence", value: "73" },
-]
-
-const activities = [
-    {
-        id: 1,
-        title: "Assemblée Générale Annuelle",
-        date: "15 Juin 2023",
-        type: "Événement",
-        image: "https://images.unsplash.com/photo-1559829604-549c5c1a3a5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    },
-    {
-        id: 2,
-        title: "Négociations tarifaires avec la Mairie",
-        date: "22 Mai 2023",
-        type: "Négociation",
-        image: "https://images.unsplash.com/photo-1517436073-3b1b3d72b6a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    },
-    {
-        id: 3,
-        title: "Campagne pour l'amélioration des conditions de travail",
-        date: "1 Mai 2023",
-        type: "Campagne",
-        image:
-            "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    },
-    {
-        id: 4,
-        title: "Formation sur les nouvelles réglementations",
-        date: "10 Avril 2023",
-        type: "Formation",
-        image:
-            "https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    },
 ]
 
 const members = [
@@ -174,8 +241,8 @@ export const SyndicatProfile = () => {
                                         Précédent
                                     </button>
                                     <span className="text-sm text-gray-500">
-                    Page {currentPage} sur {totalPages}
-                  </span>
+                                        Page {currentPage} sur {totalPages}
+                                    </span>
                                     <button
                                         className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
                                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
@@ -188,22 +255,92 @@ export const SyndicatProfile = () => {
                             )}
                         </section>
 
-                        {/* Activities section */}
+                        {/* Services et Prestations */}
                         <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">Activités récentes</h2>
+                            <h2 className="text-2xl font-bold text-blue-800 mb-4">Services et Prestations</h2>
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                {syndicatData.services.map((service, index) => (
+                                    <div key={index} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                                        <service.icon className="h-8 w-8 text-blue-600 mb-2" />
+                                        <h3 className="font-semibold text-lg mb-2">{service.title}</h3>
+                                        <p className="text-gray-600">{service.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Certifications et Récompenses */}
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                                <Certificate className="h-6 w-6 inline-block mr-2" />
+                                Agréments, Certifications et Récompenses
+                            </h2>
                             <div className="space-y-4">
-                                {activities.map((activity) => (
-                                    <div key={activity.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                                        <img
-                                            src={activity.image || "/placeholder.svg"}
-                                            alt={activity.title}
-                                            className="w-24 h-24 object-cover rounded-md"
-                                        />
+                                {syndicatData.certifications.map((cert, index) => (
+                                    <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                                        <Award className="h-8 w-8 text-yellow-500" />
                                         <div>
-                                            <h3 className="font-semibold text-lg">{activity.title}</h3>
-                                            <p className="text-sm text-gray-500">
-                                                {activity.date} - {activity.type}
-                                            </p>
+                                            <h3 className="font-semibold">{cert.title}</h3>
+                                            <p className="text-sm text-gray-600">{cert.description}</p>
+                                            <p className="text-sm text-gray-500">Délivré par: {cert.issuer}</p>
+                                            <p className="text-sm text-gray-500">Obtenu en {cert.year}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Démembrements */}
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                                <Network className="h-6 w-6 inline-block mr-2" />
+                                Agences Régionales
+                            </h2>
+                            <div className="grid gap-6 sm:grid-cols-2">
+                                {syndicatData.branches.map((branch, index) => (
+                                    <div key={index} className="p-6 border rounded-lg hover:shadow-lg transition-shadow">
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div>
+                                                <Building className="h-6 w-6 text-blue-600 mb-2" />
+                                                <h3 className="font-bold text-lg text-blue-800">{branch.name}</h3>
+                                            </div>
+                                            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                                                {branch.members} membres
+                                            </span>
+                                        </div>
+                                        
+                                        <div className="space-y-3">
+                                            <div className="space-y-1">
+                                                <p className="font-semibold text-gray-700">Directeur Régional</p>
+                                                <p className="text-gray-600">{branch.director.name}</p>
+                                                <p className="text-sm text-gray-500">{branch.director.title}</p>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <p className="text-sm text-gray-600 flex items-center">
+                                                    <MapPin className="h-4 w-4 mr-2 text-blue-600" />
+                                                    {branch.location}
+                                                </p>
+                                                <p className="text-sm text-gray-600 flex items-center">
+                                                    <Phone className="h-4 w-4 mr-2 text-blue-600" />
+                                                    {branch.contact}
+                                                </p>
+                                                <p className="text-sm text-gray-600 flex items-center">
+                                                    <Mail className="h-4 w-4 mr-2 text-blue-600" />
+                                                    {branch.director.email}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <p className="font-semibold text-gray-700 mb-2">Services disponibles</p>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {branch.services.map((service, idx) => (
+                                                        <span key={idx} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                                            {service}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -218,27 +355,72 @@ export const SyndicatProfile = () => {
                             <h2 className="text-2xl font-bold text-blue-800 mb-4">Informations de contact</h2>
                             <div className="space-y-4">
                                 <div className="flex items-center space-x-2">
-                                    <Mail className="h-5 w-5 text-blue-600" />
-                                    <span>{syndicatData.email}</span>
+                                    <Phone className="h-5 w-5 text-blue-600" />
+                                    <span>Tél: {syndicatData.contact.phone}</span>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <Phone className="h-5 w-5 text-blue-600" />
-                                    <span>{syndicatData.phone}</span>
+                                    <Printer className="h-5 w-5 text-blue-600" />
+                                    <span>Fax: {syndicatData.contact.fax}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Mail className="h-5 w-5 text-blue-600" />
+                                    <span>{syndicatData.contact.email}</span>
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <MapPin className="h-5 w-5 text-blue-600" />
-                                    <span>{syndicatData.address}</span>
+                                    <span>{syndicatData.contact.location}</span>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <ExternalLink className="h-5 w-5 text-blue-600" />
+                                    <Mail className="h-5 w-5 text-blue-600" />
+                                    <span>BP: {syndicatData.contact.poBox}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <MapPinned className="h-5 w-5 text-blue-600" />
+                                    <span>Zone d'intervention: {syndicatData.contact.interventionZone}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Clock className="h-5 w-5 text-blue-600" />
+                                    <span>{syndicatData.contact.operatingHours}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Globe className="h-5 w-5 text-blue-600" />
                                     <a
-                                        href={`https://${syndicatData.website}`}
+                                        href={`https://${syndicatData.contact.website}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-blue-600 hover:underline"
                                     >
-                                        {syndicatData.website}
+                                        {syndicatData.contact.website}
                                     </a>
+                                </div>
+                                <div className="pt-4 border-t">
+                                    <h3 className="text-lg font-semibold mb-2">Réseaux sociaux</h3>
+                                    <div className="flex space-x-4">
+                                        <a
+                                            href={`https://${syndicatData.contact.socialMedia.facebook}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 hover:text-blue-800"
+                                        >
+                                            <Facebook className="h-6 w-6" />
+                                        </a>
+                                        <a
+                                            href={`https://${syndicatData.contact.socialMedia.twitter}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-400 hover:text-blue-600"
+                                        >
+                                            <Twitter className="h-6 w-6" />
+                                        </a>
+                                        <a
+                                            href={`https://${syndicatData.contact.socialMedia.instagram}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-pink-600 hover:text-pink-800"
+                                        >
+                                            <Instagram className="h-6 w-6" />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -285,14 +467,6 @@ export const SyndicatProfile = () => {
                                     <Calendar className="mr-2 h-5 w-5" />
                                     Voir les événements
                                 </motion.button>
-                                {/*<motion.button
-                                    className="w-full py-3 px-4 bg-white text-blue-600 border-2 border-blue-600 rounded-md hover:bg-blue-50 transition duration-300 flex items-center justify-center font-semibold"
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.98 }}
-                                >
-                                    <Mail className="mr-2 h-5 w-5" />
-                                    S'abonner à la newsletter
-                                </motion.button>*/}
                             </div>
                         </section>
                     </div>
@@ -302,3 +476,4 @@ export const SyndicatProfile = () => {
     )
 }
 
+export default SyndicatProfile

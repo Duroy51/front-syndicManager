@@ -31,7 +31,9 @@ const SyndicatApp = React.lazy(async () => ({
 const Profil = React.lazy(async () => ({
     default: (await import("../components/ProfilPage/ProfilPage.jsx")).SyndicatProfile
 }))
-
+//const SimpleDashboard = React.lazy(async () => ({
+   // default: (await import("../components/HomePage/SimpleDashboard.jsx")).SimpleDashboard
+//}))
 
 export const AppRoutesPaths = {
 
@@ -41,7 +43,8 @@ export const AppRoutesPaths = {
     homePage: "/home",
     createSyndicat: "/home/createSyndicat",
     syndicatApp: "/syndicat-app",
-    profil:"/profile"
+    profil:"/profile",
+    simpleDashboard:"/simpleProfil"
 
 }
 
@@ -71,6 +74,7 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
                 <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
+                {/*<Route path={AppRoutesPaths. simpleDashboard} element={<SimpleDashboard/>}/>*/}
 
                 {/* Routes protégées */}
                 <Route
