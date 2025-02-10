@@ -5,6 +5,8 @@ import { AcceuilSection } from "@/components/HomePage/AcceuilSection.jsx"
 import { MesSyndicats } from "@/components/HomePage/MesSyndicatSection.jsx"
 import { Explorer } from "./ExploreSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "@/services/AccountService.js"
+import {logout} from "../../services/AccountService.js";
+import {useNavigate} from "react-router-dom";
 
 const navItems = [
     {
@@ -97,6 +99,7 @@ export const HomePage = () => {
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
     const [lastName, setLastName] = useState(null)
     const [firstName, setFirstName] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const savedSection = localStorage.getItem("activeSection")
@@ -251,6 +254,11 @@ export const HomePage = () => {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             className={`w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center ${isSidebarOpen ? "justify-center" : ""}`}
+                            onClick={() => {
+                                logout();
+                                navigate('/login');
+                            }}
+
                         >
                             <LogOut className="w-5 h-5" />
                             {isSidebarOpen && <span className="font-medium ml-2">Déconnexion</span>}

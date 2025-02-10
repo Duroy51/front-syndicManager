@@ -58,7 +58,7 @@ const NotificationItem = ({ title, description, time, icon: Icon, gradient }) =>
     </motion.div>
 )
 
-export const HomePage = () => {
+export const SimpleUserHomePage = () => {
     const [activeSection, setActiveSection] = useState("dashboard")
     const [searchTerm, setSearchTerm] = useState("")
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)

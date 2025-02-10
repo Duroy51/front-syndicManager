@@ -13,6 +13,7 @@ export function generateFakeJWT(user) {
         email: user.email,
         nom: user.firstName,
         Prenom: user.lastName,
+        role: user.role,
         userId: String(user.id),
         exp: Math.floor(expiration / 1000),
         sub: user.email,

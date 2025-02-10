@@ -3,9 +3,11 @@
 // Import necessary dependencies
 import {jwtDecode} from 'jwt-decode'; // Optionnel, si tu utilises JWT
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 const TOKEN_KEY = 'token'; // Clé pour le stockage du token dans localStorage
 const TOKEN_SYND = 'organisationToken';
+
 /**
  * Sauvegarde le token dans le stockage local.
  * @param {string} token - Le token d'authentification.
@@ -38,6 +40,7 @@ export const getOrganisationToken = () => {
  */
 export const removeToken = () => {
     localStorage.removeItem(TOKEN_KEY);
+
 };
 
 export const removeOrganisationToken = () => {
@@ -107,6 +110,7 @@ export const initializeAuth = () => {
 export const logout = () => {
     removeToken();
     setAuthHeader(null);
+
 };
 
 /**
@@ -133,6 +137,18 @@ export const getEmailToken = () => {
     return decoded?.email || null;
 };
 
+/**
+ * récupère le role de l'utilisateur via le toke,.
+ * @return {string|null} -le role de l'utilisateur connecté
+ */
+
+export  const getRoleFromToken = () => {
+    const token = getToken();
+    if(!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.role || null;
+}
 /**
  * Récupère le prénom de l'utilisateur depuis le token.
  * @returns {string|null} - Le prénom de l'utilisateur ou null si non disponible.

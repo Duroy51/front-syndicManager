@@ -5,6 +5,7 @@ export const fakeUsers = [
         email: "simpleUser.test@gmail.com",
         firstName: "Charles",
         lastName: "Atangana",
+        role: "syndiqué",
         password: "password",
     },
     {
@@ -12,13 +13,15 @@ export const fakeUsers = [
         email: "syndicalist.test@gmail.com",
         firstName: "Ivan",
         lastName: "Tsafack",
+        role: "syndicalist",
         password: "password",
     },
     {
         id: 3,
-        email: "syndiqué.test@gmail.com",
+        email: "syndique.test@gmail.com",
         firstName: "Paul",
         lastName: "David",
+        role: "guest",
         password: "password",
     },
     // Vous pouvez ajouter d'autres utilisateurs fictifs si besoin

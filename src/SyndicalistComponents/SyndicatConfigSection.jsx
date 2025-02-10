@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Building, Camera, Save } from "lucide-react";
 import { useState } from "react";
 
-export const UnionConfigSection = () => {
+export const SyndicatConfigSection = () => {
   const [unionProfile, setUnionProfile] = useState({
     name: "",
     type: "",
