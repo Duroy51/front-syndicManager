@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -379,17 +379,12 @@ export const SyndicatProfile = ({ syndicat }) => {
                             <BranchOfficesMap />
                         </section>
 
-                        {/* Activities section */}
+                        {/* Certifications et Récompenses */}
                         <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                                Activités récentes
-                            </h2>
+                            <h2 className="text-2xl font-bold text-blue-800 mb-4">Activités récentes</h2>
                             <div className="space-y-4">
                                 {activities.map((activity) => (
-                                    <div
-                                        key={activity.id}
-                                        className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg"
-                                    >
+                                    <div key={activity.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
                                         <img
                                             src={activity.image || "/placeholder.svg"}
                                             alt={activity.title}
