@@ -30,6 +30,8 @@ import {
 import { BusinessActorForm } from "./BusinessActorForm/BusinessActorForm.jsx";
 import { OrganisationForm } from "@/components/HomePage/OrganisationForm/OrganisationForm.jsx";
 import { apiClient } from "../../services/AxiosConfig.js";
+import {AdhereSyndicatForm} from "./AdhesionForm/AdhesionForm.jsx";
+import {CreateSyndicatForm} from "../NewCreateSyndicatPage/CreateSyndicatForm.jsx";
 
 const stats = [
     {
@@ -186,6 +188,7 @@ export const AcceuilSection = () => {
     const [isBusinessFormOpen, setIsBusinessFormOpen] = useState(false);
     const [formType, setFormType] = useState(null);
     const [activeTab, setActiveTab] = useState("activities");
+    const [showCreateSyndicatForm, setCreateSyndicatForm] = useState(false)
 
     const userId = getUserIdFromToken();
 
@@ -209,6 +212,10 @@ export const AcceuilSection = () => {
         setLastName(getLastNameToken());
     }, []);
 
+    const handleCreateSyndicat = () => {
+        setCreateSyndicatForm(true)
+    }
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
             <div className="container mx-auto px-4 py-8">
@@ -228,7 +235,7 @@ export const AcceuilSection = () => {
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={openBusinessActorForm}
+                        onClick={() => setCreateSyndicatForm(true)}
                         className="mt-6 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-full shadow-2xl hover:shadow-2xl transition-all duration-300 inline-flex items-center"
                     >
                         <Star className="w-6 h-6 mr-2" />
@@ -421,41 +428,33 @@ export const AcceuilSection = () => {
 
                 {/* Modal */}
                 <AnimatePresence>
-                    {isBusinessFormOpen && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
-                            onClick={closeBusinessActorForm}
-                        >
+                    <AnimatePresence>
+                        {showCreateSyndicatForm && (
                             <motion.div
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
-                                className="bg-white rounded-2xl shadow-2xl w-full max-w-7xl max-h-[80vh] overflow-y-auto m-4"
-                                onClick={(e) => e.stopPropagation()}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto"
                             >
-                                <div className="relative">
-                                    <motion.button
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={closeBusinessActorForm}
-                                        className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600 transition-colors duration-200"
-                                    >
-                                        <X className="w-5 h-5" />
-                                    </motion.button>
-                                    <div className="p-8">
-                                        {formType === "Syndicat" ? (
-                                            <OrganisationForm />
-                                        ) : (
-                                            <BusinessActorForm />
-                                        )}
+                                <motion.div
+                                    className="w-full max-w-4xl p-4 mx-4 sm:mx-6 md:mx-8 lg:mx-auto max-h-[80vh] overflow-y-auto"
+                                    initial={{ scale: 0.8 }}
+                                    animate={{ scale: 1 }}
+                                    exit={{ scale: 0.8 }}
+                                >
+                                    <div className="relative bg-white rounded-lg shadow-lg">
+                                        <button
+                                            className="absolute top-4 right-4 z-10 text-gray-500 hover:text-gray-700 transition-colors"
+                                            onClick={() => setCreateSyndicatForm(false)}
+                                        >
+                                            <X className="h-6 w-6" />
+                                        </button>
+                                            <CreateSyndicatForm></CreateSyndicatForm>
                                     </div>
-                                </div>
+                                </motion.div>
                             </motion.div>
-                        </motion.div>
-                    )}
+                        )}
+                    </AnimatePresence>
                 </AnimatePresence>
             </div>
         </div>

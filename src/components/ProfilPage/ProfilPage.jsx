@@ -12,7 +12,8 @@ import {
     ChevronLeft,
     ExternalLink,
     LogIn,
-    Loader2
+    Loader2,
+    Download // nouvel import pour le téléchargement
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
@@ -25,12 +26,6 @@ import markerIcon2x from "/marker-icon-2x.png";
 import markerShadow from "/marker-shadow.png";
 
 import { Button, Alert } from "antd";
-
-
-
-
-
-
 
 // Configuration de l'icône par défaut pour Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -292,7 +287,7 @@ const branchOffices = [
     },
 ];
 
-export const SyndicatProfile = ({syndicat}) => {
+export const SyndicatProfile = ({ syndicat }) => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const membersPerPage = 4;
@@ -307,6 +302,7 @@ export const SyndicatProfile = ({syndicat}) => {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
             {/* Cover Image */}
             <div className="h-64 md:h-80 w-full relative">
+
                 <img
                     src={syndicat.image || "/placeholder.svg"}
                     alt="Cover"
@@ -546,6 +542,36 @@ export const SyndicatProfile = ({syndicat}) => {
                                     <Calendar className="mr-2 h-5 w-5" />
                                     Voir les événements
                                 </motion.button>
+                            </div>
+                        </section>
+
+                        {/* Nouveauté : Documents officiels */}
+                        <section className="bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                                Documents officiels
+                            </h2>
+                            <p className="text-gray-600 mb-4">
+                                Téléchargez les statuts du syndicat et le règlement intérieur.
+                            </p>
+                            <div className="flex flex-col gap-4">
+                                <a
+                                    href="/statuts.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+                                >
+                                    <Download className="mr-2 h-5 w-5" />
+                                    Télécharger les statuts
+                                </a>
+                                <a
+                                    href="/reglement.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+                                >
+                                    <Download className="mr-2 h-5 w-5" />
+                                    Télécharger le règlement intérieur
+                                </a>
                             </div>
                         </section>
                     </div>
