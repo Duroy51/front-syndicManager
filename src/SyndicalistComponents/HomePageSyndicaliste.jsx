@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Building, Search,Bell,Settings,Home,Users,Compass,ChevronRight,Calendar,FileText,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
-import { AcceuilSection } from "@/components/HomePage/AcceuilSection.jsx"
-import { MesSyndicats } from "@/components/HomePage/MesSyndicatSection.jsx"
-import { Explorer } from "./ExploreSection.jsx"
-import { getFirstNameToken, getLastNameToken } from "@/services/AccountService.js"
+import { AcceuilSection } from "../components/HomePage/AcceuilSection.jsx"
+import { MesSyndicats } from "../components/HomePage/MesSyndicatSection.jsx"
+import { Explorer } from "../components/HomePage/ExploreSection.jsx"
+import { SyndicatConfigSection } from "./SyndicatConfigSection.jsx"
+import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
 
 const navItems = [
     {
@@ -29,6 +30,13 @@ const navItems = [
         gradient: "from-blue-500 to-indigo-600",
         /*gradient: "from-purple-500 to-pink-600",*/
         description: "Découvrir de nouveaux syndicats",
+    },
+    {
+        id: "config",
+        icon: Settings,
+        label: "Configuration",
+        gradient: "from-blue-500 to-indigo-600",
+        description: "Configurer votre syndicat",
     },
     {
         id: "parametres",
@@ -122,6 +130,8 @@ export const HomePage = () => {
                 return <MesSyndicats />
             case "explorer":
                 return <Explorer />
+            case "config":
+                    return <SyndicatConfigSection/>
             case "parametres":
                 return (
                     <div className="text-center py-12">

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building, Search,Bell,Settings,Home,Users,Compass,ChevronRight,Calendar,FileText,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
-import { AcceuilSection } from "@/components/HomePage/AcceuilSection.jsx"
-import { MesSyndicats } from "@/components/HomePage/MesSyndicatSection.jsx"
-import { Explorer } from "./ExploreSection.jsx"
-import { getFirstNameToken, getLastNameToken } from "@/services/AccountService.js"
+import { Building, Search,Bell, Home,Compass,ChevronRight,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
+import { Explorer } from "../components/HomePage/ExploreSection.jsx"
+import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
+
 
 const navItems = [
     {
@@ -15,60 +14,29 @@ const navItems = [
         description: "Tableau de bord principal",
     },
     {
-        id: "syndicats",
-        icon: Users,
-        label: "Mes Syndicats",
-        gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-green-500 to-emerald-600",*/
-        description: "Gérer vos organisations",
-    },
-    {
         id: "explorer",
         icon: Compass,
         label: "Explorer",
         gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-purple-500 to-pink-600",*/
-        description: "Découvrir de nouveaux syndicats",
-    },
-    {
-        id: "parametres",
-        icon: Settings,
-        label: "Paramètres",
-        gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-orange-500 to-red-600",*/
-        description: "Configuration du compte",
-    },
+        description: "Découvrir des syndicats",
+    }
 ]
 
 const notifications = [
     {
-        title: "Nouvelle réunion planifiée",
-        description: "Assemblée générale prévue pour demain à 14h",
+        title: "Bienvenue sur SyndicManager",
+        description: "Découvrez les syndicats disponibles",
         time: "Il y a 5 minutes",
-        icon: Calendar,
+        icon: Building,
         gradient: "from-blue-500 to-indigo-600",
     },
     {
-        title: "Cotisation reçue",
-        description: "Paiement confirmé de Jean Dupont",
+        title: "Conseil de recherche",
+        description: "Utilisez les filtres pour trouver le syndicat idéal",
         time: "Il y a 30 minutes",
-        icon: CheckCircle,
+        icon: Search,
         gradient: "from-green-500 to-emerald-600",
-    },
-    {
-        title: "Nouveau document partagé",
-        description: "Rapport mensuel disponible",
-        time: "Il y a 1 heure",
-        icon: FileText,
-        gradient: "from-purple-500 to-pink-600",
-    },
-    {
-        title: "Alerte importante",
-        description: "Mise à jour des statuts requise",
-        time: "Il y a 2 heures",
-        icon: AlertCircle,
-        gradient: "from-orange-500 to-red-600",
-    },
+    }
 ]
 
 const NotificationItem = ({ title, description, time, icon: Icon, gradient }) => (
@@ -100,7 +68,7 @@ export const HomePage = () => {
 
     useEffect(() => {
         const savedSection = localStorage.getItem("activeSection")
-        if (savedSection) {
+        if (savedSection && navItems.some(item => item.id === savedSection)) {
             setActiveSection(savedSection)
         }
     }, [])
@@ -117,21 +85,70 @@ export const HomePage = () => {
     const renderContent = () => {
         switch (activeSection) {
             case "dashboard":
-                return <AcceuilSection />
-            case "syndicats":
-                return <MesSyndicats />
-            case "explorer":
-                return <Explorer />
-            case "parametres":
                 return (
-                    <div className="text-center py-12">
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-md mx-auto">
-                            <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-800 mb-2">Paramètres en développement</h3>
-                            <p className="text-gray-600">Cette section sera bientôt disponible avec de nouvelles fonctionnalités.</p>
+                    <div className="p-6">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-white rounded-2xl shadow-lg p-8"
+                        >
+                            <div className="text-center mb-8">
+                                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-4 rounded-xl inline-block mb-4">
+                                    <Building className="h-12 w-12 text-white" />
+                                </div>
+                                <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                                    Bienvenue sur SyndicManager
+                                </h1>
+                                <p className="text-gray-600 max-w-2xl mx-auto">
+                                    Découvrez et rejoignez des syndicats qui correspondent à vos intérêts professionnels.
+                                    Explorez les différentes organisations et trouvez celle qui vous convient le mieux.
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl"
+                                >
+                                    <Compass className="h-8 w-8 text-blue-600 mb-4" />
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                        Explorer les Syndicats
+                                    </h3>
+                                    <p className="text-gray-600 mb-4">
+                                        Parcourez la liste des syndicats disponibles et trouvez celui qui correspond à vos besoins.
+                                    </p>
+                                    <button
+                                        onClick={() => setActiveSection("explorer")}
+                                        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-200"
+                                    >
+                                        Commencer l'exploration
+                                    </button>
+                                </motion.div>
+
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl"
+                                >
+                                    <Search className="h-8 w-8 text-purple-600 mb-4" />
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                        Recherche Avancée
+                                    </h3>
+                                    <p className="text-gray-600 mb-4">
+                                        Utilisez nos filtres de recherche pour trouver rapidement le syndicat qui vous correspond.
+                                    </p>
+                                    <button
+                                        onClick={() => setActiveSection("explorer")}
+                                        className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-200"
+                                    >
+                                        Rechercher un syndicat
+                                    </button>
+                                </motion.div>
+                            </div>
                         </motion.div>
                     </div>
                 )
+            case "explorer":
+                return <Explorer />
             default:
                 return null
         }
@@ -171,7 +188,7 @@ export const HomePage = () => {
                             <div className="relative">
                                 <input
                                     type="text"
-                                    placeholder="Rechercher..."
+                                    placeholder="Rechercher un syndicat..."
                                     className="w-64 pl-10 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -188,8 +205,8 @@ export const HomePage = () => {
                                 >
                                     <Bell className="h-6 w-6" />
                                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    4
-                  </span>
+                                        2
+                                    </span>
                                 </motion.button>
                             </div>
 
@@ -200,9 +217,9 @@ export const HomePage = () => {
                             >
                                 {firstName && lastName && (
                                     <span className="font-semibold text-lg">
-                    {firstName.charAt(0)}
+                                        {firstName.charAt(0)}
                                         {lastName.charAt(0)}
-                  </span>
+                                    </span>
                                 )}
                             </motion.div>
                         </div>
@@ -289,7 +306,7 @@ export const HomePage = () => {
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
                                         <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
-                                        <p className="text-sm text-gray-500">Vous avez 4 nouvelles notifications</p>
+                                        <p className="text-sm text-gray-500">Vous avez 2 nouvelles notifications</p>
                                     </div>
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
@@ -319,39 +336,6 @@ export const HomePage = () => {
                     )}
                 </AnimatePresence>
             </div>
-
-            {/* Footer */}
-            {/*<footer className="bg-white border-t border-gray-100 py-4">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                        <div className="text-center md:text-left">
-                            <h3 className="font-bold text-lg mb-2">SyndicManager</h3>
-                            <p className="text-sm text-gray-500">
-                                &copy; 2023 Syndicat des Taxi. Tous droits réservés.
-                            </p>
-                        </div>
-
-                        <div className="flex space-x-6">
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors duration-200">
-                                Conditions d'utilisation
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors duration-200">
-                                Politique de confidentialité
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </footer>*/}
-
-            {/* <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="fixed bottom-8 right-8 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
-            >
-                <PlusCircle className="w-5 h-5 mr-2" />
-                <span className="font-medium">Nouveau Syndicat</span>
-            </motion.button>*/}
         </div>
     )
 }
-
