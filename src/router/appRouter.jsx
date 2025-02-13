@@ -67,7 +67,7 @@ const HomePageWrapper = ({ userRole }) => {
             return <HomePage />;
         case 'syndicalist':
             return <SyndicalistHomePage />;
-        
+
     }
 };
 

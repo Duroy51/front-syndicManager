@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Users, Search, ChevronRight, UserPlus, X, MapPin, AlertCircle, ChevronLeft } from "lucide-react"
+import { Users, Search, ChevronRight, UserPlus, X, MapPin, AlertCircle, ChevronLeft, Sparkles, ShieldCheck, Star } from "lucide-react"
 import { getUserIdFromToken } from "../../services/AccountService.js"
 import { AdhereSyndicatForm } from "./AdhesionForm/AdhesionForm.jsx"
 import { SyndicatProfile } from "../ProfilPage/ProfilPage.jsx"
@@ -76,6 +76,88 @@ export const Explorer = () => {
             image:
                 "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         },
+
+        {
+            id: 7,
+            name: "Syndicat National des Transporteurs Maritimes",
+            type: "Maritime",
+            members: 2200,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80"
+        },
+        {
+            id: 8,
+            name: "Syndicat National des Conducteurs de Train",
+            type: "Ferroviaire",
+            members: 4500,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 9,
+            name: "Syndicat National des Chauffeurs de Taxi",
+            type: "Taxi",
+            members: 35000,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 10,
+            name: "Syndicat National des Transporteurs Sanitaires",
+            type: "Médical",
+            members: 6800,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1581056771107-24ca5f033842?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 11,
+            name: "Syndicat National des Livreurs Professionnels",
+            type: "Livraison",
+            members: 12500,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1559599189-fe84dea4eb79?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 12,
+            name: "Syndicat National des Conducteurs de Bus",
+            type: "Bus",
+            members: 28000,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 13,
+            name: "Syndicat National des Transporteurs de Matières Dangereuses",
+            type: "Dangereux",
+            members: 3400,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 14,
+            name: "Syndicat National des Pêcheurs-Transporteurs",
+            type: "Aquatique",
+            members: 8900,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1534375970777-9d3398845a83?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 15,
+            name: "Syndicat National des Transporteurs Touristiques",
+            type: "Tourisme",
+            members: 5600,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        },
+        {
+            id: 16,
+            name: "Syndicat National des Conducteurs de Poids Lourds",
+            type: "Camions",
+            members: 41200,
+            location: "National",
+            image: "https://images.unsplash.com/photo-1548534441-e99c2d96a798?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        }
+
     ])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -129,67 +211,160 @@ export const Explorer = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 py-12">
             {viewingSyndicatProfile ? (
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <button
-                        className="mb-4 flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                        className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors group"
                         onClick={() => setViewingSyndicatProfile(false)}
                     >
-                        <ChevronLeft className="mr-2 h-5 w-5" />
-                        Retour à la liste des syndicats
+                        <ChevronLeft className="h-6 w-6 transition-transform group-hover:-translate-x-1" />
+                        <span className="text-lg font-medium">Retour à l'exploration</span>
                     </button>
                     <SyndicatProfile syndicat={selectedSyndicat} />
                 </div>
             ) : (
-                <div className="container mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-center mb-12"
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.header
+                        initial={{opacity: 0, y: -20}}
+                        animate={{opacity: 1, y: 0}}
+                        transition={{duration: 0.6}}
+                        className="text-center mb-16 relative"
                     >
-                        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                            Explorer les Syndicats
-                        </h1>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                            Découvrez et rejoignez des syndicats correspondant à vos intérêts professionnels et géographiques
-                        </p>
-                    </motion.div>
-
+                        <div className="max-w-4xl mx-auto relative">
+                            <div
+                                className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-blue-100 rounded-full blur-3xl opacity-30"></div>
+                            <h1 className="text-4xl sm:text-5xl font-bold mb-6 relative z-10">
+                            <span
+                                className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                Explorer les Syndicats
+                            </span>
+                                <div
+                                    className="mt-2 w-24 h-1 bg-gradient-to-r from-blue-400 to-indigo-400 mx-auto rounded-full"></div>
+                            </h1>
+                            <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                                Trouvez la communauté professionnelle qui correspond à vos besoins
+                                <span className="block mt-2 text-blue-600 flex items-center justify-center">
+                                <Sparkles className="h-5 w-5 mr-2"/>
+                                Plus de 150 syndicats référencés
+                            </span>
+                            </p>
+                        </div>
+                    </motion.header>
                     <motion.div
-                        className="mb-12 flex flex-col items-center"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="mb-16 max-w-3xl mx-auto"
+                        initial={{opacity: 0, y: -10}}
+                        animate={{opacity: 1, y: 0}}
+                        transition={{duration: 0.6, delay: 0.3}}
                     >
-                        <div className="relative w-full max-w-md mb-4">
+                        <div className="relative">
                             <input
                                 type="text"
                                 placeholder="Rechercher un syndicat..."
-                                className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-300 text-lg"
+                                className="w-full pl-14 pr-6 py-4 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 text-lg placeholder-gray-400 shadow-sm"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6" />
+                            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 h-6 w-6"/>
                         </div>
+
                         {getSuggestionMessage() && (
                             <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm"
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                className="mt-4 flex items-center bg-blue-100 text-blue-800 px-4 py-3 rounded-lg"
                             >
-                                <AlertCircle className="h-4 w-4 mr-2" />
-                                {getSuggestionMessage()}
+                                <AlertCircle className="h-5 w-5 mr-3 flex-shrink-0"/>
+                                <span className="text-sm leading-tight">{getSuggestionMessage()}</span>
                             </motion.div>
                         )}
                     </motion.div>
+                    {/* Syndicat suggéré */}
+                    {filteredSyndicats.length > 0 && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mb-16"
+                        >
+                            <div className="flex items-center mb-6">
+                                <h2 className="text-2xl font-semibold text-gray-900 mr-4">
+                                    Syndicat suggéré
+                                </h2>
+                                <div className="flex-1 h-px bg-gradient-to-r from-blue-100 to-indigo-100"></div>
+                            </div>
 
-                    {loading && <p className="text-center text-gray-500 text-xl">Chargement des syndicats...</p>}
-                    {error && <p className="text-center text-red-500 text-xl">{error}</p>}
+                            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div className="flex flex-col md:flex-row">
+                                    <div className="md:w-1/3 relative">
+                                        <img
+                                            src={filteredSyndicats[0].image}
+                                            alt={filteredSyndicats[0].name}
+                                            className="w-full h-64 object-cover"
+                                        />
+                                        <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-medium shadow-sm">
+                                            ⭐ Recommandé
+                                        </div>
+                                    </div>
+                                    <div className="md:w-2/3 p-8">
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                                            {filteredSyndicats[0].name}
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-4 mb-6">
+                                            <div className="flex items-center">
+                                                <Users className="h-5 w-5 text-blue-600 mr-2" />
+                                                <span>{filteredSyndicats[0].members.toLocaleString()} membres</span>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <MapPin className="h-5 w-5 text-blue-600 mr-2" />
+                                                <span>{filteredSyndicats[0].location}</span>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <ShieldCheck className="h-5 w-5 text-blue-600 mr-2" />
+                                                <span>Certifié par l'État</span>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <Star className="h-5 w-5 text-blue-600 mr-2" />
+                                                <span>4.8/5 (256 avis)</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-4">
+                                            <motion.button
+                                                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                                                whileHover={{ scale: 1.05 }}
+                                            >
+                                                <UserPlus className="h-5 w-5 mr-2" />
+                                                Adhérer maintenant
+                                            </motion.button>
+                                            <motion.button
+                                                className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                                                whileHover={{ scale: 1.05 }}
+                                            >
+                                                Voir les détails
+                                            </motion.button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {loading && (
+                        <div className="flex justify-center items-center h-64">
+                            <div className="animate-pulse flex space-x-4">
+                                <div className="rounded-full bg-blue-100 h-12 w-12"></div>
+                            </div>
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="mx-auto max-w-md bg-red-50 text-red-700 p-6 rounded-xl text-center">
+                            <AlertCircle className="h-6 w-6 mx-auto mb-3"/>
+                            {error}
+                        </div>
+                    )}
 
                     <motion.div
-                        className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+                        className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
@@ -197,51 +372,66 @@ export const Explorer = () => {
                         {filteredSyndicats.map((syndicat) => (
                             <motion.div
                                 key={syndicat.id}
-                                className="bg-white rounded-xl shadow-lg overflow-hidden border-t-4 border-blue-500 hover:shadow-xl transition duration-300"
+                                className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 overflow-hidden"
                                 variants={itemVariants}
-                                whileHover={{ y: -5 }}
+                                whileHover={{y: -8}}
                             >
-                                <div className="relative">
+                                <div className="relative aspect-video">
                                     <img
-                                        src={syndicat.image || "/placeholder.svg"}
+                                        src={syndicat.image}
                                         alt={syndicat.name}
-                                        className="w-full h-48 object-cover"
+                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        loading="lazy"
                                     />
-                                    <div className="absolute top-0 right-0 m-4">
-                    <span className="text-sm font-medium text-white bg-blue-500 rounded-full px-3 py-1">
-                      {syndicat.type}
-                    </span>
+                                    <div
+                                        className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                                        <span
+                                            className="text-sm font-semibold text-white bg-blue-600/90 rounded-lg px-3 py-1.5">
+                                            {syndicat.type}
+                                        </span>
                                     </div>
                                 </div>
+
                                 <div className="p-6">
-                                    <h2 className="text-2xl font-semibold text-gray-800 mb-3 line-clamp-2">{syndicat.name}</h2>
-                                    <div className="flex items-center text-gray-600 mb-3">
-                                        <Users className="h-5 w-5 mr-2 text-blue-500" />
-                                        <span className="text-sm">{syndicat.members.toLocaleString()} membres</span>
-                                    </div>
-                                    <div className="flex items-center text-gray-600 mb-4">
-                                        <MapPin className="h-5 w-5 mr-2 text-blue-500" />
-                                        <span className="text-sm">{syndicat.location}</span>
+                                    <h2 className="text-xl font-semibold text-gray-900 mb-4 leading-snug">
+                                        {syndicat.name}
+                                    </h2>
+
+                                    <div className="space-y-3 text-gray-600">
+                                        <div className="flex items-center">
+                                            <Users className="h-5 w-5 mr-3 text-blue-500 flex-shrink-0"/>
+                                            <span className="text-sm">
+                                                {syndicat.members.toLocaleString()} membres actifs
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <MapPin className="h-5 w-5 mr-3 text-blue-500 flex-shrink-0"/>
+                                            <span className="text-sm">
+                                                {syndicat.location}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="bg-gray-50 px-6 py-4 space-y-3">
+
+                                <div className="px-6 pb-6 flex gap-3">
                                     <motion.button
-                                        className="w-full bg-blue-500 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:bg-blue-600"
-                                        whileHover={{ scale: 1.03 }}
-                                        whileTap={{ scale: 0.98 }}
+                                        className="flex-1 bg-white text-blue-600 py-2.5 rounded-lg border-2 border-blue-100 hover:border-blue-200 transition-colors duration-300 flex items-center justify-center font-medium"
+                                        whileHover={{scale: 1.03}}
+                                        whileTap={{scale: 0.98}}
                                         onClick={() => handleSyndicatClick(syndicat)}
                                     >
-                                        Voir les détails
-                                        <ChevronRight className="ml-2 h-4 w-4" />
+                                        <span>Détails</span>
+                                        <ChevronRight className="ml-2 h-4 w-4"/>
                                     </motion.button>
+
                                     <motion.button
-                                        className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md flex items-center justify-center transition duration-300"
-                                        whileHover={{ scale: 1.03 }}
-                                        whileTap={{ scale: 0.98 }}
+                                        className="flex-1 bg-gradient-to-br from-blue-600 to-indigo-600 text-white py-2.5 rounded-lg hover:shadow-lg transition-all duration-300 flex items-center justify-center font-medium"
+                                        whileHover={{scale: 1.03}}
+                                        whileTap={{scale: 0.98}}
                                         onClick={() => handleDemandeAdhesion(syndicat)}
                                     >
-                                        Demander l'adhésion
-                                        <UserPlus className="ml-2 h-4 w-4" />
+                                        <UserPlus className="mr-2 h-4 w-4"/>
+                                        <span>Adhérer</span>
                                     </motion.button>
                                 </div>
                             </motion.div>
@@ -249,29 +439,33 @@ export const Explorer = () => {
                     </motion.div>
                 </div>
             )}
+
             <AnimatePresence>
                 {showAdhesionForm && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4"
                     >
                         <motion.div
-                            className="w-full max-w-4xl p-4 mx-4 sm:mx-6 md:mx-8 lg:mx-auto max-h-[80vh] overflow-y-auto"
-                            initial={{ scale: 0.8 }}
-                            animate={{ scale: 1 }}
-                            exit={{ scale: 0.8 }}
+                            className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto"
+                            initial={{scale: 0.95}}
+                            animate={{scale: 1}}
+                            exit={{scale: 0.95}}
                         >
-                            <div className="relative bg-white rounded-lg shadow-lg">
+                            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+                                <h3 className="text-2xl font-semibold text-gray-900">
+                                    Adhésion à {selectedSyndicat?.name}
+                                </h3>
                                 <button
-                                    className="absolute top-4 right-4 z-10 text-gray-500 hover:text-gray-700 transition-colors"
+                                    className="p-2 hover:bg-gray-50 rounded-full transition-colors"
                                     onClick={() => setShowAdhesionForm(false)}
                                 >
-                                    <X className="h-6 w-6" />
+                                    <X className="h-6 w-6 text-gray-500"/>
                                 </button>
-                                <AdhereSyndicatForm syndicat={selectedSyndicat} />
                             </div>
+                            <AdhereSyndicatForm syndicat={selectedSyndicat}/>
                         </motion.div>
                     </motion.div>
                 )}

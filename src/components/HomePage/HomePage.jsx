@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react"
+"use client"
+import { useState, useEffect, useMemo, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building, Search,Bell,Settings,Home,Users,Compass,ChevronRight,Calendar,FileText,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
-import { AcceuilSection } from "@/components/HomePage/AcceuilSection.jsx"
-import { MesSyndicats } from "@/components/HomePage/MesSyndicatSection.jsx"
-import { Explorer } from "./ExploreSection.jsx"
-import { getFirstNameToken, getLastNameToken } from "@/services/AccountService.js"
-import {logout} from "../../services/AccountService.js";
-import {useNavigate} from "react-router-dom";
+import {
+    Building, Search, Bell, Settings, Home, Users, Compass,
+    ChevronRight, ChevronLeft, LogOut, X, AlertCircle, Calendar,
+    CheckCircle, FileText
+} from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { logout, getFirstNameToken, getLastNameToken } from "../../services/AccountService"
+import { AcceuilSection } from "./AcceuilSection.jsx"
+import { MesSyndicats} from "./MesSyndicatSection.jsx"
+import { Explorer} from  "./ExploreSection.jsx"
 
 const navItems = [
     {
@@ -21,7 +25,6 @@ const navItems = [
         icon: Users,
         label: "Mes Syndicats",
         gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-green-500 to-emerald-600",*/
         description: "Gérer vos organisations",
     },
     {
@@ -29,7 +32,6 @@ const navItems = [
         icon: Compass,
         label: "Explorer",
         gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-purple-500 to-pink-600",*/
         description: "Découvrir de nouveaux syndicats",
     },
     {
@@ -37,7 +39,6 @@ const navItems = [
         icon: Settings,
         label: "Paramètres",
         gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-orange-500 to-red-600",*/
         description: "Configuration du compte",
     },
 ]
@@ -92,181 +93,237 @@ const NotificationItem = ({ title, description, time, icon: Icon, gradient }) =>
     </motion.div>
 )
 
+const SettingsPlaceholder = () => (
+    <div className="text-center py-12">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="max-w-md mx-auto"
+        >
+            <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Paramètres en développement</h3>
+            <p className="text-gray-600">Cette section sera bientôt disponible avec de nouvelles fonctionnalités.</p>
+        </motion.div>
+    </div>
+)
+
+const Header = ({ isSidebarOpen, searchTerm, userData, onSidebarToggle, onSearchChange, onNotificationToggle }) => (
+    <motion.header
+        className="bg-white shadow-lg z-20"
+        initial={{ y: -50 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}
+    >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+                <div className="flex items-center space-x-4">
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={onSidebarToggle}
+                        className="text-gray-600 hover:text-blue-600 focus:outline-none"
+                    >
+                        {isSidebarOpen ? <ChevronLeft className="h-6 w-6" /> : <ChevronRight className="h-6 w-6" />}
+                    </motion.button>
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center">
+                        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg">
+                            <Building className="h-8 w-8 text-white" />
+                        </div>
+                        <h1 className="ml-3 text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                            SyndicManager
+                        </h1>
+                    </motion.div>
+                </div>
+
+                <div className="flex items-center space-x-6">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder="Rechercher..."
+                            className="w-64 pl-10 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                            value={searchTerm}
+                            onChange={(e) => onSearchChange(e.target.value)}
+                        />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    </div>
+
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="relative bg-white p-2 rounded-xl text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
+                        onClick={onNotificationToggle}
+                    >
+                        <Bell className="h-6 w-6" />
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              4
+            </span>
+                    </motion.button>
+
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center cursor-pointer shadow-lg"
+                    >
+                        {userData?.firstName && userData?.lastName && (
+                            <span className="font-semibold text-lg">
+                {userData.firstName[0]}
+                                {userData.lastName[0]}
+              </span>
+                        )}
+                    </motion.div>
+                </div>
+            </div>
+        </div>
+    </motion.header>
+)
+
+const Sidebar = ({ isOpen, activeSection, onSectionChange, onLogout }) => (
+    <motion.nav
+        initial={{ width: isOpen ? 256 : 64 }}
+        animate={{ width: isOpen ? 256 : 64 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white shadow-xl flex flex-col z-20"
+    >
+        <div className="flex-grow overflow-y-auto p-6">
+            <nav className="space-y-4">
+                {navItems.map((item) => (
+                    <motion.button
+                        key={item.id}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => onSectionChange(item.id)}
+                        className={`w-full p-3 rounded-xl transition-all duration-300 group ${
+                            activeSection === item.id
+                                ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
+                                : "bg-white text-gray-600 hover:bg-gray-50"
+                        } ${isOpen ? "flex items-center" : "flex justify-center"}`}
+                    >
+                        <item.icon className={`w-5 h-5 ${isOpen ? "mr-3" : ""}`} />
+                        {isOpen && (
+                            <div className="text-left">
+                                <div className="font-medium">{item.label}</div>
+                                <div className={`text-xs ${activeSection === item.id ? "text-white/80" : "text-gray-500"}`}>
+                                    {item.description}
+                                </div>
+                            </div>
+                        )}
+                    </motion.button>
+                ))}
+            </nav>
+        </div>
+
+        <div className="p-6 border-t border-gray-100">
+            <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                onClick={onLogout}
+            >
+                <LogOut className="w-5 h-5" />
+                {isOpen && <span className="font-medium ml-2">Déconnexion</span>}
+            </motion.button>
+        </div>
+    </motion.nav>
+)
+
+const NotificationsPanel = ({ isOpen, onClose }) => (
+    <AnimatePresence>
+        {isOpen && (
+            <motion.div
+                initial={{ opacity: 0, x: 300 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 300 }}
+                transition={{ type: "spring", stiffness: 100 }}
+                className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-30"
+            >
+                <div className="p-6">
+                    <div className="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
+                            <p className="text-sm text-gray-500">Vous avez 4 nouvelles notifications</p>
+                        </div>
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={onClose}
+                            className="p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors duration-200"
+                        >
+                            <X className="w-5 h-5" />
+                        </motion.button>
+                    </div>
+
+                    <div className="space-y-4">
+                        {notifications.map((notification, index) => (
+                            <NotificationItem key={index} {...notification} />
+                        ))}
+                    </div>
+
+                    <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+                    >
+                        Voir toutes les notifications
+                    </motion.button>
+                </div>
+            </motion.div>
+        )}
+    </AnimatePresence>
+)
+
 export const HomePage = () => {
     const [activeSection, setActiveSection] = useState("dashboard")
     const [searchTerm, setSearchTerm] = useState("")
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
-    const [lastName, setLastName] = useState(null)
-    const [firstName, setFirstName] = useState(null)
     const navigate = useNavigate()
+
+    const userData = useMemo(() => ({
+        firstName: getFirstNameToken(),
+        lastName: getLastNameToken()
+    }), [])
 
     useEffect(() => {
         const savedSection = localStorage.getItem("activeSection")
-        if (savedSection) {
-            setActiveSection(savedSection)
-        }
+        if (savedSection) setActiveSection(savedSection)
     }, [])
 
     useEffect(() => {
         localStorage.setItem("activeSection", activeSection)
     }, [activeSection])
 
-    useEffect(() => {
-        setFirstName(getFirstNameToken())
-        setLastName(getLastNameToken())
-    }, [])
-
-    const renderContent = () => {
-        switch (activeSection) {
-            case "dashboard":
-                return <AcceuilSection />
-            case "syndicats":
-                return <MesSyndicats />
-            case "explorer":
-                return <Explorer />
-            case "parametres":
-                return (
-                    <div className="text-center py-12">
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-md mx-auto">
-                            <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-800 mb-2">Paramètres en développement</h3>
-                            <p className="text-gray-600">Cette section sera bientôt disponible avec de nouvelles fonctionnalités.</p>
-                        </motion.div>
-                    </div>
-                )
-            default:
-                return null
+    const renderContent = useCallback(() => {
+        const sections = {
+            dashboard: <AcceuilSection />,
+            syndicats: <MesSyndicats />,
+            explorer: <Explorer />,
+            parametres: <SettingsPlaceholder />
         }
-    }
+        return sections[activeSection] || null
+    }, [activeSection])
 
     return (
         <div className="flex flex-col h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-            {/* Header */}
-            <motion.header
-                className="bg-white shadow-lg z-20"
-                initial={{ y: -50 }}
-                animate={{ y: 0 }}
-                transition={{ type: "spring", stiffness: 100 }}
-            >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-4">
-                        <div className="flex items-center space-x-4">
-                            <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="text-gray-600 hover:text-blue-600 focus:outline-none"
-                            >
-                                {isSidebarOpen ? <ChevronLeft className="h-6 w-6" /> : <ChevronRight className="h-6 w-6" />}
-                            </motion.button>
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center">
-                                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg">
-                                    <Building className="h-8 w-8 text-white" />
-                                </div>
-                                <h1 className="ml-3 text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                    SyndicManager
-                                </h1>
-                            </motion.div>
-                        </div>
-
-                        <div className="flex items-center space-x-6">
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    placeholder="Rechercher..."
-                                    className="w-64 pl-10 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                            </div>
-
-                            <div className="relative">
-                                <motion.button
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    className="relative bg-white p-2 rounded-xl text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
-                                    onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                                >
-                                    <Bell className="h-6 w-6" />
-                                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    4
-                  </span>
-                                </motion.button>
-                            </div>
-
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center cursor-pointer shadow-lg"
-                            >
-                                {firstName && lastName && (
-                                    <span className="font-semibold text-lg">
-                    {firstName.charAt(0)}
-                                        {lastName.charAt(0)}
-                  </span>
-                                )}
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-            </motion.header>
+            <Header
+                isSidebarOpen={isSidebarOpen}
+                searchTerm={searchTerm}
+                userData={userData}
+                onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+                onSearchChange={setSearchTerm}
+                onNotificationToggle={() => setIsNotificationOpen(!isNotificationOpen)}
+            />
 
             <div className="flex flex-1 overflow-hidden">
-                {/* Sidebar */}
-                <motion.nav
-                    initial={{ width: isSidebarOpen ? 256 : 64 }}
-                    animate={{ width: isSidebarOpen ? 256 : 64 }}
-                    transition={{ duration: 0.3 }}
-                    className={`bg-white shadow-xl flex flex-col z-20 ${isSidebarOpen ? "" : "absolute inset-y-0 left-0"}`}
-                >
-                    <div className="flex-grow overflow-y-auto p-6">
-                        <nav className="space-y-4">
-                            {navItems.map((item) => (
-                                <motion.button
-                                    key={item.id}
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => setActiveSection(item.id)}
-                                    className={`w-full p-3 rounded-xl transition-all duration-300 group ${
-                                        activeSection === item.id
-                                            ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
-                                            : "bg-white text-gray-600 hover:bg-gray-50"
-                                    } ${isSidebarOpen ? "flex items-center" : "flex justify-center"}`}
-                                >
-                                    <item.icon className={`w-5 h-5 ${isSidebarOpen ? "mr-3" : ""}`} />
-                                    {isSidebarOpen && (
-                                        <div className="text-left">
-                                            <div className="font-medium">{item.label}</div>
-                                            <div className={`text-xs ${activeSection === item.id ? "text-white/80" : "text-gray-500"}`}>
-                                                {item.description}
-                                            </div>
-                                        </div>
-                                    )}
-                                </motion.button>
-                            ))}
-                        </nav>
-                    </div>
+                <Sidebar
+                    isOpen={isSidebarOpen}
+                    activeSection={activeSection}
+                    onSectionChange={setActiveSection}
+                    onLogout={() => {
+                        logout()
+                        navigate('/login')
+                    }}
+                />
 
-                    <div className="p-6 border-t border-gray-100">
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className={`w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center ${isSidebarOpen ? "justify-center" : ""}`}
-                            onClick={() => {
-                                logout();
-                                navigate('/login');
-                            }}
-
-                        >
-                            <LogOut className="w-5 h-5" />
-                            {isSidebarOpen && <span className="font-medium ml-2">Déconnexion</span>}
-                        </motion.button>
-                    </div>
-                </motion.nav>
-
-                {/* Main Content */}
                 <main className="flex-1 overflow-y-auto">
                     <div className="max-w-7xl mx-auto">
                         <AnimatePresence mode="wait">
@@ -283,83 +340,11 @@ export const HomePage = () => {
                     </div>
                 </main>
 
-                {/* Notifications Panel */}
-                <AnimatePresence>
-                    {isNotificationOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, x: 300 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 300 }}
-                            transition={{ type: "spring", stiffness: 100 }}
-                            className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-30"
-                        >
-                            <div className="p-6">
-                                <div className="flex justify-between items-center mb-6">
-                                    <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
-                                        <p className="text-sm text-gray-500">Vous avez 4 nouvelles notifications</p>
-                                    </div>
-                                    <motion.button
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={() => setIsNotificationOpen(false)}
-                                        className="p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors duration-200"
-                                    >
-                                        <X className="w-5 h-5" />
-                                    </motion.button>
-                                </div>
-
-                                <div className="space-y-4">
-                                    {notifications.map((notification, index) => (
-                                        <NotificationItem key={index} {...notification} />
-                                    ))}
-                                </div>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
-                                >
-                                    Voir toutes les notifications
-                                </motion.button>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <NotificationsPanel
+                    isOpen={isNotificationOpen}
+                    onClose={() => setIsNotificationOpen(false)}
+                />
             </div>
-
-            {/* Footer */}
-            {/*<footer className="bg-white border-t border-gray-100 py-4">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                        <div className="text-center md:text-left">
-                            <h3 className="font-bold text-lg mb-2">SyndicManager</h3>
-                            <p className="text-sm text-gray-500">
-                                &copy; 2023 Syndicat des Taxi. Tous droits réservés.
-                            </p>
-                        </div>
-
-                        <div className="flex space-x-6">
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors duration-200">
-                                Conditions d'utilisation
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors duration-200">
-                                Politique de confidentialité
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </footer>*/}
-
-            {/* <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="fixed bottom-8 right-8 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
-            >
-                <PlusCircle className="w-5 h-5 mr-2" />
-                <span className="font-medium">Nouveau Syndicat</span>
-            </motion.button>*/}
         </div>
     )
 }
-

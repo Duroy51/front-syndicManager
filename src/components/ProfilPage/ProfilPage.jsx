@@ -13,7 +13,11 @@ import {
     ExternalLink,
     LogIn,
     Loader2,
-    Download // nouvel import pour le téléchargement
+    Download,
+    Trophy,
+    Newspaper,
+    FileText,
+    HeartHandshake
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
@@ -21,10 +25,10 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 // Assurez-vous que ces images existent dans le dossier public
-import markerIcon from "/marker-icon.png";
+
 import markerIcon2x from "/marker-icon-2x.png";
 import markerShadow from "/marker-shadow.png";
-
+import markerIcon from "../../../public/marker-icon.png";
 import { Button, Alert } from "antd";
 
 // Configuration de l'icône par défaut pour Leaflet
@@ -287,6 +291,7 @@ const branchOffices = [
     },
 ];
 
+// eslint-disable-next-line react/prop-types
 export const SyndicatProfile = ({ syndicat }) => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
@@ -298,275 +303,302 @@ export const SyndicatProfile = ({ syndicat }) => {
         currentPage * membersPerPage
     );
 
+    // Nouvelle section : Historique du syndicat
+    const timeline = [
+        { year: 1950, event: "Fondation du syndicat" },
+        { year: 1972, event: "Première convention collective nationale" },
+        { year: 1998, event: "Ouverture de la première antenne régionale" },
+        { year: 2015, event: "Adoption de la charte écologique" },
+    ];
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-            {/* Cover Image */}
-            <div className="h-64 md:h-80 w-full relative">
-
-                <img
-                    src={syndicat.image || "/placeholder.svg"}
+            {/* En-tête amélioré */}
+            <div className="relative h-96 w-full overflow-hidden">
+                <motion.img
+                    src={syndicat.image||syndicatData.coverImage}
                     alt="Cover"
                     className="w-full h-full object-cover"
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end">
-                    <div className="container mx-auto px-4 py-6">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                                <img
-                                    src={syndicat.image || "/placeholder.svg"}
-                                    alt="Logo"
-                                    className="w-24 h-24 rounded-full border-4 border-white"
-                                />
-                                <div className="text-white">
-                                    <h1 className="text-3xl font-bold">{syndicat.name}</h1>
-                                    <p className="text-xl">{syndicatData.category}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end pb-12">
+                    <div className="container mx-auto px-4 relative">
+                        <motion.div
+                            className="flex items-center space-x-6"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                        >
+                            <img
+
+                                src={syndicat.image||syndicatData.coverImage}
+                                alt="Logo"
+                                className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl"
+                            />
+                            <div className="text-white">
+                                <h1 className="text-4xl font-bold mb-2">{syndicat.name||syndicatData.name}</h1>
+                                <div className="flex items-center space-x-4">
+                                    <span className="px-4 py-1 bg-blue-600/80 rounded-full text-sm">
+                                        {syndicat.category||syndicatData.category}
+                                    </span>
+                                    <span className="flex items-center">
+                                        <Trophy className="h-5 w-5 mr-2" />
+                                        Membre d'or depuis 2018
+                                    </span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
+
+                <motion.button
+                    className="absolute top-6 right-6 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2 group"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate("/register")}
+                >
+                    <LogIn className="h-6 w-6 transition-transform group-hover:rotate-12" />
+                    <span className="font-semibold">Espace Membre</span>
+                </motion.button>
             </div>
 
-            <motion.button
-                className="fixed top-4 right-4 px-6 py-3 bg-yellow-400 text-black text-lg font-bold rounded-full shadow-lg hover:bg-yellow-300 transition duration-300 flex items-center space-x-2 z-50"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{
-                    boxShadow: [
-                        "0px 0px 0px 0px rgba(0,0,0,0.2)",
-                        "0px 0px 0px 10px rgba(0,0,0,0)",
-                    ],
-                }}
-                transition={{
-                    duration: 1,
-                    repeat: Number.POSITIVE_INFINITY,
-                    repeatType: "reverse",
-                }}
-                onClick={() => navigate("/register")}
-            >
-                <LogIn className="w-6 h-6" />
-                <span>Espace Membre</span>
-            </motion.button>
-
             <div className="container mx-auto px-4 py-12">
-                <div className="grid gap-8 md:grid-cols-3">
-                    {/* Left column */}
-                    <div className="md:col-span-2 space-y-8">
-                        {/* About section */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">À propos</h2>
-                            <p className="text-gray-600">{syndicatData.description}</p>
-                        </section>
+                <div className="grid gap-12 lg:grid-cols-3">
+                    {/* Colonne principale améliorée */}
+                    <div className="lg:col-span-2 space-y-12">
+                        {/* Section À propos redessinée */}
+                        <motion.section
+                            className="bg-white rounded-2xl shadow-xl p-8"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                        >
+                            <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                <HeartHandshake className="h-8 w-8 mr-3 text-blue-600" />
+                                Notre Mission
+                            </h2>
+                            <p className="text-lg text-gray-700 leading-relaxed">
+                                {syndicatData.description}
+                            </p>
+                        </motion.section>
 
-                        {/* Stats section */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">Statistiques</h2>
-                            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                                {stats.map((stat) => (
-                                    <div key={stat.name} className="text-center">
-                                        <div className="text-2xl font-semibold text-blue-600">
-                                            {stat.value}
-                                        </div>
-                                        <div className="text-sm text-gray-500">{stat.name}</div>
+                        {/* Statistiques enrichies */}
+                        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {stats.map((stat) => (
+                                <motion.div
+                                    key={stat.name}
+                                    className="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-blue-600"
+                                    whileHover={{ y: -5 }}
+                                >
+                                    <div className="text-4xl font-bold text-blue-600 mb-2">
+                                        {stat.value}
                                     </div>
-                                ))}
-                            </div>
+                                    <div className="text-sm font-medium text-gray-500">
+                                        {stat.name}
+                                    </div>
+                                </motion.div>
+                            ))}
                         </section>
 
-                        {/* Branch Offices Map */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">Nos Antennes</h2>
-                            <BranchOfficesMap />
-                        </section>
-
-                        {/* Certifications et Récompenses */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">Activités récentes</h2>
-                            <div className="space-y-4">
-                                {activities.map((activity) => (
-                                    <div key={activity.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                                        <img
-                                            src={activity.image || "/placeholder.svg"}
-                                            alt={activity.title}
-                                            className="w-24 h-24 object-cover rounded-md"
-                                        />
-                                        <div>
-                                            <h3 className="font-semibold text-lg">{activity.title}</h3>
-                                            <p className="text-sm text-gray-500">
-                                                {activity.date} - {activity.type}
+                        {/* Nouvelle section Timeline */}
+                        <section className="bg-white rounded-2xl shadow-xl p-8">
+                            <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
+                                <FileText className="h-8 w-8 mr-3 text-blue-600" />
+                                Notre Histoire
+                            </h2>
+                            <div className="relative pl-8 border-l-2 border-blue-100 space-y-8">
+                                {timeline.map((item, index) => (
+                                    <div key={index} className="relative">
+                                        <div className="absolute w-4 h-4 bg-blue-600 rounded-full -left-[25px] top-2 border-4 border-white shadow"></div>
+                                        <div className="pl-6">
+                                            <div className="text-xl font-semibold text-blue-900">
+                                                {item.year}
+                                            </div>
+                                            <p className="mt-1 text-gray-600">
+                                                {item.event}
                                             </p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </section>
+
+                        {/* Carte interactive améliorée */}
+                        <section className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                            <div className="p-8 pb-0">
+                                <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                    <MapPin className="h-8 w-8 mr-3 text-blue-600" />
+                                    Nos Implantations
+                                </h2>
+                            </div>
+                            <BranchOfficesMap />
+                        </section>
+
+                        {/* Activités redessinées */}
+                        <section className="bg-white rounded-2xl shadow-xl p-8">
+                            <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
+                                <Calendar className="h-8 w-8 mr-3 text-blue-600" />
+                                Agenda Syndical
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {activities.map((activity) => (
+                                    <motion.div
+                                        key={activity.id}
+                                        className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-shadow"
+                                        whileHover={{ scale: 1.02 }}
+                                    >
+                                        <img
+                                            src={activity.image}
+                                            alt={activity.title}
+                                            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                                        />
+                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 p-6">
+                                            <h3 className="text-lg font-semibold text-white">
+                                                {activity.title}
+                                            </h3>
+                                            <div className="flex items-center mt-2 text-blue-100">
+                                                <Calendar className="h-4 w-4 mr-2" />
+                                                {activity.date}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </section>
                     </div>
 
-                    {/* Right column */}
-                    <div className="space-y-8">
-                        {/* Contact information */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                                Informations de contact
+                    {/* Colonne latérale améliorée */}
+                    <div className="space-y-12">
+                        {/* Contact enrichi */}
+                        <section className="bg-white rounded-2xl shadow-xl p-8">
+                            <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                <Mail className="h-8 w-8 mr-3 text-blue-600" />
+                                Nous Contacter
                             </h2>
-                            <div className="space-y-4">
-                                <div className="flex items-center space-x-2">
-                                    <Mail className="h-5 w-5 text-blue-600" />
-                                    <span>{syndicatData.email}</span>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <Phone className="h-5 w-5 text-blue-600" />
-                                    <span>{syndicatData.phone}</span>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <MapPin className="h-5 w-5 text-blue-600" />
-                                    <span>{syndicatData.address}</span>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <ExternalLink className="h-5 w-5 text-blue-600" />
-                                    <a
-                                        href={`https://${syndicatData.website}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-600 hover:underline"
+                            <div className="space-y-5">
+                                {[
+                                    { icon: Mail, value: syndicatData.email, type: 'email' },
+                                    { icon: Phone, value: syndicatData.phone, type: 'tel' },
+                                    { icon: MapPin, value: syndicatData.address },
+                                    { icon: ExternalLink, value: syndicatData.website, type: 'website' },
+                                ].map((item, index) => (
+                                    <motion.a
+                                        key={index}
+                                        href={item.type === 'email' ? `mailto:${item.value}` :
+                                            item.type === 'tel' ? `tel:${item.value}` :
+                                                item.type === 'website' ? `https://${item.value}` : '#'}
+                                        className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors"
+                                        whileHover={{ x: 5 }}
                                     >
-                                        {syndicatData.website}
-                                    </a>
-                                </div>
+                                        <item.icon className="h-6 w-6 text-blue-600 mr-4" />
+                                        <span className="text-gray-700">{item.value}</span>
+                                    </motion.a>
+                                ))}
                             </div>
                         </section>
 
-                        {/* Members section */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                                Membres clés
+                        {/* Membres clés améliorés */}
+                        <section className="bg-white rounded-2xl shadow-xl p-8">
+                            <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                <Users className="h-8 w-8 mr-3 text-blue-600" />
+                                Équipe Directrice
                             </h2>
-                            <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-4">
                                 {paginatedMembers.map((member) => (
-                                    <div
+                                    <motion.div
                                         key={member.id}
-                                        className="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-100"
+                                        className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors"
+                                        whileHover={{ scale: 1.02 }}
                                     >
                                         <img
-                                            src={member.avatar || "/placeholder.svg"}
+                                            src={member.avatar}
                                             alt={member.name}
-                                            className="w-12 h-12 rounded-full"
+                                            className="w-14 h-14 rounded-xl object-cover"
                                         />
-                                        <div>
-                                            <div className="font-medium">{member.name}</div>
-                                            <div className="text-sm text-gray-500">{member.role}</div>
+                                        <div className="ml-4">
+                                            <div className="font-semibold text-gray-900">
+                                                {member.name}
+                                            </div>
+                                            <div className="text-sm text-blue-600">
+                                                {member.role}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
+                            {/* Pagination améliorée */}
                             {totalPages > 1 && (
-                                <div className="flex justify-between items-center mt-4">
-                                    <button
-                                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
-                                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                <div className="mt-6 flex justify-center items-center space-x-4">
+                                    <motion.button
+                                        className="p-2 rounded-lg hover:bg-gray-100"
+                                        onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
                                         disabled={currentPage === 1}
+                                        whileTap={{ scale: 0.95 }}
                                     >
-                                        <ChevronLeft className="h-4 w-4 mr-2 inline" />
-                                        Précédent
-                                    </button>
-                                    <span className="text-sm text-gray-500">
-                    Page {currentPage} sur {totalPages}
-                  </span>
-                                    <button
-                                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
-                                        onClick={() =>
-                                            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                                        }
+                                        <ChevronLeft className="h-6 w-6 text-gray-600" />
+                                    </motion.button>
+                                    <span className="text-sm font-medium text-gray-600">
+                                        Page {currentPage} / {totalPages}
+                                    </span>
+                                    <motion.button
+                                        className="p-2 rounded-lg hover:bg-gray-100"
+                                        onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
                                         disabled={currentPage === totalPages}
+                                        whileTap={{ scale: 0.95 }}
                                     >
-                                        Suivant
-                                        <ChevronRight className="h-4 w-4 ml-2 inline" />
-                                    </button>
+                                        <ChevronRight className="h-6 w-6 text-gray-600" />
+                                    </motion.button>
                                 </div>
                             )}
                         </section>
 
-                        {/* Membership growth */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                                Croissance des adhésions
+                        {/* Nouvelle section : Actualités */}
+                        <section className="bg-white rounded-2xl shadow-xl p-8">
+                            <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                <Newspaper className="h-8 w-8 mr-3 text-blue-600" />
+                                Dernières Actualités
                             </h2>
-                            <p className="text-sm text-gray-500 mb-4">
-                                Progression sur les 12 derniers mois
-                            </p>
-                            <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <div className="space-y-1">
-                                        <p className="text-sm font-medium">Nouveaux membres</p>
-                                        <p className="text-sm text-gray-500">+2,350 (+15%)</p>
+                            <div className="space-y-6">
+                                <article className="group relative overflow-hidden rounded-xl">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                        alt="Nouvelle convention"
+                                        className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                    <div className="p-4">
+                                        <h3 className="font-semibold text-lg mb-2">
+                                            Signature d'une nouvelle convention collective
+                                        </h3>
+                                        <p className="text-sm text-gray-500 line-clamp-3">
+                                            Une avancée historique pour les droits des travailleurs...
+                                        </p>
                                     </div>
-                                    <div className="text-right">
-                                        <p className="text-sm font-medium">15,000</p>
-                                        <p className="text-sm text-gray-500">Sur 250,000</p>
-                                    </div>
-                                </div>
-                                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div
-                                        className="bg-blue-600 h-2.5 rounded-full"
-                                        style={{ width: "15%" }}
-                                    ></div>
-                                </div>
+                                </article>
                             </div>
                         </section>
 
-                        {/* Quick actions */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                                Actions rapides
+                        {/* Documents officiels améliorés */}
+                        <section className="bg-white rounded-2xl shadow-xl p-8">
+                            <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                <FileText className="h-8 w-8 mr-3 text-blue-600" />
+                                Documents Officiels
                             </h2>
-                            <div className="space-y-2">
-                                <motion.button
-                                    className="w-full py-3 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center font-semibold"
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => navigate("/register")}
-                                >
-                                    <Users className="mr-2 h-5 w-5" />
-                                    Devenir membre
-                                </motion.button>
-                                <motion.button
-                                    className="w-full py-3 px-4 bg-white text-blue-600 border-2 border-blue-600 rounded-md hover:bg-blue-50 transition duration-300 flex items-center justify-center font-semibold"
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.98 }}
-                                >
-                                    <Calendar className="mr-2 h-5 w-5" />
-                                    Voir les événements
-                                </motion.button>
-                            </div>
-                        </section>
-
-                        {/* Nouveauté : Documents officiels */}
-                        <section className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                                Documents officiels
-                            </h2>
-                            <p className="text-gray-600 mb-4">
-                                Téléchargez les statuts du syndicat et le règlement intérieur.
-                            </p>
-                            <div className="flex flex-col gap-4">
-                                <a
-                                    href="/statuts.pdf"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                                >
-                                    <Download className="mr-2 h-5 w-5" />
-                                    Télécharger les statuts
-                                </a>
-                                <a
-                                    href="/reglement.pdf"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                                >
-                                    <Download className="mr-2 h-5 w-5" />
-                                    Télécharger le règlement intérieur
-                                </a>
+                            <div className="space-y-4">
+                                {['Statuts du syndicat', 'Règlement intérieur', 'Rapport annuel'].map((doc, index) => (
+                                    <motion.a
+                                        key={index}
+                                        href="#"
+                                        className="flex items-center justify-between p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors"
+                                        whileHover={{ x: 5 }}
+                                    >
+                                        <div className="flex items-center">
+                                            <FileText className="h-5 w-5 text-blue-600 mr-3" />
+                                            <span className="text-gray-700">{doc}</span>
+                                        </div>
+                                        <Download className="h-5 w-5 text-gray-400" />
+                                    </motion.a>
+                                ))}
                             </div>
                         </section>
                     </div>

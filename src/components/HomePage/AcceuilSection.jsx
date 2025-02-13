@@ -11,6 +11,7 @@ import {
     Bell,
     Briefcase,
     TrendingUp,
+    MapPin,
     Award,
     FileText,
     ChevronRight,
@@ -219,33 +220,101 @@ export const AcceuilSection = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
             <div className="container mx-auto px-4 py-8">
-                {/* Welcome Section */}
+                {/* Welcome Section améliorée */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center mb-12"
+                    className="text-center mb-12 relative"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                        Bienvenue, {firstName} {lastName} !
-                    </h1>
-                    <p className="text-gray-600 text-lg">
-                        Votre tableau de bord syndical personnalisé
-                    </p>
-                    {/* Bouton "Devenir Syndicaliste" */}
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setCreateSyndicatForm(true)}
-                        className="mt-6 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-full shadow-2xl hover:shadow-2xl transition-all duration-300 inline-flex items-center"
-                    >
-                        <Star className="w-6 h-6 mr-2" />
-                        Devenir Syndicaliste
-                    </motion.button>
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 opacity-30 blur-3xl -z-10"></div>
+                    <div className="max-w-3xl mx-auto">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                                Bienvenue, {firstName} {lastName} !
+                            </span>
+                            <div className="mt-3 w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
+                        </h1>
+                        <p className="text-lg text-gray-600 mb-6">
+                            Votre portail syndical personnalisé
+                            <span className="block mt-2 text-blue-600 flex items-center justify-center">
+                                <Sparkles className="h-5 w-5 mr-2" />
+                                Accès à 15+ syndicats actifs
+                            </span>
+                        </p>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={handleCreateSyndicat}
+                            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 inline-flex items-center group"
+                        >
+                            <Zap className="w-6 h-6 mr-2 transform group-hover:rotate-12 transition-transform" />
+                            <span>Lancer un nouveau syndicat</span>
+                        </motion.button>
+                    </div>
                 </motion.div>
 
-                {/* Stats Grid */}
+                {/* Nouvelle section Syndicat suggéré */}
                 <motion.div
-                    className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-12 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+                >
+                    <div className="flex flex-col md:flex-row">
+                        <div className="md:w-1/3 relative">
+                            <img
+                                src="https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                alt="Syndicat suggéré"
+                                className="w-full h-64 object-cover"
+                            />
+                            <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-medium shadow-sm flex items-center">
+                                <Star className="h-4 w-4 mr-1 text-yellow-500" />
+                                Recommandé
+                            </div>
+                        </div>
+                        <div className="md:w-2/3 p-8">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                                Syndicat National des Transporteurs Modernes
+                            </h2>
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <div className="flex items-center">
+                                    <Users className="h-5 w-5 text-blue-600 mr-2" />
+                                    <span>24,500 membres</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <MapPin className="h-5 w-5 text-blue-600 mr-2" />
+                                    <span>National</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <Shield className="h-5 w-5 text-blue-600 mr-2" />
+                                    <span>Certifié par l'État</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <Star className="h-5 w-5 text-blue-600 mr-2" />
+                                    <span>4.7/5 (428 avis)</span>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <motion.button
+                                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all flex items-center"
+                                    whileHover={{ scale: 1.05 }}
+                                >
+                                    <Briefcase className="h-5 w-5 mr-2" />
+                                    Rejoindre maintenant
+                                </motion.button>
+                                <motion.button
+                                    className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                                    whileHover={{ scale: 1.05 }}
+                                >
+                                    Explorer les avantages
+                                </motion.button>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Stats Grid améliorée */}
+                <motion.div
+                    className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
@@ -255,176 +324,25 @@ export const AcceuilSection = () => {
                             key={index}
                             variants={itemVariants}
                             whileHover={{ scale: 1.02 }}
-                            className="bg-white rounded-2xl shadow-lg overflow-hidden"
+                            className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
                         >
-                            <div className={`h-1 bg-gradient-to-r ${stat.gradient}`} />
+                            <div className={`h-2 bg-gradient-to-r ${stat.gradient}`} />
                             <div className="p-6">
                                 <div className="flex items-center justify-between mb-4">
-                                    <div className={`p-3 rounded-xl ${stat.bgColor}`}>
+                                    <div className={`p-3 rounded-xl ${stat.bgColor} shadow-sm`}>
                                         <stat.icon className={`h-6 w-6 ${stat.color}`} />
                                     </div>
-                                    <div className="flex items-center text-sm font-medium text-green-600">
-                                        <TrendingUp className="w-4 h-4 mr-1" />
+                                    <span className="text-sm font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">
                                         {stat.trend}
-                                    </div>
+                                    </span>
                                 </div>
-                                <h3 className="text-gray-600 text-sm mb-2">{stat.title}</h3>
+                                <h3 className="text-gray-600 text-sm mb-2 font-medium">{stat.title}</h3>
                                 <p className="text-3xl font-bold text-gray-800">{stat.value}</p>
                             </div>
                         </motion.div>
                     ))}
                 </motion.div>
 
-                {/* Quick Access Section */}
-                <div className="mt-12">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-bold text-gray-800">
-                            Accès rapide
-                        </h2>
-                        {/* Vous pouvez conserver ou supprimer d'autres boutons ici */}
-                    </div>
-
-                    <motion.div
-                        className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                    >
-                        {quickAccess.map((item, index) => (
-                            <motion.div
-                                key={index}
-                                variants={itemVariants}
-                                whileHover={{ scale: 1.02 }}
-                                className="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer group"
-                            >
-                                <div className={`h-1 bg-gradient-to-r ${item.gradient}`} />
-                                <div className="p-6">
-                                    <div className="flex items-center mb-4">
-                                        <div className={`p-3 rounded-xl ${item.bgColor}`}>
-                                            <item.icon className={`h-6 w-6 ${item.color}`} />
-                                        </div>
-                                        <ChevronRight className={`ml-auto h-5 w-5 ${item.color} opacity-0 group-hover:opacity-100 transition-all duration-300`} />
-                                    </div>
-                                    <h3 className="font-semibold text-gray-800 mb-2">{item.title}</h3>
-                                    <p className="text-sm text-gray-600">{item.description}</p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
-
-                {/* Activities and Events Section */}
-                <div className="mt-12 grid gap-6 lg:grid-cols-3">
-                    {/* Recent Activities */}
-                    <div className="lg:col-span-2">
-                        <motion.div
-                            whileHover={{ scale: 1.01 }}
-                            className="bg-white rounded-2xl shadow-lg overflow-hidden h-full"
-                        >
-                            <div className="h-1 bg-gradient-to-r from-green-500 to-emerald-600" />
-                            <div className="p-6">
-                                <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-800">
-                                        Activités récentes
-                                    </h2>
-                                    <div className="flex space-x-2">
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className={`px-4 py-2 rounded-xl transition-colors duration-200 ${
-                                                activeTab === "activities"
-                                                    ? "bg-green-500 text-white"
-                                                    : "text-gray-600 hover:bg-gray-100"
-                                            }`}
-                                            onClick={() => setActiveTab("activities")}
-                                        >
-                                            <Activity className="w-5 h-5" />
-                                        </motion.button>
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className={`px-4 py-2 rounded-xl transition-colors duration-200 ${
-                                                activeTab === "notifications"
-                                                    ? "bg-green-500 text-white"
-                                                    : "text-gray-600 hover:bg-gray-100"
-                                            }`}
-                                            onClick={() => setActiveTab("notifications")}
-                                        >
-                                            <Bell className="w-5 h-5" />
-                                        </motion.button>
-                                    </div>
-                                </div>
-
-                                <motion.div
-                                    variants={containerVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    className="space-y-4"
-                                >
-                                    {recentActivities.map((activity, index) => (
-                                        <motion.div
-                                            key={index}
-                                            variants={itemVariants}
-                                            whileHover={{ scale: 1.02 }}
-                                            className="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 transition-all duration-200"
-                                        >
-                                            <div className="flex items-center">
-                                                <div className={`p-3 rounded-xl ${activity.bgColor}`}>
-                                                    <activity.icon className={`h-5 w-5 ${activity.color}`} />
-                                                </div>
-                                                <div className="ml-4 flex-1">
-                                                    <h3 className="font-semibold text-gray-800">{activity.title}</h3>
-                                                    <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
-                                                    <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
-                                                </div>
-                                                <ChevronRight className="w-5 h-5 text-gray-400" />
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </motion.div>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Upcoming Events */}
-                    <div>
-                        <motion.div
-                            whileHover={{ scale: 1.01 }}
-                            className="bg-white rounded-2xl shadow-lg overflow-hidden h-full"
-                        >
-                            <div className="h-1 bg-gradient-to-r from-purple-500 to-pink-600" />
-                            <div className="p-6">
-                                <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                                    Prochains événements
-                                </h2>
-                                <motion.div
-                                    variants={containerVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    className="space-y-4"
-                                >
-                                    {upcomingEvents.map((event, index) => (
-                                        <motion.div
-                                            key={index}
-                                            variants={itemVariants}
-                                            whileHover={{ scale: 1.02 }}
-                                            className="rounded-xl overflow-hidden cursor-pointer group"
-                                        >
-                                            <div className={`bg-gradient-to-r ${event.gradient} p-4 text-white`}>
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <event.icon className="w-5 h-5" />
-                                                    <span className="text-sm opacity-75">{event.date}</span>
-                                                </div>
-                                                <h3 className="font-semibold">{event.title}</h3>
-                                                <p className="text-sm opacity-75 mt-1">{event.description}</p>
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </motion.div>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
 
                 {/* Modal */}
                 <AnimatePresence>
