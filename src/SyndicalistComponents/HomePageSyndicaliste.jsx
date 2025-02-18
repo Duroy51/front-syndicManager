@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building, Search,Bell,Settings,Home,Users,Compass,ChevronRight,Calendar,FileText,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
+import { Building,Edit, Search,Bell,Settings,Home,Users,Compass,ChevronRight,Calendar,FileText,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
 import { AcceuilSection } from "../components/HomePage/AcceuilSection.jsx"
 import { MesSyndicats } from "../components/HomePage/MesSyndicatSection.jsx"
 import { Explorer } from "../components/HomePage/ExploreSection.jsx"
 import { SyndicatConfigSection } from "./SyndicatConfigSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
+import {SyndicatManagement} from "./SyndicatConfig/SyndicatConfig.jsx";
+import {ProfilUser} from "../components/HomePage/ProfilUser/ProfilUser.jsx";
 
 const navItems = [
     {
@@ -13,7 +15,14 @@ const navItems = [
         icon: Home,
         label: "Accueil",
         gradient: "from-blue-500 to-indigo-600",
-        description: "Tableau de bord principal",
+        description: "Actualité",
+    },
+    {
+        id: "gestion",
+        icon: Edit,
+        label: "Gérer",
+        gradient: "from-blue-500 to-indigo-600",
+        description: "Gérez votre Syndicat",
     },
     {
         id: "syndicats",
@@ -31,13 +40,7 @@ const navItems = [
         /*gradient: "from-purple-500 to-pink-600",*/
         description: "Découvrir de nouveaux syndicats",
     },
-    {
-        id: "config",
-        icon: Settings,
-        label: "Configuration",
-        gradient: "from-blue-500 to-indigo-600",
-        description: "Configurer votre syndicat",
-    },
+
     {
         id: "parametres",
         icon: Settings,
@@ -126,22 +129,16 @@ export const SyndicalistHomePage = () => {
         switch (activeSection) {
             case "dashboard":
                 return <AcceuilSection />
+            case "gestion":
+                return <SyndicatManagement />
             case "syndicats":
                 return <MesSyndicats />
             case "explorer":
                 return <Explorer />
-            case "config":
-                    return <SyndicatConfigSection/>
+
             case "parametres":
-                return (
-                    <div className="text-center py-12">
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-md mx-auto">
-                            <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-800 mb-2">Paramètres en développement</h3>
-                            <p className="text-gray-600">Cette section sera bientôt disponible avec de nouvelles fonctionnalités.</p>
-                        </motion.div>
-                    </div>
-                )
+                return  <ProfilUser />
+
             default:
                 return null
         }

@@ -160,6 +160,13 @@ export const getFirstNameToken = () => {
     const decoded = decodeToken(token);
     return decoded?.nom || null;
 };
+export const getProfilFromToken = () => {
+    const token = getToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.profile || null;
+};
 
 /**
  * Récupère le nom de famille de l'utilisateur depuis le token.
