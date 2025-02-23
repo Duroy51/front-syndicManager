@@ -7,10 +7,11 @@ import {
     CheckCircle, FileText
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { logout, getFirstNameToken, getLastNameToken } from "../../services/AccountService"
+import { logout, getFirstNameToken, getLastNameToken, getProfilFromToken } from "../../services/AccountService"
 import { AcceuilSection } from "./AcceuilSection.jsx"
-import { MesSyndicats} from "./MesSyndicatSection.jsx"
-import { Explorer} from  "./ExploreSection.jsx"
+import { MesSyndicats } from "./MesSyndicatSection.jsx"
+import { Explorer } from "./ExploreSection.jsx"
+import { ProfilUser } from "./ProfilUser/ProfilUser.jsx"
 
 const navItems = [
     {
@@ -18,7 +19,7 @@ const navItems = [
         icon: Home,
         label: "Accueil",
         gradient: "from-blue-500 to-indigo-600",
-        description: "Tableau de bord principal",
+        description: "Actualité",
     },
     {
         id: "syndicats",
@@ -107,7 +108,7 @@ const SettingsPlaceholder = () => (
     </div>
 )
 
-const Header = ({ isSidebarOpen, searchTerm, userData, onSidebarToggle, onSearchChange, onNotificationToggle }) => (
+const Header = ({ isSidebarOpen, searchTerm, userData, onSidebarToggle, onSearchChange, onNotificationToggle, onProfileClick }) => (
     <motion.header
         className="bg-white shadow-lg z-20"
         initial={{ y: -50 }}
@@ -155,21 +156,22 @@ const Header = ({ isSidebarOpen, searchTerm, userData, onSidebarToggle, onSearch
                     >
                         <Bell className="h-6 w-6" />
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              4
-            </span>
+                            4
+                        </span>
                     </motion.button>
 
+                    {/* Modification : ajout de onClick pour afficher la section "Paramètres" */}
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center cursor-pointer shadow-lg"
+                        onClick={onProfileClick}
+                        className="w-10 h-10 rounded-full overflow-hidden cursor-pointer shadow-lg border-2 border-white"
                     >
-                        {userData?.firstName && userData?.lastName && (
-                            <span className="font-semibold text-lg">
-                {userData.firstName[0]}
-                                {userData.lastName[0]}
-              </span>
-                        )}
+                        <img
+                            src={userData?.profile}
+                            alt="Photo de profil"
+                            className="w-full h-full object-cover"
+                        />
                     </motion.div>
                 </div>
             </div>
@@ -280,7 +282,8 @@ export const HomePage = () => {
 
     const userData = useMemo(() => ({
         firstName: getFirstNameToken(),
-        lastName: getLastNameToken()
+        lastName: getLastNameToken(),
+        profile: getProfilFromToken(),
     }), [])
 
     useEffect(() => {
@@ -297,7 +300,7 @@ export const HomePage = () => {
             dashboard: <AcceuilSection />,
             syndicats: <MesSyndicats />,
             explorer: <Explorer />,
-            parametres: <SettingsPlaceholder />
+            parametres: <ProfilUser />
         }
         return sections[activeSection] || null
     }, [activeSection])
@@ -311,6 +314,7 @@ export const HomePage = () => {
                 onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)}
                 onSearchChange={setSearchTerm}
                 onNotificationToggle={() => setIsNotificationOpen(!isNotificationOpen)}
+                onProfileClick={() => setActiveSection("parametres")}
             />
 
             <div className="flex flex-1 overflow-hidden">

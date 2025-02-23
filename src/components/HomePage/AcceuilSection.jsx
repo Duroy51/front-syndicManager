@@ -1007,7 +1007,7 @@ export const AcceuilSection = () => {
                         className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                     >
                         <Zap className="w-6 h-6 inline-block mr-2" />
-                        Lancer un nouveau syndicat
+                        Lancer Votre syndicat
                     </motion.button>
                 </motion.div>
 

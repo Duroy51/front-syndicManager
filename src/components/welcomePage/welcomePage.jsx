@@ -1,10 +1,10 @@
-import React from 'react';
+import  {useState} from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { 
     Building, ArrowRight, Users, BarChart, MessageCircle, 
-    Shield, ChevronRight, Star, Zap, Award, Heart, 
-    CheckCircle, Clock, Gift, Sparkles, Globe
+    Shield, ChevronRight, Star, Zap, Award, Heart, Calendar,
+    CheckCircle, Clock, Gift, Sparkles, Globe, Bookmark,MapPin
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -113,6 +113,71 @@ export const WelcomePage = () => {
     const navigate = useNavigate();
     const { scrollYProgress } = useScroll();
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    // État pour les événements
+
+
+
+    // Données fictives pour les événements
+    const [events] = useState([
+        {
+            id: 1,
+            title: "Assemblée Générale Annuelle",
+            description: "Rejoignez-nous pour discuter des réalisations de l'année écoulée et planifier l'avenir.",
+            location: "Salle de conférence principale, 123 Rue du Syndicat",
+            startDate: new Date("2023-06-15T09:00:00"),
+            author: {
+                name: "Marie Dupont",
+                profileImage: "https://i.pravatar.cc/150?img=1"
+            }
+        },
+        {
+            id: 2,
+            title: "Formation sur les Droits du Travail",
+            description: "Session de formation sur les dernières mises à jour des lois du travail.",
+            location: "Salle de formation B, 45 Avenue des Travailleurs",
+            startDate: new Date("2023-07-10T14:00:00"),
+            author: {
+                name: "Pierre Martin",
+                profileImage: "https://i.pravatar.cc/150?img=2"
+            }
+        }
+    ]);
+
+    // Données fictives pour les publications
+    const [posts] = useState([
+        {
+            id: 1,
+            author: {
+                name: "Jean Dupont",
+                avatar: "https://i.pravatar.cc/150?img=4"
+            },
+            content: "Aujourd'hui, nous avons eu une réunion productive sur les nouvelles mesures de sécurité. Qu'en pensez-vous ?",
+            image: "https://picsum.photos/800/400",
+            timestamp: "Il y a 2 heures",
+            likes: 15,
+            comments: [
+                {
+                    author: {
+                        name: "Marie Martin",
+                        avatar: "https://i.pravatar.cc/150?img=5"
+                    },
+                    content: "Excellente initiative ! J'ai hâte de voir les résultats."
+                }
+            ]
+        },
+        {
+            id: 2,
+            author: {
+                name: "Sophie Lefebvre",
+                avatar: "https://i.pravatar.cc/150?img=6"
+            },
+            content: "Rappel : la formation sur les nouveaux outils de communication aura lieu demain à 14h.",
+            image: "https://picsum.photos/800/401",
+            timestamp: "Il y a 5 heures",
+            likes: 8,
+            comments: []
+        }
+    ]);
 
     return (
         <div className="bg-gray-50 overflow-hidden">
@@ -285,7 +350,140 @@ export const WelcomePage = () => {
                         />
                     </div>
                 </div>
+
+                <Section className="bg-white">
+                <div className="container mx-auto px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                            Actualités syndicales
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                            Découvrez les dernières initiatives et débats des syndicats engagés
+                        </p>
+                    </motion.div>
+
+                    {/* Section Événements */}
+                    <div className="mb-24">
+                        <div className="flex justify-between items-center mb-8">
+                            <h3 className="text-2xl font-bold text-gray-800 flex items-center">
+                                <Calendar className="w-6 h-6 mr-2 text-blue-500" />
+                                Événements à venir
+                            </h3>
+                            <Button
+                                onClick={() => navigate('/events')}
+                                className="flex items-center"
+                            >
+                                Voir tout
+                                <ChevronRight className="ml-2 w-4 h-4" />
+                            </Button>
+                        </div>
+
+                        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {events.slice(0, 2).map((event) => (
+                                <motion.div
+                                    key={event.id}
+                                    whileHover={{ y: -5 }}
+                                    className="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all"
+                                >
+                                    <div className="flex items-start mb-4">
+                                        <img
+                                            src={event.author.profileImage}
+                                            alt={event.author.name}
+                                            className="w-12 h-12 rounded-full object-cover mr-4"
+                                        />
+                                        <div>
+                                            <h4 className="font-bold text-lg">{event.title}</h4>
+                                            <p className="text-sm text-gray-500">
+                                                {event.startDate.toLocaleDateString('fr-FR', {
+                                                    day: 'numeric',
+                                                    month: 'long'
+                                                })}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="text-gray-600 mb-4 line-clamp-3">
+                                        {event.description}
+                                    </p>
+                                    <div className="flex items-center text-sm text-gray-500">
+                                        <MapPin className="w-4 h-4 mr-1" />
+                                        <span>{event.location}</span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+
+                    {/* Section Publications */}
+                    <div>
+                        <div className="flex justify-between items-center mb-8">
+                            <h3 className="text-2xl font-bold text-gray-800 flex items-center">
+                                <MessageCircle className="w-6 h-6 mr-2 text-blue-500" />
+                                Dernières publications
+                            </h3>
+                            <Button
+                                onClick={() => navigate('/publications')}
+                                className="flex items-center"
+                            >
+                                Voir tout
+                                <ChevronRight className="ml-2 w-4 h-4" />
+                            </Button>
+                        </div>
+
+                        <motion.div className="space-y-6">
+                            {posts.slice(0, 2).map((post) => (
+                                <motion.div
+                                    key={post.id}
+                                    whileHover={{ x: 5 }}
+                                    className="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all"
+                                >
+                                    <div className="flex items-start mb-4">
+                                        <img
+                                            src={post.author.avatar}
+                                            alt={post.author.name}
+                                            className="w-12 h-12 rounded-full object-cover mr-4"
+                                        />
+                                        <div className="flex-1">
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <h4 className="font-bold text-lg">{post.author.name}</h4>
+                                                    <p className="text-sm text-gray-500">{post.timestamp}</p>
+                                                </div>
+                                                <Bookmark className="text-gray-400 hover:text-blue-500 cursor-pointer" />
+                                            </div>
+                                            <p className="text-gray-600 mt-2 line-clamp-3">
+                                                {post.content}
+                                            </p>
+                                            {post.image && (
+                                                <img
+                                                    src={post.image}
+                                                    alt="Publication"
+                                                    className="mt-4 rounded-lg w-full h-48 object-cover"
+                                                />
+                                            )}
+                                            <div className="flex items-center gap-4 mt-4 text-sm text-gray-500">
+                                                <div className="flex items-center">
+                                                    <Heart className="w-4 h-4 mr-1" />
+                                                    {post.likes} j'aime
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <MessageCircle className="w-4 h-4 mr-1" />
+                                                    {post.comments.length} commentaires
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+                </div>
+                </Section>
             </Section>
+
 
             {/* CTA Section */}
             <Section className="bg-gradient-to-br from-blue-50 via-white to-indigo-50">
