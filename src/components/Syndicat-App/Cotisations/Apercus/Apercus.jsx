@@ -2,11 +2,11 @@ import {Eye, EyeOff, FileText, Plus} from "lucide-react";
 import React, {useState} from "react";
 import {motion} from "framer-motion";
 
-
+import { useTranslation } from "react-i18next";
 export const Apercus = () => {
 
-
-    const [showBalance, setShowBalance] = useState(false)
+    const { t }= useTranslation();
+   const [showBalance, setShowBalance] = useState(false)
     const financialData = {
         balance: 150000,
         income: 50000,
@@ -42,20 +42,20 @@ export const Apercus = () => {
                 </div>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-lg font-semibold mb-4">Revenus vs Dépenses</h3>
+                <h3 className="text-lg font-semibold mb-4">{t("revenusDepenses")}</h3>
                 <div className="flex justify-between items-center">
                     <div>
-                        <p className="text-green-600">Revenus</p>
+                        <p className="text-green-600">{t("revenus")}</p>
                         <p className="text-2xl font-semibold">{financialData.income.toLocaleString()} €</p>
                     </div>
                     <div>
-                        <p className="text-red-600">Dépenses</p>
+                        <p className="text-red-600">{t("depenses")}</p>
                         <p className="text-2xl font-semibold">{financialData.expenses.toLocaleString()} €</p>
                     </div>
                 </div>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md md:col-span-2">
-                <h3 className="text-lg font-semibold mb-4">Transactions récentes</h3>
+                <h3 className="text-lg font-semibold mb-4">{t("transactionsRecentes")}</h3>
                 <ul className="space-y-3">
                     {recentTransactions.map(transaction => (
                         <li key={transaction.id} className="flex justify-between items-center border-b pb-2">

@@ -5,6 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import {AppRoute} from "./router/appRouter";
 import {BrowserRouter} from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import './i18n';//importer i18n pour initialiser les traductions
+
+import App from './components/App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

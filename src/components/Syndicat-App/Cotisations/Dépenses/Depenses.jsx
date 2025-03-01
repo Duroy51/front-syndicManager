@@ -1,15 +1,13 @@
 import {Calendar, DollarSign, Edit2, FileText, Filter, Paperclip, PieChart, Plus, Trash2, Users} from "lucide-react";
 import {motion} from "framer-motion";
 import React, {useState} from "react";
-
+import { useTranslation } from 'react-i18next'
 
 export const Depenses = () => {
-
-
+    const { t } = useTranslation()
     const [showExpenseForm, setShowExpenseForm] = useState(false)
     const [filterCategory, setFilterCategory] = useState('')
     const [filterDate, setFilterDate] = useState('')
-
 
     const expenseCategories = [
         { id: 'maintenance', label: 'Entretien' },
@@ -28,11 +26,11 @@ export const Depenses = () => {
     const ExpenseForm = () => (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                <h3 className="text-xl font-semibold mb-4">Ajouter une dépense</h3>
+                <h3 className="text-xl font-semibold mb-4">{t('ajouterUneDépense')}</h3>
                 <form>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="amount">
-                            Montant
+                            {t('montant')}
                         </label>
                         <input
                             type="number"
@@ -43,7 +41,7 @@ export const Depenses = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="category">
-                            Catégorie
+                            {t('catégorie')}
                         </label>
                         <select
                             id="category"
@@ -56,7 +54,7 @@ export const Depenses = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="date">
-                            Date
+                            {t('date')}
                         </label>
                         <input
                             type="date"
@@ -66,30 +64,30 @@ export const Depenses = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="beneficiary">
-                            Bénéficiaire
+                            {t('bénéficiaire')}
                         </label>
                         <input
                             type="text"
                             id="beneficiary"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Nom du bénéficiaire"
+                            placeholder={t('nomDuBénéficiaire')}
                         />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="receipt">
-                            Justificatif
+                            {t('justificatif')}
                         </label>
                         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                             <div className="space-y-1 text-center">
                                 <Paperclip className="mx-auto h-12 w-12 text-gray-400" />
                                 <div className="flex text-sm text-gray-600">
                                     <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                        <span>Télécharger un fichier</span>
+                                        <span>{t('téléchargerUnFichier')}</span>
                                         <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                                     </label>
-                                    <p className="pl-1">ou glisser-déposer</p>
+                                    <p className="pl-1">{t('ouGlisserDéposer')}</p>
                                 </div>
-                                <p className="text-xs text-gray-500">PNG, JPG, PDF jusqu'à 10MB</p>
+                                <p className="text-xs text-gray-500">{t('pngJpgPdfJusquÀ10MB')}</p>
                             </div>
                         </div>
                     </div>
@@ -99,21 +97,19 @@ export const Depenses = () => {
                             onClick={() => setShowExpenseForm(false)}
                             className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            Annuler
+                            {t('annuler')}
                         </button>
                         <button
                             type="submit"
                             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            Enregistrer
+                            {t('enregistrer')}
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     )
-
-
 
     return (
         <div>
@@ -125,7 +121,7 @@ export const Depenses = () => {
                             onChange={(e) => setFilterCategory(e.target.value)}
                             className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="">Toutes les catégories</option>
+                            <option value="">{t('toutesLesCatégories')}</option>
                             {expenseCategories.map(category => (
                                 <option key={category.id} value={category.id}>{category.label}</option>
                             ))}
@@ -149,18 +145,18 @@ export const Depenses = () => {
                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
                 >
                     <Plus className="mr-2 h-5 w-5" />
-                    Ajouter une dépense
+                    {t('ajouterUneDépense')}
                 </motion.button>
             </div>
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                     <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bénéficiaire</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('date')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('catégorie')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('bénéficiaire')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('montant')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('actions')}</th>
                     </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">

@@ -6,7 +6,7 @@ import {
     Mail, Phone, MapPin, Calendar, Building, Shield,
     ChevronRight, Star, Award, TrendingUp, UserCheck
 } from 'lucide-react';
-
+import { useTranslation } from 'react-i18next';//importer le hook useTranslation
 const StatCard = ({ icon: Icon, value, label, color }) => (
     <motion.div
         whileHover={{ scale: 1.05 }}
@@ -53,6 +53,8 @@ export const MemberManagement = () => {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [selectedAction, setSelectedAction] = useState(null);
     const [selectedMember, setSelectedMember] = useState(null);
+    const { t } = useTranslation(); // Initialisation correcte du hook useTranslation
+
 
     const members = [
         { id: 1, name: 'Jean Dupont', email: 'jean@example.com', phone: '0123456789', address: '123 Rue de Paris', joinDate: '2021-05-15', status: 'active', role: 'Membre Senior', contributions: '12/12' },
@@ -88,25 +90,25 @@ export const MemberManagement = () => {
                     <StatCard
                         icon={Users}
                         value={members.length}
-                        label="Membres actifs"
+                        label={t('membresActifs')}
                         color="border-blue-500"
                     />
                     <StatCard
                         icon={UserCheck}
                         value="95%"
-                        label="Taux de participation"
+                        label={t('tauxParticipation')}
                         color="border-green-500"
                     />
                     <StatCard
                         icon={Award}
                         value="12"
-                        label="Membres du bureau"
+                        label={t('membresBureau')}
                         color="border-purple-500"
                     />
                     <StatCard
                         icon={TrendingUp}
                         value="+15%"
-                        label="Croissance mensuelle"
+                        label={t('croissanceMensuelle')}
                         color="border-orange-500"
                     />
                 </div>
@@ -116,11 +118,11 @@ export const MemberManagement = () => {
                         <table className="min-w-full">
                             <thead>
                                 <tr className="bg-gradient-to-r from-blue-50 to-indigo-50">
-                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Membre</th>
-                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Contact</th>
-                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Rôle</th>
-                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Statut</th>
-                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Actions</th>
+                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">{t('membre')}</th>
+                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">{t('contact')}</th>
+                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">{t('role')}</th>
+                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">{t('statut')}</th>
+                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">t{('actions')}</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -144,7 +146,7 @@ export const MemberManagement = () => {
                                                         <div className="text-sm font-semibold text-gray-900">{member.name}</div>
                                                         <div className="text-sm text-gray-500 flex items-center">
                                                             <Calendar className="w-4 h-4 mr-1 text-blue-500" />
-                                                            Depuis {member.joinDate}
+                                                            {t('depuis')} {member.joinDate}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -165,7 +167,7 @@ export const MemberManagement = () => {
                                                     <span className="text-sm text-gray-900">{member.role}</span>
                                                 </div>
                                                 <div className="text-sm text-gray-500">
-                                                    Cotisations : {member.contributions}
+                                                    {t('cotisations')} : {member.contributions}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
@@ -174,7 +176,7 @@ export const MemberManagement = () => {
                                                         ? 'bg-green-100 text-green-800'
                                                         : 'bg-red-100 text-red-800'
                                                 }`}>
-                                                    {member.status === 'active' ? 'Actif' : 'Suspendu'}
+                                                    {member.status === 'active' ? t('actif') : t('suspendu')}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4">
@@ -252,7 +254,7 @@ export const MemberManagement = () => {
                                             </div>
                                             <div className="flex items-center text-gray-600">
                                                 <Calendar className="w-4 h-4 mr-2 text-purple-500" />
-                                                Demande soumise le {request.requestDate}
+                                                {t('demandeSoumiseLe')} {request.requestDate}
                                             </div>
                                         </div>
                                     </div>
@@ -295,10 +297,10 @@ export const MemberManagement = () => {
                 >
                     <div>
                         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                            Gestion des Membres
+                            {t('gestionMembres')}
                         </h1>
                         <p className="text-gray-600 mt-2">
-                            Gérez efficacement les membres et les demandes d'adhésion
+                            {t('gererMembres')}
                         </p>
                     </div>
                     <motion.button
@@ -307,7 +309,7 @@ export const MemberManagement = () => {
                         className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center"
                     >
                         <UserPlus className="w-5 h-5 mr-2" />
-                        Ajouter un membre
+                        {t('ajouterMembre')}
                     </motion.button>
                 </motion.div>
 
@@ -315,13 +317,13 @@ export const MemberManagement = () => {
                     <TabButton
                         active={activeTab === 'members'}
                         icon={Users}
-                        label="Membres"
+                        label={t("membres")}
                         onClick={() => setActiveTab('members')}
                     />
                     <TabButton
                         active={activeTab === 'requests'}
                         icon={UserPlus}
-                        label="Demandes d'adhésion"
+                        label={t("demandesAdhesion")}
                         onClick={() => setActiveTab('requests')}
                     />
                 </div>
@@ -331,7 +333,7 @@ export const MemberManagement = () => {
                         <div className="relative flex-1">
                             <input
                                 type="text"
-                                placeholder="Rechercher un membre..."
+                                placeholder={t("rechercherMembre")}
                                 className="w-full pl-12 pr-4 py-3 bg-white rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -344,9 +346,9 @@ export const MemberManagement = () => {
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value)}
                             >
-                                <option value="all">Tous les statuts</option>
-                                <option value="active">Actif</option>
-                                <option value="suspended">Suspendu</option>
+                                <option value="all">{t("tousStatuts")}</option>
+                                <option value="active">{t("actif")}</option>
+                                <option value="suspended">{t("suspendu")}</option>
                             </select>
                             <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         </div>
@@ -386,12 +388,12 @@ export const MemberManagement = () => {
                                         <AlertTriangle className="w-6 h-6 text-red-600" />
                                     </div>
                                     <div className="ml-4">
-                                        <h2 className="text-2xl font-bold text-gray-800">Confirmer l'action</h2>
-                                        <p className="text-gray-600">Cette action ne peut pas être annulée</p>
+                                        <h2 className="text-2xl font-bold text-gray-800">{t('confirmerAction')}</h2>
+                                        <p className="text-gray-600">{t("cetteActionNePeutEtreannule")}</p>
                                     </div>
                                 </div>
                                 <p className="text-gray-700 mb-8">
-                                    Êtes-vous sûr de vouloir {selectedAction === 'suspend' ? 'suspendre' : 'retirer'} le membre <span className="font-semibold">{selectedMember?.name}</span> ?
+                                {t("etesVousSurDeVouloir")} {selectedAction === 'suspend' ? t('suspendre') : t('retirer')} {t("leMembre")} <span className="font-semibold">{selectedMember?.name}</span> ?
                                 </p>
                                 <div className="flex justify-end space-x-4">
                                     <motion.button
@@ -400,7 +402,7 @@ export const MemberManagement = () => {
                                         className="px-6 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200"
                                         onClick={() => setShowConfirmModal(false)}
                                     >
-                                        Annuler
+                                        {t("annuler")}
                                     </motion.button>
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
@@ -408,7 +410,7 @@ export const MemberManagement = () => {
                                         className="px-6 py-2 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
                                         onClick={confirmAction}
                                     >
-                                        Confirmer
+                                        {t("confirmer")}
                                     </motion.button>
                                 </div>
                             </motion.div>

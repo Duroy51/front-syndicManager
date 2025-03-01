@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { MemberManagement } from "../../Membres/Membres";
 import { Publications } from "../s'exprimer/Publication";
 import {getFirstNameToken, getOrganisationName} from "../../../services/AccountService.js";
-
+import { useTranslation } from 'react-i18next';
 const NotificationBadge = ({ count }) => (
     <motion.div
         initial={{ scale: 0 }}
@@ -64,6 +64,7 @@ const NotificationCard = ({ icon: Icon, title, message, time, type }) => {
 };
 
 export const SyndicatApp = () => {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState('événements');
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -89,23 +90,23 @@ export const SyndicatApp = () => {
     const notifications = [
         {
             icon: Calendar,
-            title: 'Nouvelle réunion',
-            message: 'Réunion mensuelle prévue pour demain à 10h',
-            time: 'Il y a 5 minutes',
+            title: t('nouvelleRéunion'),
+            message: t('réunionMensuellePrévue'),
+            time: t('ilYAA5Minutes'),
             type: 'info'
         },
         {
             icon: CheckCircle,
-            title: 'Cotisation reçue',
-            message: 'Votre cotisation du mois a été validée',
-            time: 'Il y a 30 minutes',
+            title: t('cotisationReçue'),
+            message: t('votreCotisationValidée'),
+            time: t('ilYAA30Minutes'),
             type: 'success'
         },
         {
             icon: AlertCircle,
-            title: 'Rappel important',
-            message: 'N\'oubliez pas de voter pour les nouvelles propositions',
-            time: 'Il y a 1 heure',
+            title: t('rappelImportant'),
+            message: t('nOubliezPasDeVoter'),
+            time: t('ilYAA1Heure'),
             type: 'warning'
         }
     ];
@@ -135,9 +136,9 @@ export const SyndicatApp = () => {
                             className="text-center mb-12"
                         >
                             <Shield className="w-16 h-16 text-blue-500 mx-auto mb-6" />
-                            <h1 className="text-4xl font-bold text-gray-800 mb-4">À propos de SyndicManager</h1>
+                            <h1 className="text-4xl font-bold text-gray-800 mb-4">{t('àProposDeSyndicManager')}</h1>
                             <p className="text-gray-600 max-w-2xl mx-auto">
-                                Votre plateforme de gestion syndicale moderne et efficace.
+                                {t('votrePlateformeDeGestion')}
                             </p>
                         </motion.div>
                     </div>
@@ -151,8 +152,8 @@ export const SyndicatApp = () => {
                             className="text-center"
                         >
                             <Building className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-                            <h2 className="text-2xl font-bold text-gray-800">Bienvenue sur SyndicManager</h2>
-                            <p className="text-gray-600 mt-2">Sélectionnez une section pour commencer</p>
+                            <h2 className="text-2xl font-bold text-gray-800">{t('bienvenueSurSyndicManager')}</h2>
+                            <p className="text-gray-600 mt-2">{t('sélectionnezUneSection')}</p>
                         </motion.div>
                     </div>
                 );
@@ -186,7 +187,7 @@ export const SyndicatApp = () => {
                             >
                                 <Building className="h-8 w-8 text-blue-500" />
                                 <h1 className="ml-2 text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                    SyndicManager
+                                    {t("SyndicManager")}
                                 </h1>
                             </motion.div>
                         </div>
@@ -282,7 +283,7 @@ export const SyndicatApp = () => {
                             onClick={() => navigate('/home')}
                         >
                             <Home className="mr-2 h-4 w-4"/>
-                            Acceuil
+                            {t('accueil')}
                         </motion.button>
                     </div>
 
@@ -318,8 +319,8 @@ export const SyndicatApp = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
-                                        <p className="text-sm text-gray-500">Vous avez 3 nouvelles notifications</p>
+                                        <h3 className="text-xl font-bold text-gray-800">{t('notifications')}</h3>
+                                        <p className="text-sm text-gray-500">{t('vousAvez3NouvellesNotifications')}</p>
                                     </div>
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
@@ -342,7 +343,7 @@ export const SyndicatApp = () => {
                                     whileTap={{ scale: 0.98 }}
                                     className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                                 >
-                                    Voir toutes les notifications
+                                    {t('voirToutesLesNotifications')}
                                 </motion.button>
                             </div>
                         </motion.div>

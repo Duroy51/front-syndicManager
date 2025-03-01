@@ -6,8 +6,10 @@ import {
     Users, CreditCard, Mail, Calendar, CheckCircle, XCircle,
     Paperclip, Trash2, Edit2
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export const FinanceManagement = () => {
+    const { t } = useTranslation()
     const [activeTab, setActiveTab] = useState('overview')
     const [showBalance, setShowBalance] = useState(false)
     const [showExpenseForm, setShowExpenseForm] = useState(false)
@@ -48,7 +50,7 @@ export const FinanceManagement = () => {
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="text-lg font-semibold mb-4">Solde actuel</h3>
+                            <h3 className="text-lg font-semibold mb-4">{t('soldeActuel')}</h3>
                             <div className="flex items-center justify-between">
                                 <span className="text-3xl font-bold">
                                     {showBalance
@@ -65,14 +67,14 @@ export const FinanceManagement = () => {
                             </div>
                         </div>
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="text-lg font-semibold mb-4">Cotisations vs Dépenses</h3>
+                            <h3 className="text-lg font-semibold mb-4">{t('cotisationsVsDépenses')}</h3>
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className="text-green-600">Cotisations</p>
+                                    <p className="text-green-600">{t('cotisations')}</p>
                                     <p className="text-2xl font-semibold">{financialData.cotisations.toLocaleString()} €</p>
                                 </div>
                                 <div>
-                                    <p className="text-red-600">Dépenses</p>
+                                    <p className="text-red-600">{t('dépenses')}</p>
                                     <p className="text-2xl font-semibold">{financialData.expenses.toLocaleString()} €</p>
                                 </div>
                             </div>
@@ -81,7 +83,7 @@ export const FinanceManagement = () => {
                 )
             case 'cotisations':
                 // Cotisations content (unchanged)
-                return <div>Contenu des cotisations</div>
+                return <div>{t('contenuCotisations')}</div>
             case 'expenses':
                 return (
                     <div>
@@ -93,7 +95,7 @@ export const FinanceManagement = () => {
                                         onChange={(e) => setFilterCategory(e.target.value)}
                                         className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
-                                        <option value="">Toutes les catégories</option>
+                                        <option value="">{t('toutesLesCatégories')}</option>
                                         {expenseCategories.map(category => (
                                             <option key={category.id} value={category.id}>{category.label}</option>
                                         ))}
@@ -117,18 +119,18 @@ export const FinanceManagement = () => {
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
                             >
                                 <Plus className="mr-2 h-5 w-5" />
-                                Ajouter une dépense
+                                {t('ajouterUneDépense')}
                             </motion.button>
                         </div>
                         <div className="bg-white rounded-lg shadow-md overflow-hidden">
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bénéficiaire</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('date')}</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('catégorie')}</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('bénéficiaire')}</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('montant')}</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('actions')}</th>
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -156,20 +158,20 @@ export const FinanceManagement = () => {
                     </div>
                 )
             case 'reports':
-                return <div>Contenu des rapports</div>
+                return <div>{t('contenuRapports')}</div>
             default:
-                return <div>Sélectionnez un onglet</div>
+                return <div>{t('sélectionnezUnOnglet')}</div>
         }
     }
 
     const ExpenseForm = () => (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                <h3 className="text-xl font-semibold mb-4">Ajouter une dépense</h3>
+                <h3 className="text-xl font-semibold mb-4">{t('ajouterUneDépense')}</h3>
                 <form>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="amount">
-                            Montant
+                            {t('montant')}
                         </label>
                         <input
                             type="number"
@@ -180,7 +182,7 @@ export const FinanceManagement = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="category">
-                            Catégorie
+                            {t('catégorie')}
                         </label>
                         <select
                             id="category"
@@ -193,7 +195,7 @@ export const FinanceManagement = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="date">
-                            Date
+                            {t('date')}
                         </label>
                         <input
                             type="date"
@@ -203,30 +205,30 @@ export const FinanceManagement = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="beneficiary">
-                            Bénéficiaire
+                            {t('bénéficiaire')}
                         </label>
                         <input
                             type="text"
                             id="beneficiary"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Nom du bénéficiaire"
+                            placeholder={t('nomDuBénéficiaire')}
                         />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="receipt">
-                            Justificatif
+                            {t('justificatif')}
                         </label>
                         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                             <div className="space-y-1 text-center">
                                 <Paperclip className="mx-auto h-12 w-12 text-gray-400" />
                                 <div className="flex text-sm text-gray-600">
                                     <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                        <span>Télécharger un fichier</span>
+                                        <span>{t('téléchargerUnFichier')}</span>
                                         <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                                     </label>
-                                    <p className="pl-1">ou glisser-déposer</p>
+                                    <p className="pl-1">{t('ouGlisserDéposer')}</p>
                                 </div>
-                                <p className="text-xs text-gray-500">PNG, JPG, PDF jusqu'à 10MB</p>
+                                <p className="text-xs text-gray-500">{t('formatsFichiers')}</p>
                             </div>
                         </div>
                     </div>
@@ -236,13 +238,13 @@ export const FinanceManagement = () => {
                             onClick={() => setShowExpenseForm(false)}
                             className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            Annuler
+                            {t('annuler')}
                         </button>
                         <button
                             type="submit"
                             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            Enregistrer
+                            {t('enregistrer')}
                         </button>
                     </div>
                 </form>
@@ -253,7 +255,7 @@ export const FinanceManagement = () => {
     return (
         <div className="bg-gray-100 min-h-screen p-6">
             <div className="max-w-6xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestion des Finances</h1>
+                <h1 className="text-3xl font-bold text-gray-800 mb-6">{t('gestionDesFinances')}</h1>
 
                 <div className="bg-white rounded-lg shadow-md p-6 mb-6">
                     <div className="flex justify-between items-center mb-6">
@@ -282,7 +284,7 @@ export const FinanceManagement = () => {
                                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
                             >
                                 <Upload className="mr-2 h-5 w-5" />
-                                Importer
+                                {t('importer')}
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
@@ -290,7 +292,7 @@ export const FinanceManagement = () => {
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
                             >
                                 <Download className="mr-2 h-5 w-5" />
-                                Exporter
+                                {t('exporter')}
                             </motion.button>
                         </div>
                     </div>
@@ -314,22 +316,22 @@ export const FinanceManagement = () => {
                             whileHover={{ scale: 1.02 }}
                             className="bg-white p-6 rounded-lg shadow-md cursor-pointer"
                         >
-                            <h3 className="text-lg font-semibold mb-2">Analyse des dépenses</h3>
-                            <p className="text-gray-600 mb-4">Visualisez la répartition de vos dépenses par catégorie</p>
+                            <h3 className="text-lg font-semibold mb-2">{t('analyseDesDépenses')}</h3>
+                            <p className="text-gray-600 mb-4">{t('visualisezRépartitionDépenses')}</p>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center">
                                 <PieChart className="mr-2 h-5 w-5" />
-                                Voir l'analyse
+                                {t('voirAnalyse')}
                             </button>
                         </motion.div>
                         <motion.div
                             whileHover={{ scale: 1.02 }}
                             className="bg-white p-6 rounded-lg shadow-md cursor-pointer"
                         >
-                            <h3 className="text-lg font-semibold mb-2">Exporter les dépenses</h3>
-                            <p className="text-gray-600 mb-4">Téléchargez un rapport détaillé de vos dépenses</p>
+                            <h3 className="text-lg font-semibold mb-2">{t('exporterLesDépenses')}</h3>
+                            <p className="text-gray-600 mb-4">{t('téléchargezRapportDépenses')}</p>
                             <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center">
                                 <Download className="mr-2 h-5 w-5" />
-                                Exporter le rapport
+                                {t('exporterRapport')}
                             </button>
                         </motion.div>
                     </div>

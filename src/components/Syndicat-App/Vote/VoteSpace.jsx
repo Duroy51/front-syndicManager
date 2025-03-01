@@ -13,8 +13,10 @@ import {
     Award,
     TrendingUp
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const VoteCard = ({ vote }) => {
+    const { t } = useTranslation();
     const [userVote, setUserVote] = useState(null);
     const [isHovered, setIsHovered] = useState(false);
     const totalVotes = vote.votesFor + vote.votesAgainst;
@@ -52,18 +54,18 @@ const VoteCard = ({ vote }) => {
                         <div className="flex items-center space-x-4 text-sm">
                             <div className="flex items-center text-blue-600">
                                 <Users className="w-4 h-4 mr-1" />
-                                <span>{totalVotes} votes</span>
+                                <span>{totalVotes} {t('votes')}</span>
                             </div>
                             <div className={`flex items-center ${isUrgent ? 'text-red-500' : 'text-gray-600'}`}>
                                 <Clock className="w-4 h-4 mr-1" />
-                                <span>{daysLeft} jours restants</span>
+                                <span>{daysLeft} {t('joursRestants')}</span>
                             </div>
                         </div>
                     </div>
                     {isUrgent && (
                         <div className="flex items-center bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
                             <AlertTriangle className="w-4 h-4 mr-1" />
-                            Urgent
+                            {t('urgent')}
                         </div>
                     )}
                 </div>
@@ -72,12 +74,12 @@ const VoteCard = ({ vote }) => {
                     <div className="flex justify-between mb-2">
                         <div className="flex items-center">
                             <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                            <span className="text-sm font-medium text-gray-600">Pour</span>
+                            <span className="text-sm font-medium text-gray-600">{t('pour')}</span>
                             <span className="ml-2 text-sm font-bold text-gray-800">{forPercentage.toFixed(1)}%</span>
                         </div>
                         <div className="flex items-center">
                             <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-                            <span className="text-sm font-medium text-gray-600">Contre</span>
+                            <span className="text-sm font-medium text-gray-600">{t('contre')}</span>
                             <span className="ml-2 text-sm font-bold text-gray-800">{againstPercentage.toFixed(1)}%</span>
                         </div>
                     </div>
@@ -113,7 +115,7 @@ const VoteCard = ({ vote }) => {
                         }`}
                     >
                         <ThumbsUp className="w-5 h-5 mr-2" />
-                        <span>Pour ({vote.votesFor})</span>
+                        <span>{t('pour')} ({vote.votesFor})</span>
                     </motion.button>
                     <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -129,7 +131,7 @@ const VoteCard = ({ vote }) => {
                         }`}
                     >
                         <ThumbsDown className="w-5 h-5 mr-2" />
-                        <span>Contre ({vote.votesAgainst})</span>
+                        <span>{t('contre')} ({vote.votesAgainst})</span>
                     </motion.button>
                 </div>
 
@@ -137,7 +139,7 @@ const VoteCard = ({ vote }) => {
                     <div className="flex items-center justify-between text-sm text-gray-600">
                         <div className="flex items-center">
                             <Calendar className="w-4 h-4 mr-2 text-blue-500" />
-                            <span>Clôture le {vote.closingDate.toLocaleDateString('fr-FR', {
+                            <span>{t('clôtureLe')} {vote.closingDate.toLocaleDateString('fr-FR', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric'
@@ -146,7 +148,7 @@ const VoteCard = ({ vote }) => {
                         {userVote && (
                             <div className="flex items-center text-green-600">
                                 <CheckCircle className="w-4 h-4 mr-1" />
-                                <span>Vote enregistré</span>
+                                <span>{t('voteEnregistré')}</span>
                             </div>
                         )}
                     </div>
@@ -157,24 +159,25 @@ const VoteCard = ({ vote }) => {
 };
 
 export const VotesList = () => {
+    const { t } = useTranslation();
     const votes = [
         {
             id: 1,
-            description: "Proposition de nouvelle convention collective",
+            description: t("propositionNouvelleConvention"),
             closingDate: new Date("2023-07-01T23:59:59"),
             votesFor: 45,
             votesAgainst: 15
         },
         {
             id: 2,
-            description: "Augmentation des cotisations syndicales de 2%",
+            description: t("augmentationCotisations"),
             closingDate: new Date("2023-06-15T23:59:59"),
             votesFor: 30,
             votesAgainst: 25
         },
         {
             id: 3,
-            description: "Mise en place d'un comité pour l'amélioration des conditions de travail",
+            description: t("miseEnPlaceComité"),
             closingDate: new Date("2023-07-31T23:59:59"),
             votesFor: 60,
             votesAgainst: 5
@@ -190,10 +193,10 @@ export const VotesList = () => {
                     className="text-center mb-12"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                        Votes & Décisions
+                        {t('votesDécisions')}
                     </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Participez aux décisions importantes qui façonnent notre avenir collectif.
+                        {t('participezAuxDécisions')}
                     </p>
                 </motion.div>
 
@@ -202,21 +205,21 @@ export const VotesList = () => {
                         <div className="flex items-center px-4 py-2 bg-white rounded-xl shadow-sm">
                             <BarChart className="w-5 h-5 text-blue-500 mr-2" />
                             <div>
-                                <div className="text-sm text-gray-600">Votes actifs</div>
+                                <div className="text-sm text-gray-600">{t('votesActifs')}</div>
                                 <div className="font-bold text-gray-800">{votes.length}</div>
                             </div>
                         </div>
                         <div className="flex items-center px-4 py-2 bg-white rounded-xl shadow-sm">
                             <Users className="w-5 h-5 text-green-500 mr-2" />
                             <div>
-                                <div className="text-sm text-gray-600">Participants</div>
+                                <div className="text-sm text-gray-600">{t('participants')}</div>
                                 <div className="font-bold text-gray-800">125</div>
                             </div>
                         </div>
                         <div className="flex items-center px-4 py-2 bg-white rounded-xl shadow-sm">
                             <TrendingUp className="w-5 h-5 text-purple-500 mr-2" />
                             <div>
-                                <div className="text-sm text-gray-600">Taux de participation</div>
+                                <div className="text-sm text-gray-600">{t('tauxDeParticipation')}</div>
                                 <div className="font-bold text-gray-800">78%</div>
                             </div>
                         </div>
@@ -227,7 +230,7 @@ export const VotesList = () => {
                         className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl inline-flex items-center transition duration-200 shadow-lg"
                     >
                         <Plus className="mr-2 h-5 w-5" />
-                        Nouveau vote
+                        {t('nouveauVote')}
                     </motion.button>
                 </div>
 

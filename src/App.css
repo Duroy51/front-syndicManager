@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* ajout des style pour les bouton*/
+
+/* Ajout d'un style basique pour les boutons de langue */
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50; /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  transition: background-color 0.3s; /* Pour une transition fluide */
+}
+
+button:hover {
+  background-color: #45a049; /* Couleur au survol */
+}
+
+/* Style pour le conteneur des boutons */
+.language-switcher {
+  margin-top: 20px; /* Espace au-dessus des boutons */
+  display: flex;
+  justify-content: center; /* Centrer les boutons */
+  gap: 10px; /* Espacement entre les boutons */
+}

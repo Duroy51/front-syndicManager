@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import SearchInterface from "./SearchSection/SearchSection.jsx";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 // Mock data for popular syndicats
 const popularSyndicats = [
@@ -47,6 +48,7 @@ const statistics = [
 ];
 
 export const LandingPage = () => {
+    const { t } = useTranslation();
     const [searchTerm, setSearchTerm] = useState("");
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const navigate = useNavigate();
@@ -68,7 +70,7 @@ export const LandingPage = () => {
                             onClick={() => navigate("/login")}
                         >
                             <LogIn className="mr-2 h-4 w-4" />
-                            Se connecter
+                            {t('seConnecter')}
                         </motion.button>
                         <motion.button
                             className="bg-blue-600 text-white px-4 py-2 rounded-full flex items-center hover:bg-blue-700 transition duration-300"
@@ -77,7 +79,7 @@ export const LandingPage = () => {
                             onClick={() => navigate("/register")}
                         >
                             <UserPlus className="mr-2 h-4 w-4" />
-                            S'inscrire
+                            {t('sinscrire')}
                         </motion.button>
                     </div>
                 </div>
@@ -90,11 +92,10 @@ export const LandingPage = () => {
                     <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2 mb-10 md:mb-0">
                             <h1 className="text-4xl md:text-5xl font-bold text-blue-800 mb-6 drop-shadow-lg">
-                                Gérez vos syndicats en toute simplicité
+                                {t('gérezVosSyndicats')}
                             </h1>
                             <p className="text-xl text-blue-600 mb-8">
-                                SyndicManager : la plateforme moderne pour une gestion syndicale
-                                efficace et transparente.
+                                {t('syndicManagerDescription')}
                             </p>
                             <motion.button
                                 className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold flex items-center hover:bg-blue-700 transition duration-300 shadow-lg"
@@ -102,14 +103,14 @@ export const LandingPage = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => navigate("/register")}
                             >
-                                Commencer maintenant
+                                {t('commencerMaintenant')}
                                 <ChevronRight className="ml-2 h-5 w-5" />
                             </motion.button>
                         </div>
                         <div className="md:w-1/2">
                             <img
                                 src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                                alt="Gestion syndicale"
+                                alt={t('gestionSyndicale')}
                                 className="rounded-lg shadow-2xl"
                             />
                         </div>
@@ -120,12 +121,12 @@ export const LandingPage = () => {
                 <section className="py-16 bg-white">
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-blue-800 mb-8 text-center">
-                            Trouvez votre syndicat
+                            {t('trouvezVotreSyndicat')}
                         </h2>
                         <div className="max-w-2xl mx-auto relative">
                             <input
                                 type="text"
-                                placeholder="Nom du syndicat..."
+                                placeholder={t('nomDuSyndicat')}
                                 className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-blue-300 focus:border-blue-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition duration-300 placeholder-gray-500"
                                 onClick={() => setIsSearchOpen(true)}
                                 readOnly
@@ -139,7 +140,7 @@ export const LandingPage = () => {
                 <section className="bg-gradient-to-r from-blue-50 to-purple-50 py-16">
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-blue-800 mb-8 text-center">
-                            Syndicats populaires
+                            {t('syndicatsPopulaires')}
                         </h2>
                         <div className="grid gap-8 md:grid-cols-3">
                             {popularSyndicats.map((syndicat) => (
@@ -159,14 +160,14 @@ export const LandingPage = () => {
                                         </h3>
                                         <div className="flex items-center text-gray-600 mb-4">
                                             <Users className="h-5 w-5 mr-2 text-blue-500" />
-                                            <span>{syndicat.members.toLocaleString()} membres</span>
+                                            <span>{syndicat.members.toLocaleString()} {t('membres')}</span>
                                         </div>
                                         <motion.button
                                             className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:from-blue-500 hover:to-blue-700"
                                             whileHover={{ scale: 1.03 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
-                                            En savoir plus
+                                            {t('enSavoirPlus')}
                                             <ChevronRight className="ml-2 h-4 w-4" />
                                         </motion.button>
                                     </div>
@@ -180,7 +181,7 @@ export const LandingPage = () => {
                 <section className="py-16 bg-white">
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-blue-800 mb-12 text-center">
-                            Pourquoi choisir SyndicManager ?
+                            {t('pourquoiChoisirSyndicManager')}
                         </h2>
                         <div className="grid gap-8 md:grid-cols-3">
                             <div className="text-center">
@@ -188,11 +189,10 @@ export const LandingPage = () => {
                                     <TrendingUp className="h-8 w-8 text-white" />
                                 </div>
                                 <h3 className="text-xl font-semibold text-blue-700 mb-2">
-                                    Gestion efficace
+                                    {t('gestionEfficace')}
                                 </h3>
                                 <p className="text-gray-600">
-                                    Optimisez la gestion de vos syndicats avec nos outils
-                                    intuitifs.
+                                    {t('optimisezLaGestion')}
                                 </p>
                             </div>
                             <div className="text-center">
@@ -200,11 +200,10 @@ export const LandingPage = () => {
                                     <Users className="h-8 w-8 text-white" />
                                 </div>
                                 <h3 className="text-xl font-semibold text-blue-700 mb-2">
-                                    Collaboration simplifiée
+                                    {t('collaborationSimplifiée')}
                                 </h3>
                                 <p className="text-gray-600">
-                                    Facilitez la communication et la coordination entre les
-                                    membres.
+                                    {t('facilitezLaCommunication')}
                                 </p>
                             </div>
                             <div className="text-center">
@@ -212,11 +211,10 @@ export const LandingPage = () => {
                                     <Building className="h-8 w-8 text-white" />
                                 </div>
                                 <h3 className="text-xl font-semibold text-blue-700 mb-2">
-                                    Transparence accrue
+                                    {t('transparenceAccrue')}
                                 </h3>
                                 <p className="text-gray-600">
-                                    Assurez une gestion transparente et responsable de vos
-                                    activités.
+                                    {t('assurezUneGestionTransparente')}
                                 </p>
                             </div>
                         </div>
@@ -227,7 +225,7 @@ export const LandingPage = () => {
                 <section className="py-16 bg-gradient-to-r from-blue-100 to-purple-100">
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-blue-800 mb-12 text-center">
-                            SyndicManager en chiffres
+                            {t('syndicManagerEnChiffres')}
                         </h2>
                         <div className="grid gap-8 md:grid-cols-4">
                             {statistics.map((stat) => (
@@ -241,7 +239,7 @@ export const LandingPage = () => {
                                 >
                                     <stat.icon className="h-12 w-12 text-blue-600 mx-auto mb-4" />
                                     <h3 className="text-2xl font-bold text-blue-800 mb-2">
-                                        {stat.name === "Taux de satisfaction"
+                                        {stat.name === t("tauxDeSatisfaction")
                                             ? `${stat.value}%`
                                             : stat.value.toLocaleString()}
                                     </h3>
@@ -263,18 +261,18 @@ export const LandingPage = () => {
                                 <span className="text-xl font-semibold">SyndicManager</span>
                             </div>
                             <p className="text-blue-100">
-                                La plateforme moderne pour une gestion syndicale efficace.
+                                {t('plateformeModerne')}
                             </p>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Liens rapides</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t('liensRapides')}</h4>
                             <ul className="space-y-2">
                                 <li>
                                     <a
                                         href="#"
                                         className="text-blue-100 hover:text-purple-200 transition duration-300"
                                     >
-                                        À propos
+                                        {t('àPropos')}
                                     </a>
                                 </li>
                                 <li>
@@ -282,7 +280,7 @@ export const LandingPage = () => {
                                         href="#"
                                         className="text-blue-100 hover:text-purple-200 transition duration-300"
                                     >
-                                        Services
+                                        {t('services')}
                                     </a>
                                 </li>
                                 <li>
@@ -290,13 +288,13 @@ export const LandingPage = () => {
                                         href="#"
                                         className="text-blue-100 hover:text-purple-200 transition duration-300"
                                     >
-                                        Contact
+                                        {t('contact')}
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Suivez-nous</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t('suivezNous')}</h4>
                             <div className="flex space-x-4">
                                 <a
                                     href="#"

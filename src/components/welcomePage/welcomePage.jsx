@@ -7,6 +7,7 @@ import {
     CheckCircle, Clock, Gift, Sparkles, Globe
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Button = ({ children, primary = false, className = '', onClick }) => (
     <motion.button
@@ -110,6 +111,7 @@ const FloatingElement = ({ children, delay = 0 }) => (
 );
 
 export const WelcomePage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { scrollYProgress } = useScroll();
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
@@ -142,13 +144,13 @@ export const WelcomePage = () => {
                             className="flex-1 text-center lg:text-left"
                         >
                             <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-                                Gérez votre syndicat avec
+                                {t('gérezVotreSyndicatAvec')}
                                 <span className="block bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                                    SyndicManager
-                                </span>
+                                {t(SyndicManager)}
+                            </span>
                             </h1>
                             <p className="text-xl lg:text-2xl mb-8 text-blue-100">
-                                La solution complète et gratuite pour la gestion moderne des syndicats
+                                {t('solutionComplèteGratuite')}
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                 <Button 
@@ -156,11 +158,11 @@ export const WelcomePage = () => {
                                     className="text-lg px-8 py-4"
                                     onClick={() => navigate('/register')}
                                 >
-                                    Commencer gratuitement
+                                    {t('commencerGratuitement')}
                                     <ArrowRight className="inline-block ml-2" />
                                 </Button>
                                 <Button className="text-lg px-8 py-4">
-                                    Découvrir
+                                    {t('découvrir')}
                                     <ChevronRight className="inline-block ml-2" />
                                 </Button>
                             </div>
@@ -193,10 +195,10 @@ export const WelcomePage = () => {
 
                     {/* Stats Section */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-24">
-                        <StatCard icon={Users} value="10,000+" label="Utilisateurs actifs" />
-                        <StatCard icon={Globe} value="50+" label="Pays" />
-                        <StatCard icon={Clock} value="24/7" label="Support client" />
-                        <StatCard icon={Heart} value="98%" label="Satisfaction" />
+                        <StatCard icon={Users} value="10,000+" label={t('utilisateursActifs')} />
+                        <StatCard icon={Globe} value="50+" label={t('pays')} />
+                        <StatCard icon={Clock} value="24/7" label={t('supportClient')} />
+                        <StatCard icon={Heart} value="98%" label={t('satisfaction')} />
                     </div>
                 </div>
             </Section>
@@ -210,42 +212,42 @@ export const WelcomePage = () => {
                         className="text-center mb-16"
                     >
                         <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                            Fonctionnalités principales
+                            {t('fonctionnalitésPrincipales')}
                         </h2>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                            Découvrez les outils puissants qui font de SyndicManager la solution idéale pour votre syndicat
+                            {t('découvrezLesOutils')}
                         </p>
                     </motion.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <Feature
                             icon={Users}
-                            title="Gestion des membres"
-                            description="Gérez facilement les adhésions, les cotisations et les informations des membres avec des outils intuitifs."
+                            title={t('gestionDesMembres')}
+                            description={t('gérezFacilementLesAdhésions')}
                         />
                         <Feature
                             icon={BarChart}
-                            title="Rapports et analyses"
-                            description="Obtenez des insights précieux grâce à des tableaux de bord interactifs et des rapports détaillés."
+                            title={t('rapportsEtAnalyses')}
+                            description={t('obtenezDesInsights')}
                         />
                         <Feature
                             icon={MessageCircle}
-                            title="Communication intégrée"
-                            description="Facilitez les échanges entre membres avec des outils de messagerie et de forum modernes."
+                            title={t('communicationIntégrée')}
+                            description={t('facilitezLesÉchanges')}
                         />
                         <Feature
                             icon={Shield}
-                            title="Sécurité avancée"
-                            description="Protégez vos données avec un cryptage de niveau bancaire et des sauvegardes automatiques."
+                            title={t('sécuritéAvancée')}
+                            description={t('protégezVosDonnées')}
                         />
                         <Feature
                             icon={Gift}
-                            title="Ressources gratuites"
-                            description="Accédez à une bibliothèque de ressources et de modèles pour optimiser votre gestion."
+                            title={t('ressourcesGratuites')}
+                            description={t('accédezÀUneBibliothèque')}
                         />
                         <Feature
                             icon={Zap}
-                            title="Automatisation"
-                            description="Simplifiez vos tâches quotidiennes grâce à des workflows automatisés intelligents."
+                            title={t('automatisation')}
+                            description={t('simplifiezVosTâches')}
                         />
                     </div>
                 </div>
@@ -259,28 +261,28 @@ export const WelcomePage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl font-bold mb-4">Ce que disent nos utilisateurs</h2>
+                        <h2 className="text-4xl font-bold mb-4">{t('ceQueDisentNosUtilisateurs')}</h2>
                         <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-                            Découvrez pourquoi des milliers de syndicats nous font confiance
+                            {t('découvrezPourquoi')}
                         </p>
                     </motion.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <Testimonial
-                            quote="SyndicManager a révolutionné notre façon de gérer le syndicat. L'interface est intuitive et les fonctionnalités sont exactement ce dont nous avions besoin."
+                            quote={t('testimonial1')}
                             author="Marie Dupont"
-                            role="Présidente du Syndicat des Enseignants"
+                            role={t('présidenteSyndicatEnseignants')}
                             image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
                         />
                         <Testimonial
-                            quote="La facilité d'utilisation et les fonctionnalités complètes ont grandement amélioré notre efficacité. Le support client est également exceptionnel."
+                            quote={t('testimonial2')}
                             author="Jean Martin"
-                            role="Secrétaire Général"
+                            role={t('secrétaireGénéral')}
                             image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop"
                         />
                         <Testimonial
-                            quote="Grâce à SyndicManager, nous avons pu moderniser nos processus et mieux servir nos membres. Un outil indispensable !"
+                            quote={t('testimonial3')}
                             author="Sophie Lefebvre"
-                            role="Trésorière"
+                            role={t('trésorière')}
                             image="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
                         />
                     </div>
@@ -296,17 +298,17 @@ export const WelcomePage = () => {
                         className="max-w-3xl mx-auto"
                     >
                         <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                            Prêt à transformer la gestion de votre syndicat ?
+                            {t('prêtÀTransformer')}
                         </h2>
                         <p className="text-xl text-gray-600 mb-8">
-                            Rejoignez des milliers de syndicats qui font confiance à SyndicManager
+                            {t('rejoignezDesMilliers')}
                         </p>
                         <Button 
                             primary 
                             className="text-xl px-12 py-6"
                             onClick={() => navigate('/register')}
                         >
-                            Commencer gratuitement
+                            {t('commencerGratuitement')}
                             <ArrowRight className="inline-block ml-2" />
                         </Button>
                     </motion.div>
@@ -323,7 +325,7 @@ export const WelcomePage = () => {
                                 <span className="text-2xl font-bold">SyndicManager</span>
                             </div>
                             <p className="text-gray-400 mb-6">
-                                La solution moderne pour la gestion des syndicats
+                                {t('solutionModerne')}
                             </p>
                             <div className="flex space-x-4">
                                 {['facebook', 'twitter', 'linkedin', 'instagram'].map((social) => (
@@ -344,36 +346,36 @@ export const WelcomePage = () => {
                             </div>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Produit</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t('produit')}</h4>
                             <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Fonctionnalités</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Tarification</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">FAQ</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Sécurité</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('fonctionnalités')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('tarification')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('faq')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('sécurité')}</a></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Ressources</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t('ressources')}</h4>
                             <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Blog</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Documentation</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Guides</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Support</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('blog')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('documentation')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('guides')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('support')}</a></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Contact</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t('contact')}</h4>
                             <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Nous contacter</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Partenariats</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Carrières</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Presse</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('nousContacter')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('partenariats')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('carrières')}</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t('presse')}</a></li>
                             </ul>
                         </div>
                     </div>
                     <div className="border-t border-gray-800 mt-12 pt-8 text-center">
                         <p className="text-gray-400">
-                            &copy; 2024 SyndicManager. Tous droits réservés.
+                            &copy; {t("SyndicManagerToutDroit")}.
                         </p>
                     </div>
                 </div>

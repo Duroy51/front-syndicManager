@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Clock, User, Image as ImageIcon, MoreHorizontal, Plus, Users, X, Heart, Share2, MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+
 export const EventsList = () => {
+    const { t } = useTranslation();
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [events, setEvents] = useState([
         {
@@ -207,7 +210,7 @@ export const EventsList = () => {
                             />
                             {event.images.length > 1 && (
                                 <button className="absolute bottom-4 right-4 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg text-sm hover:bg-opacity-90 transition-colors duration-200 backdrop-blur-sm">
-                                    +{event.images.length - 1} photos
+                                    +{event.images.length - 1} {t("photos")}
                                 </button>
                             )}
                         </div>
@@ -219,7 +222,7 @@ export const EventsList = () => {
                             className="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200"
                         >
                             <Users className="w-5 h-5 mr-2"/>
-                            <span className="font-medium">{event.participants.length} participants</span>
+                            <span className="font-medium">{event.participants.length} {t('participants')}</span>
                         </button>
                         
                         <div className="flex items-center gap-4">
@@ -283,7 +286,7 @@ export const EventsList = () => {
                     onClick={e => e.stopPropagation()}
                 >
                     <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-2xl font-bold text-gray-800">Participants</h3>
+                        <h3 className="text-2xl font-bold text-gray-800">{t('participants')}</h3>
                         <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
@@ -327,7 +330,7 @@ export const EventsList = () => {
                     className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 px-8 rounded-xl inline-flex items-center text-lg transition duration-200 shadow-lg"
                 >
                     <Plus className="mr-2 h-5 w-5" />
-                    Créer un événement
+                    {t('creerUnEvenement')}
                 </motion.button>
             </motion.div>
 

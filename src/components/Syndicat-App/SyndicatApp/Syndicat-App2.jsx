@@ -8,8 +8,9 @@ import {PartnershipsList} from "../Partenaire/Partenaires";
 import { Calendar, MessageSquare, Vote, CreditCard, Handshake, Home, Bell, User, LogOut, ChevronRight, Search } from 'lucide-react'
 import {useNavigate} from "react-router-dom";
 import {Footer} from "./Footer"
-
+import { useTranslation } from 'react-i18next';
 export const SyndicatApp2 = () => {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState('événements')
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const navigate = useNavigate();
@@ -32,9 +33,9 @@ export const SyndicatApp2 = () => {
             case 'contributions':
                 return <Finances />
             case 'partnerships':
-                return  <PartnershipsList />
+                return <PartnershipsList />
             default:
-                return <div>Bienvenue sur la page d'accueil</div>
+                return <div>{t('bienvenueSurLaPageDAccueil')}</div>
         }
     }
 
@@ -50,7 +51,7 @@ export const SyndicatApp2 = () => {
                     className={`w-64 bg-white shadow-lg flex flex-col z-20 ${isSidebarOpen ? '' : 'absolute inset-y-0 left-0'}`}
                 >
                     <div className="p-6 border-b border-gray-200">
-                        <h1 className="text-2xl font-bold text-blue-600">Syndicat des Taxi</h1>
+                        <h1 className="text-2xl font-bold text-blue-600">{t('syndicatDesTaxi')}</h1>
                     </div>
                     <div className="flex-grow overflow-y-auto">
                         <nav className="mt-6">
@@ -80,7 +81,7 @@ export const SyndicatApp2 = () => {
                             onClick={() => navigate('/home')}
                         >
                             <Home className="mr-2 h-4 w-4" />
-                            Acceuil
+                            {t('accueil')}
                         </motion.button>
                     </div>
                 </motion.div>
@@ -99,15 +100,12 @@ export const SyndicatApp2 = () => {
                                         <ChevronRight className={`h-6 w-6 transition-transform duration-200 ${isSidebarOpen ? 'transform rotate-180' : ''}`} />
                                     </button>
                                     <h2 className="ml-2 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                                        {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
-                                    </h2>
+                                        {acvection.charAt(0).toUpperCase() + activeSection.slice(1)}</h2>
                                 </div>
                                 <div className="flex items-center">
-
                                     <button className="ml-4 bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                         <Bell className="h-6 w-6" />
                                     </button>
-
                                 </div>
                             </div>
                         </div>
@@ -132,7 +130,7 @@ export const SyndicatApp2 = () => {
                 </div>
 
             </div>
-            <Footer></Footer>
+            <Footer />
         </div>
     )
 }

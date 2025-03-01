@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, Paperclip, Smile, Image as ImageIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export const ChatBox2 = () => {
     const [messages, setMessages] = useState([
@@ -11,6 +12,8 @@ export const ChatBox2 = () => {
         { id: 5, sender: 'Vous', content: 'Tout va bien de mon côté aussi !', timestamp: new Date(Date.now() - 60000) },
         { id: 6, sender: 'Marie Curie', content: 'Ok', timestamp: new Date(Date.now() - 30000) },
     ])
+    const {t}=useTranslation;// Initialisation correcte du hook useTranslation
+    
     const [newMessage, setNewMessage] = useState('')
     const messagesEndRef = useRef(null)
     const fileInputRef = useRef(null)
@@ -73,22 +76,22 @@ export const ChatBox2 = () => {
                 <div ref={messagesEndRef} />
             </div>
             <div className="flex items-center bg-white rounded-lg shadow-inner p-2">
-                <button className="text-gray-500 hover:text-blue-500 transition-colors mr-2" aria-label="Ajouter un emoji">
+                <button className="text-gray-500 hover:text-blue-500 transition-colors mr-2" aria-label={t(ajouterEmoji)}>
                     <Smile className="h-6 w-6" />
                 </button>
                 <textarea
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Tapez votre message..."
+                    placeholder={t('tapezMessage')}
                     className="flex-grow resize-none border-none p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
                     rows={1}
-                    aria-label="Champ de saisie du message"
+                    aria-label={t('champSaisieMessage')}
                 />
                 <button
                     onClick={handleFileUpload}
                     className="text-gray-500 hover:text-blue-500 transition-colors mx-2"
-                    aria-label="Joindre un fichier"
+                    aria-label={t('joindreFichier')}
                 >
                     <Paperclip className="h-6 w-6" />
                 </button>
@@ -102,7 +105,7 @@ export const ChatBox2 = () => {
                 <button
                     onClick={handleFileUpload}
                     className="text-gray-500 hover:text-blue-500 transition-colors mr-2"
-                    aria-label="Joindre une image"
+                    aria-label={t('joindreImage')}
                 >
                     <ImageIcon className="h-6 w-6" />
                 </button>
@@ -110,7 +113,7 @@ export const ChatBox2 = () => {
                     onClick={handleSend}
                     className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition duration-200 flex items-center justify-center"
                     disabled={!newMessage.trim()}
-                    aria-label="Envoyer le message"
+                    aria-label={t('envoyerMessage')}
                 >
                     <Send className="h-5 w-5" />
                 </button>

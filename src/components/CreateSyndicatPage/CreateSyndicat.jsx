@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ChevronLeft, Upload } from 'lucide-react'
-
+import { useTranslation } from 'react-i18next'//importer le hook useTranslation
 export const CreateSyndicat = () => {
     const [step, setStep] = useState(1)
     const [formData, setFormData] = useState({
@@ -14,6 +14,8 @@ export const CreateSyndicat = () => {
         reglementInterieur: null,
         logo: null
     })
+    const { t } = useTranslation(); // Initialisation correcte du hook useTranslation
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -42,7 +44,7 @@ export const CreateSyndicat = () => {
                         className="space-y-4"
                     >
                         <div className="space-y-2">
-                            <label htmlFor="nom" className="block text-sm font-medium text-gray-700">Nom du syndicat</label>
+                            <label htmlFor="nom" className="block text-sm font-medium text-gray-700">{t('nomSyndicat')}</label>
                             <input
                                 id="nom"
                                 name="nom"
@@ -54,7 +56,7 @@ export const CreateSyndicat = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="secteurActivite" className="block text-sm font-medium text-gray-700">Secteur d'activité</label>
+                            <label htmlFor="secteurActivite" className="block text-sm font-medium text-gray-700">{t('secteurActivite')}</label> 
                             <input
                                 id="secteurActivite"
                                 name="secteurActivite"
@@ -66,7 +68,7 @@ export const CreateSyndicat = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="objet" className="block text-sm font-medium text-gray-700">Objet du syndicat</label>
+                            <label htmlFor="objet" className="block text-sm font-medium text-gray-700">{t('objectSyndicat')}</label>
                             <textarea
                                 id="objet"
                                 name="objet"
@@ -87,7 +89,7 @@ export const CreateSyndicat = () => {
                         className="space-y-4"
                     >
                         <div className="space-y-2">
-                            <label htmlFor="siegeSocial" className="block text-sm font-medium text-gray-700">Siège social</label>
+                            <label htmlFor="siegeSocial" className="block text-sm font-medium text-gray-700">{t('siegeSocial')}</label>
                             <input
                                 id="siegeSocial"
                                 name="siegeSocial"
@@ -99,7 +101,7 @@ export const CreateSyndicat = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="conditionsAdhesion" className="block text-sm font-medium text-gray-700">Conditions d'adhésion des membres</label>
+                            <label htmlFor="conditionsAdhesion" className="block text-sm font-medium text-gray-700">{t('conditionsAdhesionMembres')}</label>
                             <textarea
                                 id="conditionsAdhesion"
                                 name="conditionsAdhesion"
@@ -120,7 +122,7 @@ export const CreateSyndicat = () => {
                         className="space-y-4"
                     >
                         <div className="space-y-2">
-                            <label htmlFor="statuts" className="block text-sm font-medium text-gray-700">Statuts du syndicat (PDF)</label>
+                            <label htmlFor="statuts" className="block text-sm font-medium text-gray-700">{t('statusSyndicat')}</label>
                             <input
                                 id="statuts"
                                 name="statuts"
@@ -132,7 +134,7 @@ export const CreateSyndicat = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="reglementInterieur" className="block text-sm font-medium text-gray-700">Règlement intérieur (optionnel)</label>
+                            <label htmlFor="reglementInterieur" className="block text-sm font-medium text-gray-700">{t('reglementInterieurOptionel')}</label>
                             <input
                                 id="reglementInterieur"
                                 name="reglementInterieur"
@@ -143,7 +145,7 @@ export const CreateSyndicat = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="logo" className="block text-sm font-medium text-gray-700">Logo du syndicat (optionnel)</label>
+                            <label htmlFor="logo" className="block text-sm font-medium text-gray-700">{t('logoSyndicatOptionnel)')}</label>
                             <input
                                 id="logo"
                                 name="logo"
@@ -162,7 +164,7 @@ export const CreateSyndicat = () => {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4">
             <div className="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
                 <div className="bg-gradient-to-r from-blue-600 to-blue-400 p-6">
-                    <h2 className="text-2xl font-bold text-center text-white">Nouveau Syndicat</h2>
+                    <h2 className="text-2xl font-bold text-center text-white">{t('nouveauSyndicat')}</h2>
                 </div>
                 <div className="p-6">
                     <div className="mb-6">
@@ -173,7 +175,7 @@ export const CreateSyndicat = () => {
                                         {i}
                                     </div>
                                     <div className={`text-sm mt-1 ${step >= i ? 'text-blue-600' : 'text-gray-600'}`}>
-                                        {i === 1 ? 'Informations' : i === 2 ? 'Détails' : 'Documents'}
+                                        {i === 1 ? t('Informations') : i === 2 ? t('Détails') : t('Documents')}
                                     </div>
                                 </div>
                             ))}
@@ -197,21 +199,21 @@ export const CreateSyndicat = () => {
                         disabled={step === 1}
                         className="px-4 py-2 bg-white text-blue-600 rounded-md border border-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
                     >
-                        <ChevronLeft className="inline-block mr-2 h-4 w-4" /> Précédent
+                        <ChevronLeft className="inline-block mr-2 h-4 w-4" /> t({'precedent'})
                     </button>
                     {step < 3 ? (
                         <button
                             onClick={nextStep}
                             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
                         >
-                            Suivant <ChevronRight className="inline-block ml-2 h-4 w-4" />
+                            t{('suivant')} <ChevronRight className="inline-block ml-2 h-4 w-4" />
                         </button>
                     ) : (
                         <button
                             type="submit"
                             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
                         >
-                            Créer le syndicat <Upload className="inline-block ml-2 h-4 w-4" />
+                            {t('CreerSyndicat')} <Upload className="inline-block ml-2 h-4 w-4" />
                         </button>
                     )}
                 </div>
