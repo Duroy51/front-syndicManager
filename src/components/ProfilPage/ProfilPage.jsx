@@ -26,13 +26,13 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet"
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 
-// Assurez-vous que ces images existent dans le dossier public
+
 import markerIcon2x from "/marker-icon-2x.png"
 import markerShadow from "/marker-shadow.png"
 import markerIcon from "../../../public/marker-icon.png"
 import { Button, Alert } from "antd"
 
-// Configuration de l'icône par défaut pour Leaflet
+
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: markerIcon2x,

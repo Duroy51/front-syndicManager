@@ -42,6 +42,12 @@ const statistics = [
     { id: 4, name: "Événements organisés", value: 3200, icon: BarChart2 },
 ]
 
+// Variants pour les animations des sections
+const sectionVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+}
+
 export const LandingPage = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const navigate = useNavigate()
@@ -51,7 +57,13 @@ export const LandingPage = () => {
             <App />
             <main className="flex-grow">
                 {/* Hero Section */}
-                <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={sectionVariants}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20"
+                >
                     <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2 mb-10 md:mb-0">
                             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -78,10 +90,16 @@ export const LandingPage = () => {
                             />
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Features Section */}
-                <section className="py-16 bg-white">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={sectionVariants}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                    className="py-16 bg-white"
+                >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
                             Pourquoi choisir SyndicManager ?
@@ -116,10 +134,16 @@ export const LandingPage = () => {
                             </div>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Search Section */}
-                <section className="py-16 bg-white">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={sectionVariants}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                    className="py-16 bg-white"
+                >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-8 text-center">
                             Trouvez votre syndicat
@@ -135,10 +159,16 @@ export const LandingPage = () => {
                             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-500" />
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Syndicats Populaires Section */}
-                <section className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={sectionVariants}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+                    className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200"
+                >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-8 text-center">
                             Syndicats populaires
@@ -176,10 +206,16 @@ export const LandingPage = () => {
                             ))}
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Publications & Événements Section */}
-                <section className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={sectionVariants}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+                    className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200"
+                >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
                             Actualités et Événements
@@ -221,10 +257,16 @@ export const LandingPage = () => {
                             </div>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Statistics Section */}
-                <section className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200">
+                <motion.section
+                    initial="hidden"
+                    animate="visible"
+                    variants={sectionVariants}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 1 }}
+                    className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200"
+                >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
                             SyndicManager en chiffres
@@ -245,11 +287,17 @@ export const LandingPage = () => {
                             ))}
                         </div>
                     </div>
-                </section>
+                </motion.section>
             </main>
 
             {/* Footer */}
-            <footer className="bg-blue-500 text-white py-8">
+            <motion.footer
+                initial="hidden"
+                animate="visible"
+                variants={sectionVariants}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 1.2 }}
+                className="bg-blue-500 text-white py-8"
+            >
                 <div className="container mx-auto px-4">
                     <div className="grid gap-8 md:grid-cols-3">
                         <div>
@@ -302,7 +350,7 @@ export const LandingPage = () => {
                         </div>
                     </div>
                 </div>
-            </footer>
+            </motion.footer>
             <SearchInterface isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
         </div>
     )
