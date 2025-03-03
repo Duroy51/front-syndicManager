@@ -1,6 +1,26 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building,Edit, Search,Bell,Settings,Home,Users,Compass,ChevronRight,Calendar,FileText,LogOut,X,AlertCircle,CheckCircle,ChevronLeft,} from "lucide-react"
+import {
+    Building,
+    LifeBuoy,
+    Building2,
+    Edit,
+    Search,
+    Bell,
+    Settings,
+    Home,
+    Users,
+    Compass,
+    ChevronRight,
+    Calendar,
+    FileText,
+    LogOut,
+    X,
+    AlertCircle,
+    CheckCircle,
+    ChevronLeft,
+    Briefcase,
+} from "lucide-react"
 import { AcceuilSection } from "../components/HomePage/AcceuilSection.jsx"
 import { MesSyndicats } from "../components/HomePage/MesSyndicatSection.jsx"
 import { Explorer } from "../components/HomePage/ExploreSection.jsx"
@@ -8,6 +28,8 @@ import { SyndicatConfigSection } from "./SyndicatConfigSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
 import {SyndicatManagement} from "./SyndicatConfig/SyndicatConfig.jsx";
 import {ProfilUser} from "../components/HomePage/ProfilUser/ProfilUser.jsx";
+import {OrganisationNavigationTabs} from "./OrganisationGestion/OrganisationSection.jsx";
+import {BusinessNavigationTabs} from "./BusinessSection/BusinessSection.jsx";
 
 const navItems = [
     {
@@ -18,29 +40,20 @@ const navItems = [
         description: "Actualité",
     },
     {
-        id: "gestion",
-        icon: Edit,
-        label: "Gérer",
+        id: "organisation",
+        icon: Building2,
+        label: "Organisation",
         gradient: "from-blue-500 to-indigo-600",
         description: "Gérez votre Syndicat",
     },
     {
-        id: "syndicats",
-        icon: Users,
-        label: "Mes Syndicats",
+        id: "business",
+        icon: Briefcase,
+        label: "Business",
         gradient: "from-blue-500 to-indigo-600",
         /*gradient: "from-green-500 to-emerald-600",*/
         description: "Gérer vos organisations",
     },
-    {
-        id: "explorer",
-        icon: Compass,
-        label: "Explorer",
-        gradient: "from-blue-500 to-indigo-600",
-        /*gradient: "from-purple-500 to-pink-600",*/
-        description: "Découvrir de nouveaux syndicats",
-    },
-
     {
         id: "parametres",
         icon: Settings,
@@ -48,6 +61,14 @@ const navItems = [
         gradient: "from-blue-500 to-indigo-600",
         /*gradient: "from-orange-500 to-red-600",*/
         description: "Configuration du compte",
+    },
+    {
+        id: "help",
+        icon: LifeBuoy,
+        label: "Help",
+        gradient: "from-blue-500 to-indigo-600",
+        /*gradient: "from-purple-500 to-pink-600",*/
+        description: "Découvrir de nouveaux syndicats",
     },
 ]
 
@@ -129,10 +150,10 @@ export const SyndicalistHomePage = () => {
         switch (activeSection) {
             case "dashboard":
                 return <AcceuilSection />
-            case "gestion":
-                return <SyndicatManagement />
-            case "syndicats":
-                return <MesSyndicats />
+            case "organisation":
+                return <OrganisationNavigationTabs />
+            case "business":
+                return <BusinessNavigationTabs />
             case "explorer":
                 return <Explorer />
 

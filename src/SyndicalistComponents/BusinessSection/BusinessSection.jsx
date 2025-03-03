@@ -1,0 +1,71 @@
+
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Calendar, MapPin, BookOpen, ShoppingBag } from "lucide-react"
+import {PlanningManagement} from "./planing/PlaningManagement.jsx";
+import {ReservationManagement} from "./Reservation/ReservationManagement.jsx";
+
+
+export const BusinessNavigationTabs = () => {
+    // État initial : le premier onglet est actif
+    const [activeTab, setActiveTab] = useState("planing")
+
+    const tabs = [
+        { key: "planing", icon: <Calendar className="inline-block mr-2" />, label: "Planning" },
+        { key: "evenement", icon: <MapPin className="inline-block mr-2" />, label: "Événements" },
+        { key: "reservation", icon: <BookOpen className="inline-block mr-2" />, label: "Réservation" },
+    ];
+
+    // Fonction qui renvoie le composant à afficher selon l'onglet actif
+    const renderComponent = (tabKey) => {
+        switch (tabKey) {
+            case "planing":
+                return <PlanningManagement/>
+            case "evenement":
+                return <div>evenementt</div>
+            case "reservation":
+                return <ReservationManagement/>
+            default:
+                return null
+        }
+    }
+
+    return (
+        <div className="pt-6">
+            {/* Barre de navigation */}
+            <div className="flex justify-center gap-6 relative">
+                {tabs.map((tab) => (
+                    <motion.button
+                        key={tab.key}
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`relative px-6 py-3 rounded-xl text-lg font-semibold transition-all duration-300 shadow-md ${
+                            activeTab === tab.key
+                                ? "bg-indigo-600 text-white"
+                                : "bg-white/30 backdrop-blur-md text-gray-700 hover:bg-indigo-100"
+                        }`}
+                        onClick={() => setActiveTab(tab.key)}
+                        aria-selected={activeTab === tab.key}
+                    >
+                        {tab.icon}
+                        {tab.label}
+                        {activeTab === tab.key && (
+                            <motion.div
+                                layoutId="underline"
+                                className="absolute bottom-0 left-1/2 w-5 h-1 bg-indigo-600 rounded-full"
+                                initial={{ opacity: 0, width: 0 }}
+                                animate={{ opacity: 1, width: "60%", x: "-50%" }}
+                                transition={{ duration: 0.3 }}
+                            />
+                        )}
+                    </motion.button>
+                ))}
+            </div>
+
+            {/* Zone de contenu qui change selon l'onglet actif */}
+            <div className="mt-8">
+                {renderComponent(activeTab)}
+            </div>
+        </div>
+    )
+}
