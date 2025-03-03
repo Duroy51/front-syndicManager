@@ -1,9 +1,18 @@
 import React from "react"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, Navigate } from "react-router-dom"
 import { Circles } from 'react-loader-spinner';
 import AuthGuard from '../helpers/AuthGuard.jsx';
 import {getRoleFromToken} from "../services/AccountService.js";
-
+/*import { 
+    MemoizedBlogContent,
+    MemoizedPodcastContent,
+    MemoizedNewsletterContent,
+    MemoizedPrivacyPolicy,
+    MemoizedNewsletterArchives
+  } from '../components/Education/ContentManager.jsx';
+import PodcastTagPage from '../components/Education/PodcastTagPage';
+  import ArticleDetail from '../components/Education/ArticleDetail';
+*/ 
 // Imports avec React.lazy
 const LoginPage = React.lazy(async () => ({
     default: (await import("../components/Authentication/Login/LoginPage")).LoginPage
@@ -32,6 +41,15 @@ const SyndicatApp = React.lazy(async () => ({
 const Profil = React.lazy(async () => ({
     default: (await import("../components/ProfilPage/ProfilPage.jsx")).SyndicatProfile
 }))
+const ContentManager = React.lazy(async () => ({
+    default: (await import("../components/Education/ContentManager.jsx")).default,
+  }));
+  const CommunicationManager = React.lazy(async () => ({
+    default: (await import("../components/Communication/CommunicationManager.jsx")).default,
+}));
+const ForumTopic = React.lazy(async () => ({
+    default: (await import("../components/Communication/ForumTopic.jsx")).default,
+}));
 
 export const AppRoutesPaths = {
     loginPage: "/login",
@@ -41,6 +59,24 @@ export const AppRoutesPaths = {
     createSyndicat: "/home/createSyndicat",
     syndicatApp: "/syndicat-app",
     profil: "/profile",
+    education: {
+        base: "/education",
+        blog: "/education/blog",
+        blogArticle: "/education/blog/article/:id",
+        podcast: "/education/podcast",
+        newsletter: "/education/newsletter",
+        podcastTag: "/education/podcast/tag/:tag",
+        privacy: "/education/privacy",
+        archives: "/education/newsletter/archives"
+    },
+    communication: {
+        base: "/communication",
+        chat: "/communication/chat",
+        forum: "/communication/forum",
+        forumTopic: "/communication/forum/topic/:id",
+        chatbot: "/communication/chatbot"
+    }
+
 }
 
 const CenteredSpinner = () => (
@@ -67,7 +103,8 @@ const HomePageWrapper = ({ userRole }) => {
             return <HomePage />;
         case 'syndicalist':
             return <SyndicalistHomePage />;
-
+        default:
+                return <WelcomePage />;
     }
 };
 
@@ -84,6 +121,10 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
                 <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
+                <Route path={`${AppRoutesPaths.education.base}/*`} element={<ContentManager />}/>
+                            {/* Routes pour la communication */}
+                <Route path={`${AppRoutesPaths.communication.base}/*`} element={<CommunicationManager />} />
+                <Route path={AppRoutesPaths.communication.forumTopic} element={<ForumTopic />} />
 
                 {/* Route conditionnelle pour la page d'accueil */}
                 <Route
@@ -112,3 +153,4 @@ export function AppRoute() {
         </React.Suspense>
     );
 }
+export default AppRoute;

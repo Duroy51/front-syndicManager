@@ -1,8 +1,9 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import 'react';
 import { Building, LogIn, UserPlus, BookOpen, Radio, Mail, MessageCircle, Users, Bot, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { AppRoutesPaths } from '../../router/appRouter'; 
 
 function App() {
   const navigate = useNavigate();
@@ -26,18 +27,18 @@ function App() {
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </button>
                 <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 py-2 w-48">
-                  <a href="/blog" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  <Link to={AppRoutesPaths.education.blog} className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
                     <BookOpen className="inline-block w-4 h-4 mr-2" />
                     Blog
-                  </a>
-                  <a href="/podcast" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  </Link>
+                  <Link to={AppRoutesPaths.education.podcast} className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
                     <Radio className="inline-block w-4 h-4 mr-2" />
                     Podcast
-                  </a>
-                  <a href="/newsletter" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  </Link>
+                  <Link to= {AppRoutesPaths.education.newsletter} className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
                     <Mail className="inline-block w-4 h-4 mr-2" />
                     Newsletter
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -48,18 +49,18 @@ function App() {
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </button>
                 <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 py-2 w-48">
-                  <a href="/chat" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  <Link to= {AppRoutesPaths.communication.chat} className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
                     <MessageCircle className="inline-block w-4 h-4 mr-2" />
                     Chat
-                  </a>
-                  <a href="/forum" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  </Link>
+                  <Link to= {AppRoutesPaths.communication.forum} className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
                     <Users className="inline-block w-4 h-4 mr-2" />
                     Forum
-                  </a>
-                  <a href="/chatbot" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  </Link>
+                  <Link to= {AppRoutesPaths.communication.chatbot} className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
                     <Bot className="inline-block w-4 h-4 mr-2" />
                     ChatBot
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
