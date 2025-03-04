@@ -1,15 +1,16 @@
 import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Filter, Building } from "lucide-react"
+import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 // Données simulées pour les syndicats et les recherches populaires
 const allSyndicats = [
-    { id: 1, name: "Syndicat National de l'Éducation", members: 250000, category: "Éducation" },
-    { id: 2, name: "Union des Travailleurs de la Santé", members: 180000, category: "Santé" },
-    { id: 3, name: "Fédération des Employés du Commerce", members: 150000, category: "Commerce" },
-    { id: 4, name: "Syndicat des Transports Publics", members: 120000, category: "Transport" },
-    { id: 5, name: "Association des Ingénieurs", members: 90000, category: "Ingénierie" },
+    { id: 1, name: "Syndicat National de l'Éducation", members: 250000, category: "Éducation", image: "/images/education.jpeg" },
+    { id: 2, name: "Union des Travailleurs de la Santé", members: 180000, category: "Santé", image: "/images/sante.jpg" },
+    { id: 3, name: "Fédération des Employés du Commerce", members: 150000, category: "Commerce", image: "/images/commerce.jpeg" },
+    { id: 4, name: "Syndicat des Transports Publics", members: 120000, category: "Transport", image: "/images/transport.jpeg" },
+    { id: 5, name: "Association des Ingénieurs", members: 90000, category: "Ingénierie", image: "/images/ingenierie.jpg" },
 ]
 
 const popularSearches = ["Éducation", "Santé", "Transport", "Commerce", "Industrie"]
@@ -20,7 +21,6 @@ export default function SearchInterface({ isOpen, onClose }) {
     const [selectedCategory, setSelectedCategory] = useState("Tous")
     const [hasSearched, setHasSearched] = useState(false)
     const navigate = useNavigate();
-
     const handleSearch = useCallback(() => {
         const filtered = allSyndicats.filter(
             (syndicat) =>
@@ -30,12 +30,9 @@ export default function SearchInterface({ isOpen, onClose }) {
         setFilteredSyndicats(filtered)
         setHasSearched(true)
     }, [searchTerm, selectedCategory])
-
-    const handleSyndicatClick = (syndicat) => {
-        alert(`Syndicat sélectionné: ${syndicat.name}`)
-        // Ici, tu peux ajouter une navigation vers une page détaillée
-        // Exemple avec React Router: navigate(`/syndicat/${syndicat.id}`)
-    }
+    useEffect(() => {
+        handleSearch();
+    }, [selectedCategory]);
 
     const categories = ["Tous", ...new Set(allSyndicats.map((s) => s.category))]
 
@@ -99,7 +96,7 @@ export default function SearchInterface({ isOpen, onClose }) {
                             </div>
 
                             {hasSearched && (
-                                <div>
+                                <div className="max-h-80 overflow-y-auto">
                                     <h3 className="text-lg font-semibold text-gray-700 mb-4">Résultats de la recherche</h3>
                                     {filteredSyndicats.length > 0 ? (
                                         <ul className="space-y-4">
@@ -112,7 +109,7 @@ export default function SearchInterface({ isOpen, onClose }) {
                                                     transition={{ duration: 0.3 }}
                                                     onClick={() => navigate('/profile')}
                                                 >
-                                                    <Building className="h-10 w-10 text-blue-600 mr-4" />
+                                                    <img src={syndicat.image} alt={syndicat.name} className="h-10 w-10 rounded-full mr-4" />
                                                     <div>
                                                         <h4 className="text-lg font-semibold text-gray-800">{syndicat.name}</h4>
                                                         <p className="text-sm text-gray-500">
