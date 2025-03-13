@@ -3,17 +3,15 @@ import { Route, Routes, Navigate } from "react-router-dom"
 import { Circles } from 'react-loader-spinner';
 import AuthGuard from '../helpers/AuthGuard.jsx';
 import {getRoleFromToken} from "../services/AccountService.js";
-/*import { 
-    MemoizedBlogContent,
-    MemoizedPodcastContent,
-    MemoizedNewsletterContent,
-    MemoizedPrivacyPolicy,
-    MemoizedNewsletterArchives
-  } from '../components/Education/ContentManager.jsx';
-import PodcastTagPage from '../components/Education/PodcastTagPage';
-  import ArticleDetail from '../components/Education/ArticleDetail';
-*/ 
-// Imports avec React.lazy
+import {AppRoutesPaths} from "./AppRoutesPaths.js";
+import {CenteredSpinner} from "./Spinner.jsx";
+import {HomePageWrapper} from "./Provider.jsx";
+
+
+
+
+
+
 const LoginPage = React.lazy(async () => ({
     default: (await import("../components/Authentication/Login/LoginPage")).LoginPage
 }))
@@ -51,67 +49,15 @@ const ForumTopic = React.lazy(async () => ({
     default: (await import("../components/Communication/ForumTopic.jsx")).default,
 }));
 
-export const AppRoutesPaths = {
-    loginPage: "/login",
-    registerPage: "/register",
-    welcomePage: "/",
-    homePage: "/home",
-    createSyndicat: "/home/createSyndicat",
-    syndicatApp: "/syndicat-app",
-    profil: "/profile",
-    education: {
-        base: "/education",
-        blog: "/education/blog",
-        blogArticle: "/education/blog/article/:id",
-        podcast: "/education/podcast",
-        newsletter: "/education/newsletter",
-        podcastTag: "/education/podcast/tag/:tag",
-        privacy: "/education/privacy",
-        archives: "/education/newsletter/archives"
-    },
-    communication: {
-        base: "/communication",
-        chat: "/communication/chat",
-        forum: "/communication/forum",
-        forumTopic: "/communication/forum/topic/:id",
-        chatbot: "/communication/chatbot"
-    }
 
-}
 
-const CenteredSpinner = () => (
-    <div className="flex items-center justify-center h-screen">
-        <Circles
-            height="40"
-            width="40"
-            color="#3498db"
-            ariaLabel="circles-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-        />
-        <span className="ml-4 text-gray-600">Chargement...</span>
-    </div>
-);
 
-// Composant qui gère le rendu conditionnel de la page d'accueil selon le rôle
-const HomePageWrapper = ({ userRole }) => {
-    switch(userRole) {
-        case 'guest':
-            return <SimpleUserHomePage />;
-        case 'syndiqué':
-            return <HomePage />;
-        case 'syndicalist':
-            return <SyndicalistHomePage />;
-        default:
-                return <WelcomePage />;
-    }
-};
+
+
 
 export function AppRoute() {
-    // Vous devrez implémenter une façon d'obtenir le rôle de l'utilisateur
-    // Par exemple, depuis un contexte d'authentification ou un état global
-    const userRole = getRoleFromToken(); // À remplacer par votre logique d'obtention du rôle
+
+    const userRole = getRoleFromToken();
 
     return (
         <React.Suspense fallback={<CenteredSpinner/>}>

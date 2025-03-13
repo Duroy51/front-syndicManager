@@ -3,7 +3,8 @@ import { Building, LogIn, UserPlus, BookOpen, Radio, Mail, MessageCircle, Users,
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { AppRoutesPaths } from '../../router/appRouter'; 
+import {AppRoutesPaths} from "../../router/AppRoutesPaths.js";
+
 
 
 const menuItems = [

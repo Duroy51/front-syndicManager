@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -53,7 +53,7 @@ export const LandingPage = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-200 to-indigo-200">
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#6BAED6] to-indigo-200">
             <App />
             <main className="flex-grow">
                 {/* Hero Section */}
@@ -62,7 +62,7 @@ export const LandingPage = () => {
                     animate="visible"
                     variants={sectionVariants}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20"
+                    className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white py-20"
                 >
                     <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2 mb-10 md:mb-0">
@@ -73,7 +73,7 @@ export const LandingPage = () => {
                                 SyndicManager : la plateforme moderne pour une gestion syndicale efficace et transparente.
                             </p>
                             <motion.button
-                                className="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold flex items-center hover:bg-indigo-700 transition duration-300 shadow"
+                                className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white px-8 py-3 rounded-full font-semibold flex items-center hover:opacity-90 transition duration-300 shadow-lg"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => navigate("/register")}
@@ -106,7 +106,7 @@ export const LandingPage = () => {
                         </h2>
                         <div className="grid gap-8 md:grid-cols-3">
                             <div className="text-center">
-                                <div className="bg-blue-300 rounded-full p-4 inline-block mb-4">
+                                <div className="bg-indigo-100 rounded-full p-4 inline-block mb-4">
                                     <TrendingUp className="h-8 w-8 text-indigo-700" />
                                 </div>
                                 <h3 className="text-xl font-semibold text-indigo-800 mb-2">Gestion efficace</h3>
@@ -115,7 +115,7 @@ export const LandingPage = () => {
                                 </p>
                             </div>
                             <div className="text-center">
-                                <div className="bg-blue-300 rounded-full p-4 inline-block mb-4">
+                                <div className="bg-indigo-100 rounded-full p-4 inline-block mb-4">
                                     <Users className="h-8 w-8 text-indigo-700" />
                                 </div>
                                 <h3 className="text-xl font-semibold text-indigo-800 mb-2">Collaboration simplifiée</h3>
@@ -124,7 +124,7 @@ export const LandingPage = () => {
                                 </p>
                             </div>
                             <div className="text-center">
-                                <div className="bg-blue-300 rounded-full p-4 inline-block mb-4">
+                                <div className="bg-indigo-100 rounded-full p-4 inline-block mb-4">
                                     <Building className="h-8 w-8 text-indigo-700" />
                                 </div>
                                 <h3 className="text-xl font-semibold text-indigo-800 mb-2">Transparence accrue</h3>
@@ -152,11 +152,11 @@ export const LandingPage = () => {
                             <input
                                 type="text"
                                 placeholder="Nom du syndicat..."
-                                className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-blue-500 focus:border-blue-700 focus:ring focus:ring-blue-300 transition duration-300 shadow-sm"
+                                className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-[#6BAED6] focus:border-indigo-700 focus:ring focus:ring-indigo-300 transition duration-300 shadow-sm"
                                 onClick={() => setIsSearchOpen(true)}
                                 readOnly
                             />
-                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-500" />
+                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#6BAED6]" />
                         </div>
                     </div>
                 </motion.section>
@@ -167,7 +167,7 @@ export const LandingPage = () => {
                     animate="visible"
                     variants={sectionVariants}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
-                    className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200"
+                    className="py-16 bg-gradient-to-r from-[#6BAED6] to-indigo-200"
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-8 text-center">
@@ -190,11 +190,11 @@ export const LandingPage = () => {
                                             {syndicat.name}
                                         </h3>
                                         <div className="flex items-center text-gray-600 mb-4">
-                                            <Users className="h-5 w-5 mr-2 text-blue-500" />
+                                            <Users className="h-5 w-5 mr-2 text-[#6BAED6]" />
                                             <span>{syndicat.members.toLocaleString()} membres</span>
                                         </div>
                                         <motion.button
-                                            className="w-full bg-blue-500 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:bg-blue-600"
+                                            className="w-full bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white py-2 rounded-md flex items-center justify-center transition duration-300 hover:opacity-90 shadow-md"
                                             whileHover={{ scale: 1.03 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
@@ -209,63 +209,67 @@ export const LandingPage = () => {
                 </motion.section>
 
                 {/* Publications & Événements Section */}
-                <motion.section
+                    <motion.section
                     initial="hidden"
                     animate="visible"
                     variants={sectionVariants}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
-                    className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200"
-                >
-                    <div className="container mx-auto px-4">
-                        <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
-                            Actualités et Événements
-                        </h2>
-                        <div className="grid gap-12 md:grid-cols-2">
-                            <div>
-                                <h3 className="text-2xl font-semibold text-indigo-800 mb-6">
-                                    Publications Récentes
-                                </h3>
-                                <Publications limit={3} />
-                                <div className="text-center mt-6">
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold inline-flex items-center transition duration-300 hover:bg-blue-600"
-                                        onClick={() => navigate("/publications")}
-                                    >
-                                        Voir toutes les publications
-                                        <ChevronRight className="ml-2 h-5 w-5" />
-                                    </motion.button>
-                                </div>
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.8 }}
+                className="py-16 bg-gradient-to-r from-[#6BAED6] to-indigo-200"
+            >
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
+                        Actualités et Événements
+                    </h2>
+                    {/* Utilisation d'une disposition en pile pour afficher les sections l'une après l'autre */}
+                    <div className="space-y-12">
+                        <div>
+                            <h3 className="text-2xl font-semibold text-indigo-800 mb-6">
+                                Publications Récentes
+                            </h3>
+                            {/* Affiche un élément à la fois */}
+                            <Publications limit={3} />
+                            <div className="text-center mt-6">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white px-6 py-2 rounded-full font-semibold inline-flex items-center transition duration-300 hover:opacity-90 shadow-md"
+                                    onClick={() => navigate("/publications")}
+                                >
+                                    Voir plus de publications
+                                    <ChevronRight className="ml-2 h-5 w-5" />
+                                </motion.button>
                             </div>
-                            <div>
-                                <h3 className="text-2xl font-semibold text-indigo-800 mb-6">
-                                    Événements à Venir
-                                </h3>
-                                <EventsList limit={3} />
-                                <div className="text-center mt-6">
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold inline-flex items-center transition duration-300 hover:bg-blue-600"
-                                        onClick={() => navigate("/events")}
-                                    >
-                                        Voir tous les événements
-                                        <ChevronRight className="ml-2 h-5 w-5" />
-                                    </motion.button>
-                                </div>
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-semibold text-indigo-800 mb-6">
+                                Événements à Venir
+                            </h3>
+                            {/* Affiche un événement à la fois */}
+                            <EventsList limit={3} />
+                            <div className="text-center mt-6">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white px-6 py-2 rounded-full font-semibold inline-flex items-center transition duration-300 hover:opacity-90 shadow-md"
+                                    onClick={() => navigate("/events")}
+                                >
+                                    Voir plus d'événements
+                                    <ChevronRight className="ml-2 h-5 w-5" />
+                                </motion.button>
                             </div>
                         </div>
                     </div>
-                </motion.section>
+                </div>
+            </motion.section>
 
-                {/* Statistics Section */}
+
+            {/* Statistics Section */}
                 <motion.section
                     initial="hidden"
                     animate="visible"
                     variants={sectionVariants}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 1 }}
-                    className="py-16 bg-gradient-to-r from-blue-200 to-indigo-200"
+                    className="py-16 bg-gradient-to-r from-[#6BAED6] to-indigo-200"
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
@@ -278,7 +282,7 @@ export const LandingPage = () => {
                                     className="bg-white rounded-lg p-6 text-center shadow-md transition duration-300 hover:shadow-xl"
                                     whileHover={{ y: -5 }}
                                 >
-                                    <stat.icon className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+                                    <stat.icon className="h-12 w-12 text-[#6BAED6] mx-auto mb-4" />
                                     <h3 className="text-2xl font-bold text-indigo-800 mb-2">
                                         {stat.name === "Taux de satisfaction" ? `${stat.value}%` : stat.value.toLocaleString()}
                                     </h3>
@@ -296,7 +300,7 @@ export const LandingPage = () => {
                 animate="visible"
                 variants={sectionVariants}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 1.2 }}
-                className="bg-blue-500 text-white py-8"
+                className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white py-8"
             >
                 <div className="container mx-auto px-4">
                     <div className="grid gap-8 md:grid-cols-3">
@@ -305,7 +309,7 @@ export const LandingPage = () => {
                                 <Building className="h-6 w-6" />
                                 <span className="text-xl font-semibold">SyndicManager</span>
                             </div>
-                            <p className="text-blue-100">
+                            <p className="text-indigo-100">
                                 La plateforme moderne pour une gestion syndicale efficace.
                             </p>
                         </div>
@@ -313,17 +317,17 @@ export const LandingPage = () => {
                             <h4 className="text-lg font-semibold mb-4">Liens rapides</h4>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#" className="text-blue-100 hover:text-blue-200 transition duration-300">
+                                    <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
                                         À propos
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="text-blue-100 hover:text-blue-200 transition duration-300">
+                                    <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
                                         Services
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="text-blue-100 hover:text-blue-200 transition duration-300">
+                                    <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
                                         Contact
                                     </a>
                                 </li>
@@ -332,7 +336,7 @@ export const LandingPage = () => {
                         <div>
                             <h4 className="text-lg font-semibold mb-4">Suivez-nous</h4>
                             <div className="flex space-x-4">
-                                <a href="#" className="text-blue-100 hover:text-blue-200 transition duration-300">
+                                <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path
                                             fillRule="evenodd"
@@ -341,7 +345,7 @@ export const LandingPage = () => {
                                         />
                                     </svg>
                                 </a>
-                                <a href="#" className="text-blue-100 hover:text-blue-200 transition duration-300">
+                                <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8" />
                                     </svg>
