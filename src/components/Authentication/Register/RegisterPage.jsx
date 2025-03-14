@@ -211,7 +211,7 @@ export const RegisterPage = () => {
 
         try {
             // Envoi de la requête au serveur
-            const response = await axios.post('http://localhost:9005/api/register', {
+            const response = await axios.post('https://gateway.yowyob.com/auth-service/auth/register', {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,

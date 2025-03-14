@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Créer une instance d'Axios
 export const apiClient = axios.create({
-    baseURL: 'http://localhost:9005/api', // Remplacez par votre URL de base
+    baseURL: 'https://gateway.yowyob.com', // Remplacez par votre URL de base
     /*timeout: 10000, // Timeout pour les requêtes*/
 });
 

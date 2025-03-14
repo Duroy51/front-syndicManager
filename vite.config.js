@@ -6,13 +6,14 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/amadeus': {
-        target: 'https://test.api.amadeus.com',
+      // Toute requête vers /auth-service sera redirigée vers le serveur cible.
+      '/auth-service': {
+        target: 'https://gateway.yowyob.com',
         changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api\/amadeus/, '')
-      }
-    }
+        secure: false, // À utiliser si le certificat du serveur n'est pas validé
+        // Vous pouvez éventuellement réécrire le chemin si besoin :
+        // rewrite: (path) => path.replace(/^\/auth-service/, '')
+      },
   },
   resolve: {
     alias: {

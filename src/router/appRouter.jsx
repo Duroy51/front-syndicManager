@@ -82,6 +82,7 @@ export function AppRoute() {
                     }
                 />
 
+
                 {/* Autres routes protégées */}
                 <Route
                     path={AppRoutesPaths.createSyndicat}
