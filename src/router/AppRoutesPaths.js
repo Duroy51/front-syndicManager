@@ -12,6 +12,6 @@ export const AppRoutesPaths = {
     createSyndicat: "/home/createSyndicat",
     syndicatApp: "/syndicat-app",
     profil: "/profile",
-    
+
 
 }

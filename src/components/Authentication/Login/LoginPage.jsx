@@ -103,7 +103,7 @@ export const LoginPage = () => {
                 window.AppleID.auth.init({
                     clientId: 'com.bandesoft.dev-gloswitch',
                     scope: 'name email',
-                    redirectURI: 'https://front-syndic-manager-git-dev-erickoghene-gmailcoms-projects.vercel.app/login',
+                    redirectURI: 'https://front-syndic-manager-2fmn.vercel.app/login',
                     state: 'origin:web',
                     usePopup: true
                 });
