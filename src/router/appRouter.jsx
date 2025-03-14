@@ -39,15 +39,7 @@ const SyndicatApp = React.lazy(async () => ({
 const Profil = React.lazy(async () => ({
     default: (await import("../components/ProfilPage/ProfilPage.jsx")).SyndicatProfile
 }))
-const ContentManager = React.lazy(async () => ({
-    default: (await import("../components/Education/ContentManager.jsx")).default,
-  }));
-  const CommunicationManager = React.lazy(async () => ({
-    default: (await import("../components/Communication/CommunicationManager.jsx")).default,
-}));
-const ForumTopic = React.lazy(async () => ({
-    default: (await import("../components/Communication/ForumTopic.jsx")).default,
-}));
+
 
 
 
@@ -67,10 +59,6 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
                 <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
-                <Route path={`${AppRoutesPaths.education.base}/*`} element={<ContentManager />}/>
-                            {/* Routes pour la communication */}
-                <Route path={`${AppRoutesPaths.communication.base}/*`} element={<CommunicationManager />} />
-                <Route path={AppRoutesPaths.communication.forumTopic} element={<ForumTopic />} />
 
                 {/* Route conditionnelle pour la page d'accueil */}
                 <Route
