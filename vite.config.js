@@ -14,7 +14,9 @@ export default defineConfig({
         // Vous pouvez éventuellement réécrire le chemin si besoin :
         // rewrite: (path) => path.replace(/^\/auth-service/, '')
       },
+    }
   },
+
   resolve: {
     alias: {
       '@': '/src',
@@ -25,5 +27,5 @@ export default defineConfig({
     include: /src\/.*\.[jt]sx?$/, // Inclut tous les fichiers .js, .jsx, .ts, .tsx dans src/
     exclude: /node_modules/, // Exclut node_modules
   },
-});
+})
 
