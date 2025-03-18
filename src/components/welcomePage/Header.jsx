@@ -64,8 +64,8 @@ function Header() {
             </div>
 
 
-            <div className="flex space-x-2">
-              {/* Éducation Dropdown */}
+            {/*<div className="flex space-x-2">
+               Éducation Dropdown
               <div className="relative group">
                 <button className="text-2xl text-gray-700 hover:text-blue-600 px-4 py-2 rounded-full flex items-center transition duration-300">
                   Éducation
@@ -87,7 +87,7 @@ function Header() {
                 </div>
               </div>
 
-              {/* Communication Dropdown */}
+               Communication Dropdown
               <div className="relative group">
                 <button className="text-2xl text-gray-700 hover:text-blue-600 px-4 py-2 rounded-full flex items-center transition duration-300">
                   Communication
@@ -108,7 +108,7 @@ function Header() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </div>*/}
 
           </div>
 
