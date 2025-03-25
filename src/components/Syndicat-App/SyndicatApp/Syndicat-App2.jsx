@@ -8,8 +8,12 @@ import {PartnershipsList} from "../Partenaire/Partenaires";
 import { Calendar, MessageSquare, Vote, CreditCard, Handshake, Home, Bell, User, LogOut, ChevronRight, Search } from 'lucide-react'
 import {useNavigate} from "react-router-dom";
 import {Footer} from "./Footer"
+import { useTranslation } from "react-i18next";
+import i18n from '../../../i18n';
+
 
 export const SyndicatApp2 = () => {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState('événements')
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const navigate = useNavigate();
@@ -80,7 +84,7 @@ export const SyndicatApp2 = () => {
                             onClick={() => navigate('/home')}
                         >
                             <Home className="mr-2 h-4 w-4" />
-                            Acceuil
+                            {t("accueil")}
                         </motion.button>
                     </div>
                 </motion.div>

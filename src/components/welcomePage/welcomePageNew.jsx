@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import App from "./Header.jsx"
 import { EventsList } from "./ActuSection/EvenList.jsx"
 import { Publications } from "./ActuSection/PublicationList.jsx"
+import { useTranslation } from "react-i18next";
+import i18n from '../../i18n.js';
 
 // Données fictives pour les syndicats populaires
 const popularSyndicats = [
@@ -49,8 +51,9 @@ const sectionVariants = {
 }
 
 export const LandingPage = () => {
-    const [isSearchOpen, setIsSearchOpen] = useState(false)
-    const navigate = useNavigate()
+    const { t } = useTranslation();
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#6BAED6] to-indigo-200">
@@ -67,10 +70,10 @@ export const LandingPage = () => {
                     <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
                         <div className="md:w-1/2 mb-10 md:mb-0">
                             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                                Gérez vos syndicats en toute simplicité
+                                {t("gérerSyndicats")}
                             </h1>
                             <p className="text-xl mb-8">
-                                SyndicManager : la plateforme moderne pour une gestion syndicale efficace et transparente.
+                                {t("syndicmanager_description")}
                             </p>
                             <motion.button
                                 className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white px-8 py-3 rounded-full font-semibold flex items-center hover:opacity-90 transition duration-300 shadow-lg"
@@ -78,14 +81,14 @@ export const LandingPage = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => navigate("/register")}
                             >
-                                Commencer maintenant
+                                {t("commencer_maintenant")}
                                 <ChevronRight className="ml-2 h-5 w-5" />
                             </motion.button>
                         </div>
                         <div className="md:w-1/2">
                             <img
                                 src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                                alt="Gestion syndicale"
+                                alt={t("gestionSyndicale")}
                                 className="rounded-lg shadow-xl"
                             />
                         </div>
@@ -102,34 +105,34 @@ export const LandingPage = () => {
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
-                            Pourquoi choisir SyndicManager ?
+                            {t("pourquoi_choisir_syndicmanager")}
                         </h2>
                         <div className="grid gap-8 md:grid-cols-3">
                             <div className="text-center">
                                 <div className="bg-indigo-100 rounded-full p-4 inline-block mb-4">
                                     <TrendingUp className="h-8 w-8 text-indigo-700" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-indigo-800 mb-2">Gestion efficace</h3>
+                                <h3 className="text-xl font-semibold text-indigo-800 mb-2">{t("gestion_efficace")}</h3>
                                 <p className="text-gray-600">
-                                    Optimisez la gestion de vos syndicats avec nos outils intuitifs.
+                                    {t("description_gestion_efficace")}
                                 </p>
                             </div>
                             <div className="text-center">
                                 <div className="bg-indigo-100 rounded-full p-4 inline-block mb-4">
                                     <Users className="h-8 w-8 text-indigo-700" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-indigo-800 mb-2">Collaboration simplifiée</h3>
+                                <h3 className="text-xl font-semibold text-indigo-800 mb-2">{t("collaboration_simplifiee")}</h3>
                                 <p className="text-gray-600">
-                                    Facilitez la communication et la coordination entre les membres.
+                                {t("description_collaboration_simplifiee")}
                                 </p>
                             </div>
                             <div className="text-center">
                                 <div className="bg-indigo-100 rounded-full p-4 inline-block mb-4">
                                     <Building className="h-8 w-8 text-indigo-700" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-indigo-800 mb-2">Transparence accrue</h3>
+                                <h3 className="text-xl font-semibold text-indigo-800 mb-2">{t("transparence_accrue")}</h3>
                                 <p className="text-gray-600">
-                                    Assurez une gestion transparente et responsable de vos activités.
+                                    {t("description_transparence_accrue")}
                                 </p>
                             </div>
                         </div>
@@ -146,12 +149,12 @@ export const LandingPage = () => {
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-8 text-center">
-                            Trouvez votre syndicat
+                            {t("trouver_votre_syndicat")}
                         </h2>
                         <div className="max-w-xl mx-auto relative">
                             <input
                                 type="text"
-                                placeholder="Nom du syndicat..."
+                                placeholder={t("placeholder_nom_syndicat")}
                                 className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-[#6BAED6] focus:border-indigo-700 focus:ring focus:ring-indigo-300 transition duration-300 shadow-sm"
                                 onClick={() => setIsSearchOpen(true)}
                                 readOnly
@@ -171,7 +174,7 @@ export const LandingPage = () => {
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-8 text-center">
-                            Syndicats populaires
+                            {t("syndicats_populaires")}
                         </h2>
                         <div className="grid gap-8 md:grid-cols-3">
                             {popularSyndicats.map((syndicat) => (
@@ -198,7 +201,7 @@ export const LandingPage = () => {
                                             whileHover={{ scale: 1.03 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
-                                            En savoir plus
+                                            {t("en_savoir_plus")}
                                             <ChevronRight className="ml-2 h-4 w-4" />
                                         </motion.button>
                                     </div>
@@ -218,13 +221,13 @@ export const LandingPage = () => {
             >
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
-                        Actualités et Événements
+                        {t("actualites_et_evenements")}
                     </h2>
                     {/* Utilisation d'une disposition en pile pour afficher les sections l'une après l'autre */}
                     <div className="space-y-12">
                         <div>
                             <h3 className="text-2xl font-semibold text-indigo-800 mb-6">
-                                Publications Récentes
+                                {t("publications_recentes")}
                             </h3>
                             {/* Affiche un élément à la fois */}
                             <Publications limit={3} />
@@ -235,14 +238,14 @@ export const LandingPage = () => {
                                     className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white px-6 py-2 rounded-full font-semibold inline-flex items-center transition duration-300 hover:opacity-90 shadow-md"
                                     onClick={() => navigate("/publications")}
                                 >
-                                    Voir plus de publications
+                                    {t("voir_plus_de_publications")}
                                     <ChevronRight className="ml-2 h-5 w-5" />
                                 </motion.button>
                             </div>
                         </div>
                         <div>
                             <h3 className="text-2xl font-semibold text-indigo-800 mb-6">
-                                Événements à Venir
+                                {t("evenements_a_venir")}
                             </h3>
                             {/* Affiche un événement à la fois */}
                             <EventsList limit={3} />
@@ -253,7 +256,7 @@ export const LandingPage = () => {
                                     className="bg-gradient-to-r from-[#6BAED6] to-indigo-700 text-white px-6 py-2 rounded-full font-semibold inline-flex items-center transition duration-300 hover:opacity-90 shadow-md"
                                     onClick={() => navigate("/events")}
                                 >
-                                    Voir plus d'événements
+                                    {t("voir_plus_d_evenements")}
                                     <ChevronRight className="ml-2 h-5 w-5" />
                                 </motion.button>
                             </div>
@@ -273,7 +276,7 @@ export const LandingPage = () => {
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold text-indigo-800 mb-12 text-center">
-                            SyndicManager en chiffres
+                        {t("syndicmanager_en_chiffres")}
                         </h2>
                         <div className="grid gap-8 md:grid-cols-4">
                             {statistics.map((stat) => (
@@ -310,31 +313,31 @@ export const LandingPage = () => {
                                 <span className="text-xl font-semibold">SyndicManager</span>
                             </div>
                             <p className="text-indigo-100">
-                                La plateforme moderne pour une gestion syndicale efficace.
+                            {t("description_plateforme")}
                             </p>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Liens rapides</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t("liens_rapides")}</h4>
                             <ul className="space-y-2">
                                 <li>
                                     <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
-                                        À propos
+                                    {t("a_propos")}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
-                                        Services
+                                        {t("services")}
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
-                                        Contact
+                                        {t("contact")}
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold mb-4">Suivez-nous</h4>
+                            <h4 className="text-lg font-semibold mb-4">{t("suivez_nous")}</h4>
                             <div className="flex space-x-4">
                                 <a href="#" className="text-indigo-100 hover:text-indigo-200 transition duration-300">
                                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

@@ -7,6 +7,8 @@ import { AdhereSyndicatForm } from "./AdhesionForm/AdhesionForm.jsx"
 import { SyndicatProfile } from "../ProfilPage/ProfilPage.jsx"
 import {ExploreCard} from "./ExploreSection/ExploreCard.jsx";
 import {exploresyndicat} from "../../fakeData/exploreSyndicatFake.js";
+import { useTranslation } from 'react-i18next';
+
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -29,6 +31,7 @@ export const Explorer = () => {
     const [selectedSyndicat, setSelectedSyndicat] = useState(null)
     const [showAdhesionForm, setShowAdhesionForm] = useState(false)
     const [viewingSyndicatProfile, setViewingSyndicatProfile] = useState(false)
+    const { t } = useTranslation(); // Récupération de la fonction de traduction
 
     const userId = getUserIdFromToken()
 
@@ -60,7 +63,6 @@ export const Explorer = () => {
         setSelectedSyndicat(syndicat)
         setViewingSyndicatProfile(true)
     }
-
     const getSuggestionMessage = () => {
         if (!searchTerm) return null
 
@@ -84,7 +86,7 @@ export const Explorer = () => {
                         onClick={() => setViewingSyndicatProfile(false)}
                     >
                         <ChevronLeft className="h-6 w-6 transition-transform group-hover:-translate-x-1" />
-                        <span className="text-lg font-medium">Retour à l'exploration</span>
+                        <span className="text-lg font-medium">{t("retour_exploration")}</span>
                     </button>
                     <SyndicatProfile syndicat={selectedSyndicat} />
                 </div>
@@ -102,16 +104,16 @@ export const Explorer = () => {
                             <h1 className="text-4xl sm:text-5xl font-bold mb-6 relative z-10">
                             <span
                                 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                Explorer les Syndicats
+                                {t("explorer_syndicats")}s
                             </span>
                                 <div
                                     className="mt-2 w-24 h-1 bg-gradient-to-r from-blue-400 to-indigo-400 mx-auto rounded-full"></div>
                             </h1>
                             <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
-                                Trouvez la communauté professionnelle qui correspond à vos besoins
+                                {t("trouver_communautes")}
                                 <span className="block mt-2 text-blue-600 flex items-center justify-center">
                                 <Sparkles className="h-5 w-5 mr-2"/>
-                                Plus de 150 syndicats référencés
+                                {t("plus_syndicats")}
                             </span>
                             </p>
                         </div>
@@ -167,7 +169,7 @@ export const Explorer = () => {
                                             className="w-full h-64 object-cover"
                                         />
                                         <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-medium shadow-sm">
-                                            ⭐ Recommandé
+                                            {t("recommande")}
                                         </div>
                                     </div>
                                     <div className="md:w-2/3 p-8">
@@ -185,7 +187,7 @@ export const Explorer = () => {
                                             </div>
                                             <div className="flex items-center">
                                                 <ShieldCheck className="h-5 w-5 text-blue-600 mr-2" />
-                                                <span>Certifié par l'État</span>
+                                                <span>{t("certifie_etat")}</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <Star className="h-5 w-5 text-blue-600 mr-2" />
@@ -198,13 +200,13 @@ export const Explorer = () => {
                                                 whileHover={{ scale: 1.05 }}
                                             >
                                                 <UserPlus className="h-5 w-5 mr-2" />
-                                                Adhérer maintenant
+                                               {t(" adherer_maintenant")}
                                             </motion.button>
                                             <motion.button
                                                 className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
                                                 whileHover={{ scale: 1.05 }}
                                             >
-                                                Voir les détails
+                                                {t("voir_details")}
                                             </motion.button>
                                         </div>
                                     </div>

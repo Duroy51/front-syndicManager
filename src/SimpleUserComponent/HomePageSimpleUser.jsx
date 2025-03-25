@@ -4,7 +4,8 @@ import { Building, Search,Bell, Home,Compass,ChevronRight,LogOut,X,AlertCircle,C
 import { Explorer } from "../components/HomePage/ExploreSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
 
-
+import { useTranslation } from "react-i18next"
+import i18n from "../i18n.js"
 const navItems = [
     {
         id: "dashboard",
@@ -65,7 +66,7 @@ export const SimpleUserHomePage = () => {
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
     const [lastName, setLastName] = useState(null)
     const [firstName, setFirstName] = useState(null)
-
+    const{t}=useTranslation()
     useEffect(() => {
         const savedSection = localStorage.getItem("activeSection")
         if (savedSection && navItems.some(item => item.id === savedSection)) {
@@ -305,7 +306,7 @@ export const SimpleUserHomePage = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">{t("notifications")}</h3>
                                         <p className="text-sm text-gray-500">Vous avez 2 nouvelles notifications</p>
                                     </div>
                                     <motion.button
@@ -329,8 +330,7 @@ export const SimpleUserHomePage = () => {
                                     whileTap={{ scale: 0.98 }}
                                     className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                                 >
-                                    Voir toutes les notifications
-                                </motion.button>
+                                    {t("voir_toutes_les_notifications")}                                </motion.button>
                             </div>
                         </motion.div>
                     )}

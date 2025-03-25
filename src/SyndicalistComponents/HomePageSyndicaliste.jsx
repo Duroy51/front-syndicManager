@@ -31,6 +31,7 @@ import {ProfilUser} from "../components/HomePage/ProfilUser/ProfilUser.jsx";
 import {OrganisationNavigationTabs} from "./OrganisationGestion/OrganisationSection.jsx";
 import {BusinessNavigationTabs} from "./BusinessSection/BusinessSection.jsx";
 
+import { useTranslation } from "react-i18next"
 const navItems = [
     {
         id: "dashboard",
@@ -129,6 +130,8 @@ export const SyndicalistHomePage = () => {
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
     const [lastName, setLastName] = useState(null)
     const [firstName, setFirstName] = useState(null)
+
+    const {t}  =useTranslation();
 
     useEffect(() => {
         const savedSection = localStorage.getItem("activeSection")
@@ -316,7 +319,7 @@ export const SyndicalistHomePage = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">{t("notifications")}</h3>
                                         <p className="text-sm text-gray-500">Vous avez 4 nouvelles notifications</p>
                                     </div>
                                     <motion.button
@@ -340,7 +343,7 @@ export const SyndicalistHomePage = () => {
                                     whileTap={{ scale: 0.98 }}
                                     className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                                 >
-                                    Voir toutes les notifications
+                                    {t("voir_toutes_les_notifications")}
                                 </motion.button>
                             </div>
                         </motion.div>

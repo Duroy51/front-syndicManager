@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Check, X, Download, Search, ChevronDown, MoreHorizontal, Filter, Lock, Unlock, Slash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 // Fausses données pour les demandes d'adhésion
 const dummyRequests = [
@@ -244,6 +245,7 @@ export const MembersManagement = () => {
     const handleMenuClick = (e) => {
         e.stopPropagation()
     }
+    const {t}=useTranslation();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -266,11 +268,11 @@ export const MembersManagement = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8 text-gray-800">Gestion des Membres</h1>
+            <h1 className="text-3xl font-bold mb-8 text-gray-800">{t("gestion_des_membres")}</h1>
 
             {/* Section des demandes d'adhésion */}
             <section className="mb-12 border-b pb-8">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-700">Demandes d'adhésion</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-700">{t("demandes_adhesion")}</h2>
                 <div className="space-y-6">
                     {displayedRequests.map((req) => (
                         <motion.div
@@ -314,7 +316,7 @@ export const MembersManagement = () => {
                                                 download
                                                 className="mt-1 text-sm text-blue-600 hover:underline flex items-center gap-1"
                                             >
-                                                <Download size={14} /> Télécharger
+                                                <Download size={14} /> {t("telecharger")}
                                             </a>
                                         </div>
                                         <div className="flex flex-col items-center">
@@ -328,7 +330,7 @@ export const MembersManagement = () => {
                                                 download
                                                 className="mt-1 text-sm text-blue-600 hover:underline flex items-center gap-1"
                                             >
-                                                <Download size={14} /> Télécharger
+                                                <Download size={14} /> {t("telecharger")}
                                             </a>
                                         </div>
                                     </div>
@@ -337,13 +339,13 @@ export const MembersManagement = () => {
                                             className="px-4 py-2 bg-green-600 text-white rounded-md flex items-center hover:bg-green-700 transition-colors"
                                             onClick={() => handleAcceptRequest(req.id)}
                                         >
-                                            <Check size={16} className="mr-2" /> Accepter
+                                            <Check size={16} className="mr-2" /> {t("accepter")}
                                         </button>
                                         <button
                                             className="px-4 py-2 bg-red-600 text-white rounded-md flex items-center hover:bg-red-700 transition-colors"
                                             onClick={() => handleRejectRequest(req.id)}
                                         >
-                                            <X size={16} className="mr-2" /> Rejeter
+                                            <X size={16} className="mr-2" /> {t("rejeter")}
                                         </button>
                                     </div>
                                 </div>
@@ -365,7 +367,7 @@ export const MembersManagement = () => {
 
             {/* Section de la liste des membres */}
             <section>
-                <h2 className="text-2xl font-semibold mb-6 text-gray-700">Liste des membres</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-700">{t("liste_des_membres")}</h2>
                 <div className="mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="relative w-full md:w-64">
                         <input
@@ -383,7 +385,7 @@ export const MembersManagement = () => {
                             className="px-4 py-2 bg-blue-600 text-white rounded-md flex items-center gap-2 hover:bg-blue-700 transition-colors"
                         >
                             <Filter size={16} />
-                            Filtrer par statut
+                            {t("filtrer_par_statut")}
                             <ChevronDown size={16} />
                         </button>
                         {showStatusFilter && (
@@ -400,7 +402,7 @@ export const MembersManagement = () => {
                                         }}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
-                                        Tous
+                                        {t("tous")}
                                     </button>
                                     <button
                                         onClick={() => {
@@ -410,7 +412,7 @@ export const MembersManagement = () => {
                                         }}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
-                                        Actifs
+                                        {t("actifs")}
                                     </button>
                                     <button
                                         onClick={() => {
@@ -420,7 +422,7 @@ export const MembersManagement = () => {
                                         }}
                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
-                                        Bloqués
+                                        {t("Bloques")}
                                     </button>
                                 </div>
                             </div>
@@ -433,19 +435,19 @@ export const MembersManagement = () => {
                         <tr className="bg-gray-100">
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Email
+                                {t("email")}
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Téléphone
+                                {t("telephone")}
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Statut
+                                {t("statut")}
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Date d'adhésion
+                                {t("dateAdhesion")}
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions
+                                {t("actions")}
                             </th>
                         </tr>
                         </thead>
@@ -495,11 +497,11 @@ export const MembersManagement = () => {
                                                     >
                                                         {member.status === "active" ? (
                                                             <>
-                                                                <Lock className="inline-block mr-2" size={16} /> Bloquer
+                                                                <Lock className="inline-block mr-2" size={16} /> {t("bloquer")}
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <Unlock className="inline-block mr-2" size={16} /> Débloquer
+                                                                <Unlock className="inline-block mr-2" size={16} /> {t("debloquer")}
                                                             </>
                                                         )}
                                                     </button>
@@ -507,7 +509,7 @@ export const MembersManagement = () => {
                                                         onClick={() => setActiveActionMenu(null)}
                                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                                                     >
-                                                        <Slash className="inline-block mr-2" size={16} /> Bannir
+                                                        <Slash className="inline-block mr-2" size={16} /> {t("bannir")}
                                                     </button>
                                                 </div>
                                             </div>
@@ -525,7 +527,7 @@ export const MembersManagement = () => {
                         className="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
                         disabled={currentPage === 1}
                     >
-                        Précédent
+                        {t("precedent")}
                     </button>
                     <span className="text-gray-700">
             Page {currentPage} sur {totalPages}
@@ -535,7 +537,7 @@ export const MembersManagement = () => {
                         className="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
                         disabled={currentPage === totalPages}
                     >
-                        Suivant
+                        {t("suivant")}
                     </button>
                 </div>
                 {filteredMembers.length > pageSize && !showAllMembers && (
@@ -544,7 +546,7 @@ export const MembersManagement = () => {
                             className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
                             onClick={() => setShowAllMembers(true)}
                         >
-                            Voir plus
+                            {t("voirPlus")}
                         </button>
                     </div>
                 )}
@@ -554,7 +556,7 @@ export const MembersManagement = () => {
                             className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
                             onClick={() => setShowAllMembers(false)}
                         >
-                            Voir moins
+                            {t("voirMoins")}
                         </button>
                     </div>
                 )}

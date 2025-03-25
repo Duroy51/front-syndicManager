@@ -3,11 +3,15 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Calendar, MapPin, Clock, Users, ChevronRight, ExternalLink } from "lucide-react"
+import { useTranslation } from "react-i18next";
+import i18n from '../../../i18n';
 
 const EventCard = ({ event }) => {
     const [isExpanded, setIsExpanded] = useState(false)
+    const { t } = useTranslation();
 
     return (
+        
         <motion.div
             layout
             initial={{ opacity: 0, y: 20 }}
@@ -50,14 +54,14 @@ const EventCard = ({ event }) => {
                 <div className="mt-4 flex justify-between items-center">
                     <div className="flex items-center text-gray-600">
                         <Users className="w-5 h-5 mr-2 text-blue-500" />
-                        <span>{event.participants} participants</span>
+                        <span>{event.participants} {t("participants")}</span>
                     </div>
                     <motion.button
                         className="bg-blue-600 text-white px-4 py-2 rounded-full flex items-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        S'inscrire
+                        {t("sinscrire")}
                         <ExternalLink className="w-4 h-4 ml-2" />
                     </motion.button>
                 </div>

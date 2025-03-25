@@ -1,0 +1,142 @@
+{
+    "français": "Français",
+    "english": "Anglais",
+    "deutsch": "Allemand",
+    "seConnecter": "Se connecter",
+    "sinscrire": "S'inscrire",
+
+    "accueil": "Accueil",
+    "créez_votre_propre_syndicat": "Créez votre propre syndicat",
+    "lancez_votre_propre_syndicat_et_rassemblez_des_membres_autour_de_votre_cause": "Lancez votre propre syndicat et rassemblez des membres autour de votre cause.",
+    "créer_un_syndicat": "Créer un Syndicat",
+    "accéder_au_syndicat": "Accéder au syndicat",
+    "membres": "membres",
+    "messages": "messages",
+     
+    "explorer_syndicats": "Explorer les Syndicats",
+    "trouver_communautes": "Trouvez la communauté professionnelle qui correspond à vos besoins",
+    "plus_syndicats": "Plus de 150 syndicats référencés",
+    "rechercher_syndicat": "Rechercher un syndicat...",
+    "aucun_syndicat_trouve": "Aucun syndicat trouvé pour \"{searchTerm}\". Essayez une autre recherche.",
+    "syndicat_trouve": "{count} syndicat(s) trouvé(s) pour \"{searchTerm}\".",
+    "syndicat_suggere": "Syndicat suggéré",
+    "recommande": "⭐ Recommandé",
+    "certifie_etat": "Certifié par l'État",
+    "avis_note": "{rating}/5 ({reviews} avis)",
+    "adherer_maintenant": "Adhérer maintenant",
+    "voir_details": "Voir les détails",
+    "retour_exploration": "Retour à l'exploration",
+    "adhesion_a": "Adhésion à {syndicat}",
+    "erreur_chargement": "Erreur lors du chargement des syndicats.",
+  
+
+    
+      "rechercherPlaceholder": "Rechercher un syndicat...",
+      "filtrer": "Filtrer",
+      "aucunSyndicatTrouvé": "Aucun syndicat trouvé pour \"{searchTerm}\". Essayez une autre recherche.",
+      "syndicatsTrouvés": "{filteredSyndicats.length} syndicat(s) trouvé(s) pour \"{searchTerm}\".",
+      "étatVideTitre": "Aucun syndicat trouvé",
+      "étatVideDescription": "Essayez d'ajuster vos filtres ou créez un nouveau syndicat",
+      "créerSyndicat": "Créer un syndicat",
+      "nouveauSyndicatTitre": "Nouveau syndicat",
+      "chargementMessage": "Connexion à l'espace syndical...",
+      "chargementSousMessage": "Veuillez patienter quelques instants",
+      "succèsTitre": "Vous êtes connecté !",
+      "boutonConfirmer": "Ok",
+      "erreurTitre": "Erreur",
+      "erreurMessage": "Une erreur est survenue lors de la communication avec le serveur",
+
+        "nouveauxMessages": "{newMessages} messages",
+        "accéderSyndicat": "Accéder au syndicat",
+        "créerSyndicatTitre": "Créez votre propre syndicat",
+        "créerSyndicatDescription": "Lancez votre propre syndicat et rassemblez des membres autour de votre cause.",
+        "créerSyndicatBouton": "Créer un Syndicat"
+      ,  "gérerSyndicats": "Gérez vos syndicats en toute simplicité"
+
+
+,        "syndicmanager_description": "SyndicManager : la plateforme moderne pour une gestion syndicale efficace et transparente.",
+        "commencer_maintenant": "Commencer maintenant",
+        "pourquoi_choisir_syndicmanager": "Pourquoi choisir SyndicManager ?",
+        "gestion_efficace": "Gestion efficace",
+        "description_gestion_efficace": "Optimisez la gestion de vos syndicats avec nos outils intuitifs.",
+        "collaboration_simplifiee": "Collaboration simplifiée",
+        "description_collaboration_simplifiee": "Facilitez la communication et la coordination entre les membres.",
+        "transparence_accrue": "Transparence accrue",
+        "description_transparence_accrue": "Assurez une gestion transparente et responsable de vos activités.",
+        "trouver_votre_syndicat": "Trouvez votre syndicat",
+        "placeholder_nom_syndicat": "Nom du syndicat...",
+        "syndicats_populaires": "Syndicats populaires",
+        "en_savoir_plus": "En savoir plus",
+        "publications_recentes": "Publications Récentes",
+        "voir_plus_de_publications": "Voir plus de publications",
+        "evenements_a_venir": "Événements à Venir",
+        "voir_plus_d_evenements": "Voir plus d'événements",
+        "syndicmanager_en_chiffres": "SyndicManager en chiffres",
+        "taux_de_satisfaction": "Le taux de satisfaction",
+        "description_plateforme": "La plateforme moderne pour une gestion syndicale efficace.",
+        "liens_rapides": "Liens rapides",
+        "a_propos": "À propos",
+        "services": "Services",
+        "contact": "Contact",
+        "suivez_nous": "Suivez-nous",
+        "icone_facebook": "Icône Facebook",
+        "icone_twitter": "Icône Twitter"
+
+,
+        "participants":"participants",
+
+        "àVenir": "À venir",
+         "voirPlus": "Voir plus",
+        "voirMoins": "Voir moins",
+        "participerÉvénement": "Participer à l'événement",
+        "vousParticipez": "Vous participez à l'événement",
+        "créerÉvénement": "Créer un événement",
+
+
+
+        "accederEspace":"Accéder à l'espace"
+,
+      "gestionSyndicale": "Gestion syndicale",
+      "mesSyndicats": "Mes Syndicats",
+      "hubAffiliationsSyndicales": "Votre hub central pour gérer toutes vos affiliations syndicales en un seul endroit",
+      "rechercherPlaceholder1":"Rechercher...",
+
+
+
+
+
+      
+        "Suivant": "Suivant",
+        "Précedent": "Précedent",
+        "Bannir": "Bannir",
+        "Débloquer": "Débloquer",
+        "Bloquer": "Blocquer",
+        "Bloqués": "Bloqués",
+        "Actions": "Actions",
+        "Statut": "Statut",
+        "Téléphone": "Téléphone",
+        "Email": "Email",
+        "Actifs": "Actifs",
+        "Tous": "Tous",
+        "Filtrer par statut": "Filtrer par statut",
+        "Liste des membres": "Liste des membres",
+        "Rejeter": "Rejeter",
+        "Accepter": "Accepter",
+        "Télécharger": "Télécharger",
+        "Demandes d'adhésion": "Demandes d'adhésion",
+        "Gestion des Membres": "Gestion des Membres",
+        "dateAdhesion":"Date d'adhésion",
+
+
+        "jaime": "J'aime",
+        "commenter": "Commenter",
+        "partager": "Partager",
+        "commentaire": "Commentaire",
+        "ecrivez_un_commentaire": "Écrivez un commentaire...",
+        "notifications": "Notifications",
+        "voir_toutes_les_notifications": "Voir toutes les notifications",
+        "lancer_votre_syndicat": "Lancer Votre syndicat",
+        "votre_portail_syndical_personnalise": "Votre portail syndical personnalisé",
+        "actualites_et_evenements": "Actualités et Événements"
+      }
+

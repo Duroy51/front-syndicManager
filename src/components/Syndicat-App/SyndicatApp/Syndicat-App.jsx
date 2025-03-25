@@ -15,6 +15,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MemberManagement } from "../../Membres/Membres";
 import { Publications } from "../s'exprimer/Publication";
 
+import { useTranslation } from "react-i18next";
+import i18n from '../../../i18n';
+
+
 // Composant d'affichage du badge de notification
 const NotificationBadge = ({ count }) => (
     <motion.div
@@ -70,6 +74,7 @@ const NotificationCard = ({ icon: Icon, title, message, time, type }) => {
  */
 export const SyndicatApp = () => {
     // Au lieu de masquer totalement la sidebar, on la replie en ne gardant visibles que les icônes.
+    const { t } = useTranslation();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
     const [activeSection, setActiveSection] = useState('événements');
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -308,7 +313,7 @@ export const SyndicatApp = () => {
                             <Home className="h-4 w-4" />
                             {!isSidebarCollapsed && (
                                 <>
-                                    <span className="ml-2">Acceuil</span>
+                                    <span className="ml-2">{t("accueil")}</span>
                                     <ChevronRight className="ml-2 h-4 w-4" />
                                 </>
                             )}
@@ -360,7 +365,7 @@ export const SyndicatApp = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">{t("notifications")}</h3>
                                         <p className="text-sm text-gray-500">Vous avez 3 nouvelles notifications</p>
                                     </div>
                                     <motion.button
@@ -384,7 +389,7 @@ export const SyndicatApp = () => {
                                     whileTap={{ scale: 0.98 }}
                                     className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                                 >
-                                    Voir toutes les notifications
+                                    {t("voir_toutes_les_notifications")}
                                 </motion.button>
                             </div>
                         </motion.div>

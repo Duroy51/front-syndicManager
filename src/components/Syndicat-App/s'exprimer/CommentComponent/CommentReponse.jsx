@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../../i18n';
+
 export const Reply = ({ reply, onLike }) => {
+    const{t}=useTranslation();
     return (
         <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -26,7 +30,7 @@ export const Reply = ({ reply, onLike }) => {
                         onClick={() => onLike(reply.id)}
                     >
                         <Heart className="w-4 h-4" fill={reply.liked ? 'currentColor' : 'none'} />
-                        <span>J'aime {reply.likes > 0 && `(${reply.likes})`}</span>
+                        <span>{t("jaime")} {reply.likes > 0 && `(${reply.likes})`}</span>
                     </motion.button>
                 </div>
             </div>

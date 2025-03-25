@@ -28,7 +28,6 @@ const Section = ({ children, className = '', gradient = false }) => {
         triggerOnce: true,
         threshold: 0.1,
     });
-
     return (
         <motion.section
             ref={ref}
@@ -467,7 +466,7 @@ export const WelcomePage = () => {
                                             <div className="flex items-center gap-4 mt-4 text-sm text-gray-500">
                                                 <div className="flex items-center">
                                                     <Heart className="w-4 h-4 mr-1" />
-                                                    {post.likes} j'aime
+                                                    {post.likes} {t("jaime")}
                                                 </div>
                                                 <div className="flex items-center">
                                                     <MessageCircle className="w-4 h-4 mr-1" />

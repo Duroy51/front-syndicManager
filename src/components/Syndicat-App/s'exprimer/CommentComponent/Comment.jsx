@@ -2,7 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, MessageCircle, Eye, X } from 'lucide-react';
 import {Reply} from './CommentReponse.jsx'
 
+import { useTranslation } from 'react-i18next';
+
+import i18n from '../../../../i18n.js';
 export const Comment = ({ comment, onLike, onReply, onToggleReplies, showReplies }) => {
+    const {t} = useTranslation();
     return (
         <motion.div
             className="flex space-x-4"
@@ -34,7 +38,7 @@ export const Comment = ({ comment, onLike, onReply, onToggleReplies, showReplies
                         onClick={() => onLike(comment.id)}
                     >
                         <Heart className="w-4 h-4" fill={comment.liked ? 'currentColor' : 'none'} />
-                        <span>J'aime {comment.likes > 0 && `(${comment.likes})`}</span>
+                        <span>{t("jaime")} {comment.likes > 0 && `(${comment.likes})`}</span>
                     </motion.button>
                     <motion.button
                         whileHover={{ scale: 1.1 }}
