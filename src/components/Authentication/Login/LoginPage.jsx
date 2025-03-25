@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { fakeUsers } from "../../../services/FakeUsers.js";
 import { generateFakeJWT } from "../../../services/FakeAuth.js";
 import {AppRoutesPaths} from "../../../router/AppRoutesPaths.js";
+import { useTranslation } from 'react-i18next';
 
 export const AppleID = "P3WHTNR897.gloswitch";
 
@@ -67,7 +68,7 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     const [isSDKLoaded, setIsSDKLoaded] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
-
+    const {t} =useTranslation();
 
     // Configuration Google (si vous l'utilisez)
     const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com';
@@ -347,18 +348,18 @@ export const LoginPage = () => {
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
-                                    Se souvenir de moi
+                                    {t("se_souvenir_de_moi")}
                                 </label>
                             </div>
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                                    Mot de passe oublié ?
+                                    {t("mot_de_passe_oublie")} ?
                                 </a>
                             </div>
                         </div>
 
                         <Button type="submit" disabled={isLoading}>
-                            {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+                            {isLoading ? 'Connexion en cours...' : t("se_connecter")}
                         </Button>
                     </form>
 
@@ -374,9 +375,9 @@ export const LoginPage = () => {
 
                     <div className="mt-8 text-center">
                         <p className="text-gray-600">
-                            Pas encore de compte ?{' '}
+                            {t("pas_encore_de_compte")}?{' '}
                             <a href="/register" className="text-blue-500 hover:underline">
-                                Inscrivez-vous ici
+                                {t("inscrivez_vous_ici")}
                             </a>
                         </p>
                     </div>

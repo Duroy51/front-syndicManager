@@ -137,6 +137,79 @@
         "voir_toutes_les_notifications": "Voir toutes les notifications",
         "lancer_votre_syndicat": "Lancer Votre syndicat",
         "votre_portail_syndical_personnalise": "Votre portail syndical personnalisé",
-        "actualites_et_evenements": "Actualités et Événements"
-      }
+        "actualites_et_evenements": "Actualités et Événements",
+
+        "rechercher_un_membre": "Rechercher un membre...",
+        "details": "Détails",
+        "adherer": "Adhérer",
+
+
+          "se_connecter": "Se connecter",
+          "se_souvenir_de_moi": "Se souvenir de moi",
+          "mot_de_passe_oublie": "Mot de passe oublié",
+          "pas_encore_de_compte": "Pas encore de compte ?",
+          "inscrivez_vous_ici": "Inscrivez-vous ici",
+          "configuration_du_profil": "Configuration du profil",
+          "prenom": "Prénom",
+          "nom": "Nom",
+          "telephone": "Téléphone",
+          "email": "Email",
+          "photo_de_profil": "Photo de profil",
+          "formations": "Formations",
+          "ajouter_une_formation": "Ajouter une formation",
+          "enregistrer_les_modifications": "Enregistrer les modifications",
+          "glissez_et_deposez_votre_fichier_ici_ou_cliquer_pour_selectionner": "Glissez et déposez votre fichier ici ou cliquer pour sélectionner",
+
+
+    
+            "s_exprimer": "S'exprimer",
+            "partagez_vos_idees_vos_experiences_et_vos_reflexions_avec_la_communaute": "Partagez vos idées, vos expériences et vos réflexions avec la communauté.",
+            "publication": "Publication",
+            "signaler": "Signaler",
+            "messagesM": "Messages",
+            "chat_de_groupe": "Chat de Groupe",
+            "les_messages_sont_chiffres_de_bout_en_bout": "Les messages sont chiffrés de bout en bout",
+            "recherher_une_conversation": "Rechercher une conversation...",
+            "votes_decisions": "Votes & Décisions",
+            "participez_aux_decisions_importantes_qui_faconnent_notre_avenir_collectif": "Participez aux décisions importantes qui façonnent notre avenir collectif.",
+            "nouveau_vote": "Nouveau vote",
+            "votes_actifs": "Votes actifs",
+            "participantsP": "Participants",
+            "taux_de_participation": "Taux de participation",
+            "finances": "Finances",
+            "apercu": "Aperçu",
+            "revenus": "Revenus",
+            "depenses": "Dépenses",
+            "rapports": "Rapports",
+            "importer": "Importer",
+            "exporter": "Exporter",
+            "rechercher": "Rechercher...",
+            "solde_actuel": "Solde actuel",
+            "revenus_vs_depenses": "Revenus vs Dépenses",
+            "transactions_recentes": "Transactions récentes",
+            "cotisations_mensuelles": "Cotisations mensuelles",
+            "frais_de_location_de_salle": "Frais de location de salle",
+            "don_de_soutien": "Don de soutien",
+            "achat_de_fournitures_de_bureau": "Achat de fournitures de bureau",
+            "remboursement_de_frais": "Remboursement de frais",
+            "partenariats": "Partenariats",
+            "categorie": "Catégorie",
+            "adresse": "Adresse",
+            "site_web": "Site web",
+            "avantages": "Avantages",
+            "nom_du_partenaire": "Nom du partenaire",
+            "categorie_du_partenaire": "Catégorie du partenaire",
+            "adresse_du_partenaire": "Adresse du partenaire",
+            "numero_de_telephone": "Numéro de téléphone",
+            "adresse_email": "Adresse email",
+            "site_web_du_partenaire": "Site web du partenaire",
+            "avantage": "Avantage",
+            "ajouter_le_partenaire": "Ajouter le partenaire",
+            "a_propos_de_syndic_manager": "À propos de SyndicManager",
+            "votre_plateforme_de_gestion_syndicale_moderne_et_efficace": "Votre plateforme de gestion syndicale moderne et efficace."
+          
+
+ 
+ 
+        }
 

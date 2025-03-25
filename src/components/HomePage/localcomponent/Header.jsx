@@ -67,7 +67,7 @@ export const Header = ({ isSidebarOpen, searchTerm, userData, onSidebarToggle, o
                         >
                             <img
                                 src={userData?.profile}
-                                alt="Photo de profil"
+                                alt={t("photo_de_profil")}
                                 className="w-full h-full object-cover"
                             />
                         </motion.div>

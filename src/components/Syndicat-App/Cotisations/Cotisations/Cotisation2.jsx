@@ -16,8 +16,8 @@ const FinanceManagement = () => {
     const tabs = [
         { id: 'overview', label: 'Aperçu', icon: PieChart },
         { id: 'cotisations', label: 'Cotisations', icon: Users },
-        { id: 'expenses', label: 'Dépenses', icon: DollarSign },
-        { id: 'reports', label: 'Rapports', icon: FileText },
+        { id: 'expenses', label: {t("depenses")}, icon: DollarSign },
+        { id: 'reports', label: {t("rapports")}, icon: FileText },
     ]
 
     const financialData = {
@@ -40,7 +40,7 @@ const FinanceManagement = () => {
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="text-lg font-semibold mb-4">Solde actuel</h3>
+                            <h3 className="text-lg font-semibold mb-4">{t("solde_actuel")}</h3>
                             <div className="flex items-center justify-between">
                                 <span className="text-3xl font-bold">
                                     {showBalance
@@ -64,7 +64,7 @@ const FinanceManagement = () => {
                                     <p className="text-2xl font-semibold">{financialData.cotisations.toLocaleString()} €</p>
                                 </div>
                                 <div>
-                                    <p className="text-red-600">Dépenses</p>
+                                    <p className="text-red-600">{t("depenses")}</p>
                                     <p className="text-2xl font-semibold">{financialData.expenses.toLocaleString()} €</p>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@ const FinanceManagement = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">{member.amount} €</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button className="text-blue-600 hover:text-blue-900 mr-4">Détails</button>
+                                            <button className="text-blue-600 hover:text-blue-900 mr-4">{t("details")}</button>
                                             {member.status !== 'paid' && (
                                                 <button className="text-green-600 hover:text-green-900 mr-4">Enregistrer un paiement</button>
                                             )}
@@ -257,7 +257,7 @@ const FinanceManagement = () => {
                                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
                             >
                                 <Upload className="mr-2 h-5 w-5" />
-                                Importer
+                                {t("importer")}
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
@@ -265,7 +265,7 @@ const FinanceManagement = () => {
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
                             >
                                 <Download className="mr-2 h-5 w-5" />
-                                Exporter
+                                {t("exporter")}
                             </motion.button>
                         </div>
                     </div>

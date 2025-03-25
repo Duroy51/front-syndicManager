@@ -11,6 +11,8 @@ import {
     getProfilFromToken
 } from "../../../services/AccountService.js";
 
+import { useTranslation } from "react-i18next";
+
 export const ProfilUser = () => {
     const [currentUser, setCurrentUser] = useState({
         firstName: getFirstNameToken(),
@@ -19,7 +21,8 @@ export const ProfilUser = () => {
         phone: "+237 679 39 04 71",
         profilePicture: getProfilFromToken(),
     })
-
+    
+    const { t } = useTranslation();
     const [firstName, setFirstName] = useState(currentUser.firstName)
     const [lastName, setLastName] = useState(currentUser.lastName)
     const [phone, setPhone] = useState(currentUser.phone)
@@ -47,7 +50,7 @@ export const ProfilUser = () => {
 
 
                 <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Configuration du profil
+                    {t("configuration_du_profil")}
                 </h2>
 
                 <motion.div
@@ -60,7 +63,7 @@ export const ProfilUser = () => {
                         <div className="relative">
                             <img
                                 src={currentUser.profilePicture || "/placeholder.svg"}
-                                alt="Photo de profil"
+                                alt={t("photo_de_profil")}
                                 className="w-32 h-32 rounded-full object-cover border-4 border-blue-200"
                             />
                             <motion.div
@@ -92,7 +95,7 @@ export const ProfilUser = () => {
                         <motion.div whileHover={{ scale: 1.02 }} className="bg-white p-6 rounded-2xl shadow-md">
                             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
                                 <User className="inline-block mr-2 text-blue-500" />
-                                Prénom
+                                {t("prenom")}
                             </label>
                             <input
                                 type="text"
@@ -106,7 +109,7 @@ export const ProfilUser = () => {
                         <motion.div whileHover={{ scale: 1.02 }} className="bg-white p-6 rounded-2xl shadow-md">
                             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
                                 <User className="inline-block mr-2 text-purple-500" />
-                                Nom
+                                {t("nom")}
                             </label>
                             <input
                                 type="text"
@@ -120,7 +123,7 @@ export const ProfilUser = () => {
                         <motion.div whileHover={{ scale: 1.02 }} className="bg-white p-6 rounded-2xl shadow-md">
                             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                                 <Phone className="inline-block mr-2 text-green-500" />
-                                Téléphone
+                                {t("telephone")}
                             </label>
                             <input
                                 type="tel"
@@ -134,7 +137,7 @@ export const ProfilUser = () => {
                         <motion.div whileHover={{ scale: 1.02 }} className="bg-white p-6 rounded-2xl shadow-md">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                                 <Mail className="inline-block mr-2 text-red-500" />
-                                Email
+                                {t("email")}
                             </label>
                             <input
                                 type="email"
@@ -150,7 +153,7 @@ export const ProfilUser = () => {
                             className="bg-white p-6 rounded-2xl shadow-md col-span-1 md:col-span-2 lg:col-span-3"
                         >
                             <FileUploader
-                                label="Photo de profil"
+                                label={t("photo_de_profil")}
                                 icon={<Camera className="text-blue-500" />}
                                 accept="image/*"
                                 onFileSelect={setProfilePicture}
@@ -163,7 +166,7 @@ export const ProfilUser = () => {
                     <motion.div whileHover={{ scale: 1.02 }} className="bg-white p-6 rounded-2xl shadow-md">
                         <h3 className="text-xl font-semibold mb-4 text-gray-800">
                             <GraduationCap className="inline-block mr-2 text-indigo-500" />
-                            Formations
+                            {t("formations")}
                         </h3>
                         {formations.map((formation, index) => (
                             <div key={index} className="flex items-center mb-4">
@@ -189,7 +192,7 @@ export const ProfilUser = () => {
                             className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
                         >
                             <Plus size={20} className="mr-2" />
-                            Ajouter une formation
+                            {t("ajouter_une_formation")}
                         </button>
                     </motion.div>
 
@@ -211,7 +214,7 @@ export const ProfilUser = () => {
                         className="w-full py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-full shadow-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition duration-300"
                     >
                         <Save className="inline-block mr-2" />
-                        Enregistrer les modifications
+                        {t("enregistrer_les_modifications")}
                     </motion.button>
                 </form>
             </div>

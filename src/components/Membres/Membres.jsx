@@ -6,6 +6,7 @@ import {
     Mail, Phone, MapPin, Calendar, Building, Shield,
     ChevronRight, Star, Award, TrendingUp, UserCheck
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const StatCard = ({ icon: Icon, value, label, color }) => (
     <motion.div
@@ -53,7 +54,7 @@ export const MemberManagement = () => {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [selectedAction, setSelectedAction] = useState(null);
     const [selectedMember, setSelectedMember] = useState(null);
-
+    const {t}=useTranslation();
     const members = [
         { id: 1, name: 'Jean Dupont', email: 'jean@example.com', phone: '0123456789', address: '123 Rue de Paris', joinDate: '2021-05-15', status: 'active', role: 'Membre Senior', contributions: '12/12' },
         { id: 2, name: 'Marie Curie', email: 'marie@example.com', phone: '0987654321', address: '456 Avenue des Sciences', joinDate: '2020-11-23', status: 'active', role: 'Membre du Bureau', contributions: '12/12' },
@@ -94,7 +95,7 @@ export const MemberManagement = () => {
                     <StatCard
                         icon={UserCheck}
                         value="95%"
-                        label="Taux de participation"
+                        label={t("taux_de_participation")}
                         color="border-green-500"
                     />
                     <StatCard
@@ -331,7 +332,7 @@ export const MemberManagement = () => {
                         <div className="relative flex-1">
                             <input
                                 type="text"
-                                placeholder="Rechercher un membre..."
+                                placeholder={t("rechercher_un_membre")}
                                 className="w-full pl-12 pr-4 py-3 bg-white rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}

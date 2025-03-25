@@ -146,10 +146,10 @@ export const Publications = () => {
                     className="text-center mb-12"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                        S'exprimer
+                        {t("s_exprimer")}
                     </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Partagez vos idées, vos expériences et vos réflexions avec la communauté.
+                        {t("partagez_vos_idees_vos_experiences_et_vos_reflexions_avec_la_communaute")}
                     </p>
                 </motion.div>
 

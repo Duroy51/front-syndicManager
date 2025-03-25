@@ -125,7 +125,7 @@ export const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="p-6 border-b flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-2xl">
-                            <h2 className="text-2xl font-bold text-gray-800">Publication</h2>
+                            <h2 className="text-2xl font-bold text-gray-800">{t("publication")}</h2>
                             <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}

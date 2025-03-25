@@ -202,7 +202,7 @@ export const SyndicalistHomePage = () => {
                             <div className="relative">
                                 <input
                                     type="text"
-                                    placeholder="Rechercher..."
+                                    placeholder={t("rechercher")}
                                     className="w-64 pl-10 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}

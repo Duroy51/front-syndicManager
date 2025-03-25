@@ -7,6 +7,7 @@ import { AdhereSyndicatForm } from "./AdhesionForm/AdhesionForm.jsx"
 import { SyndicatProfile } from "../ProfilPage/ProfilPage.jsx"
 import {ExploreCard} from "./ExploreSection/ExploreCard.jsx";
 import {exploresyndicat} from "../../fakeData/exploreSyndicatFake.js";
+
 import { useTranslation } from 'react-i18next';
 
 
@@ -127,7 +128,7 @@ export const Explorer = () => {
                         <div className="relative">
                             <input
                                 type="text"
-                                placeholder="Rechercher un syndicat..."
+                                placeholder={t("rechercher_syndicat")}
                                 className="w-full pl-14 pr-6 py-4 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 text-lg placeholder-gray-400 shadow-sm"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -155,7 +156,7 @@ export const Explorer = () => {
                         >
                             <div className="flex items-center mb-6">
                                 <h2 className="text-2xl font-semibold text-gray-900 mr-4">
-                                    Syndicat suggéré
+                                    {t("syndicat_suggere")}
                                 </h2>
                                 <div className="flex-1 h-px bg-gradient-to-r from-blue-100 to-indigo-100"></div>
                             </div>
@@ -200,7 +201,7 @@ export const Explorer = () => {
                                                 whileHover={{ scale: 1.05 }}
                                             >
                                                 <UserPlus className="h-5 w-5 mr-2" />
-                                               {t(" adherer_maintenant")}
+                                               {t("adherer_maintenant")}
                                             </motion.button>
                                             <motion.button
                                                 className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"

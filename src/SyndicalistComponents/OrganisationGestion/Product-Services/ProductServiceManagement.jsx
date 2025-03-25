@@ -187,7 +187,7 @@ export const ProductsServicesManagement = () => {
                                             handleEditItem({ ...item, name: e.target.value })
                                         }
                                         className="w-full p-3 border rounded-md focus:ring-2 focus:ring-indigo-500"
-                                        placeholder="Nom"
+                                        placeholder={t("nom")}
                                     />
                                     <textarea
                                         value={item.description}
@@ -312,7 +312,7 @@ export const ProductsServicesManagement = () => {
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Nom
+                                        {t("nom")}
                                     </label>
                                     <input
                                         type="text"

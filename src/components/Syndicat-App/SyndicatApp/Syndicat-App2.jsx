@@ -22,7 +22,7 @@ export const SyndicatApp2 = () => {
         { id: 'chat', icon: MessageSquare, label: 'Chat' },
         { id: 'votes', icon: Vote, label: 'Votes' },
         { id: 'contributions', icon: CreditCard, label: 'Cotisations' },
-        { id: 'partnerships', icon: Handshake, label: 'Partenariats' },
+        { id: 'partnerships', icon: Handshake, label: {t("partenariats")} },
     ]
 
     const renderContent = () => {

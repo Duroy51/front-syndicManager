@@ -205,6 +205,7 @@ export const MembersManagement = () => {
     const [showStatusFilter, setShowStatusFilter] = useState(false)
     const [activeActionMenu, setActiveActionMenu] = useState(null)
     const pageSize = 5
+    const {t}=useTranslation();
 
     // Traitement des demandes d'adhésion
     const handleAcceptRequest = (id) => {
@@ -245,7 +246,6 @@ export const MembersManagement = () => {
     const handleMenuClick = (e) => {
         e.stopPropagation()
     }
-    const {t}=useTranslation();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -372,7 +372,7 @@ export const MembersManagement = () => {
                     <div className="relative w-full md:w-64">
                         <input
                             type="text"
-                            placeholder="Rechercher un membre..."
+                            placeholder={t("rechercher_un_membre")}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -433,7 +433,7 @@ export const MembersManagement = () => {
                     <table className="min-w-full table-auto">
                         <thead>
                         <tr className="bg-gray-100">
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t("nom")}</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {t("email")}
                             </th>

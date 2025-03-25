@@ -17,8 +17,8 @@ export const FinanceManagement = () => {
     const tabs = [
         { id: 'overview', label: 'Aperçu', icon: PieChart },
         { id: 'cotisations', label: 'Cotisations', icon: Users },
-        { id: 'expenses', label: 'Dépenses', icon: DollarSign },
-        { id: 'reports', label: 'Rapports', icon: FileText },
+        { id: 'expenses', label: {t("depenses")}, icon: DollarSign },
+        { id: 'reports', label: {t("rapports")}, icon: FileText },
     ]
 
     const financialData = {
@@ -48,7 +48,7 @@ export const FinanceManagement = () => {
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="text-lg font-semibold mb-4">Solde actuel</h3>
+                            <h3 className="text-lg font-semibold mb-4">{t("solde_actuel")}</h3>
                             <div className="flex items-center justify-between">
                                 <span className="text-3xl font-bold">
                                     {showBalance
@@ -72,7 +72,7 @@ export const FinanceManagement = () => {
                                     <p className="text-2xl font-semibold">{financialData.cotisations.toLocaleString()} €</p>
                                 </div>
                                 <div>
-                                    <p className="text-red-600">Dépenses</p>
+                                    <p className="text-red-600">{t("depenses")}</p>
                                     <p className="text-2xl font-semibold">{financialData.expenses.toLocaleString()} €</p>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@ export const FinanceManagement = () => {
                                 <thead className="bg-gray-50">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t("categorie")}</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bénéficiaire</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -180,7 +180,7 @@ export const FinanceManagement = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="category">
-                            Catégorie
+                            {t("categorie")}
                         </label>
                         <select
                             id="category"
@@ -282,7 +282,7 @@ export const FinanceManagement = () => {
                                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
                             >
                                 <Upload className="mr-2 h-5 w-5" />
-                                Importer
+                                {t("importer")}
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
@@ -290,7 +290,7 @@ export const FinanceManagement = () => {
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
                             >
                                 <Download className="mr-2 h-5 w-5" />
-                                Exporter
+                                {t("exporter")}
                             </motion.button>
                         </div>
                     </div>

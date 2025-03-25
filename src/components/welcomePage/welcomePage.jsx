@@ -459,7 +459,7 @@ export const WelcomePage = () => {
                                             {post.image && (
                                                 <img
                                                     src={post.image}
-                                                    alt="Publication"
+                                                    alt={t("publication")}
                                                     className="mt-4 rounded-lg w-full h-48 object-cover"
                                                 />
                                             )}
@@ -562,7 +562,7 @@ export const WelcomePage = () => {
                             <h4 className="text-lg font-semibold mb-4">Contact</h4>
                             <ul className="space-y-2">
                                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Nous contacter</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Partenariats</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t("partenariats")}</a></li>
                                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Carrières</a></li>
                                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Presse</a></li>
                             </ul>

@@ -2,7 +2,10 @@ import { motion } from "framer-motion";
 import { Building, Camera, Save } from "lucide-react";
 import { useState } from "react";
 
+import { useTranslation } from "react-i18next";
+
 export const SyndicatConfigSection = () => {
+  const {t} =useTranslation();
   const [unionProfile, setUnionProfile] = useState({
     name: "",
     type: "",
@@ -127,7 +130,7 @@ export const SyndicatConfigSection = () => {
             className="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
           >
             <Save className="h-5 w-5" />
-            Enregistrer les modifications
+            {t("enregistrer_les_modifications")}
           </motion.button>
         </form>
       </motion.div>

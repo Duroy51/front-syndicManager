@@ -138,7 +138,7 @@ export const Post = ({ post, onUpdatePost }) => {
                             className="flex items-center px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200"
                         >
                             <Flag className="w-5 h-5 mr-2" />
-                            Signaler
+                            {t("signaler")}
                         </motion.button>
                     </div>
                 </div>
