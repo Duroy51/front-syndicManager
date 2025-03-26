@@ -260,6 +260,19 @@
   "votes": "Votes",
   "evenements": "Événements",
   "membresM": "Membres",
-  "chat": "Chat"
+  "chat": "Chat",
+
+  
+    "mes_syndicats": "Mes Syndicats",
+    "explorer": "Explorer",
+    "parametres": "Paramètres",
+    "actualite": "Actualité",
+    "gerer_vos_organisations": "Gérer vos organisations",
+    "decouvrir_de_nouveaux_syndicats": "Découvrir de nouveaux syndicats",
+    "configuration_du_compte": "Configuration du compte",
+    "deconnexion": "Déconnexion"
+  
+
+
 }
 

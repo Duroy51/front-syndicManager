@@ -229,6 +229,16 @@
         "membresM": "Members",
 
         "evenements": "Events",
-        "chat": "Chat"
-}
+        "chat": "Chat",
+        "rechercherPlaceholder1": "Search...",
+  "mes_syndicats": "My Unions",
+  "explorer": "Explore",
+  "parametres": "Settings",
+  "actualite": "News",
+  "gerer_vos_organisations": "Manage your organizations",
+  "decouvrir_de_nouveaux_syndicats": "Discover new unions",
+  "configuration_du_compte": "Account settings",
+  "deconnexion": "Logout"
 
+
+}
