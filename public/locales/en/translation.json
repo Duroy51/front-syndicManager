@@ -203,6 +203,32 @@
     "expliquez_nous_pourquoi_vous_souhaitez_rejoindre_notre_syndicat": "Explain why you wish to join our union...",
     "piece_d_identite_face": "ID (Front)",
     "piece_d_identite_dos": "ID (Back)",
-    "envoyer_ma_demande_d_adhesion": "Send my membership application"
-  }
+    "envoyer_ma_demande_d_adhesion": "Send my membership application",
+
+    
+      "nouvelle_publication": "New publication",
+      "que_voulez_vous_partager?": "What do you want to share?",
+      "annuler": "Cancel",
+      "publier": "Publish",
+      "nouvelle_discussion": "New discussion",
+      "flitres": "Filters",
+      "ou_connectez_vous_avec": "Or connect with",
+      "connexion_a_syndic_manager": "Login to SyndicManager",
+      "prenez_des_decisions_eclairees": "Make informed decisions",
+      "simplifiez_vos_processus_administratifs": "Simplify your administrative processes",
+      "bienvenue_sur_syndic_manager": "Welcome to SyndicManager",
+      "restez_connecte_avec_vos_membres": "Stay connected with your members",
+      "gerez_votre_syndicat_efficacement": "Manage your union efficiently",
+      "se_connecter_avec_google": "Sign in with Google",
+      "connexion_reussie": "Login successful!",
+      "vous_allez_etre_redirige": "You will be redirected",
+      "ok": "Ok",
+
+        "cotisations": "Dues",
+        "votes": "Votes",
+        "membresM": "Members",
+
+        "evenements": "Events",
+        "chat": "Chat"
+}
 

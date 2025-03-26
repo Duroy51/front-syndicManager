@@ -221,7 +221,7 @@ const EventModal = ({ event, onSave, onClose }) => {
                             onClick={onClose}
                             className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
                         >
-                            Annuler
+                            {t("annuler")}
                         </button>
                         <button
                             onClick={handleSubmit}

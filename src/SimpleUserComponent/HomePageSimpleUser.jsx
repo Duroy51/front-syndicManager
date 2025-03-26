@@ -98,7 +98,7 @@ export const SimpleUserHomePage = () => {
                                     <Building className="h-12 w-12 text-white" />
                                 </div>
                                 <h1 className="text-3xl font-bold text-gray-800 mb-4">
-                                    Bienvenue sur SyndicManager
+                                    {t("bienvenue_sur_syndic_manager")}
                                 </h1>
                                 <p className="text-gray-600 max-w-2xl mx-auto">
                                     Découvrez et rejoignez des syndicats qui correspondent à vos intérêts professionnels.

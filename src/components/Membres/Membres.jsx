@@ -166,7 +166,7 @@ export const MemberManagement = () => {
                                                     <span className="text-sm text-gray-900">{member.role}</span>
                                                 </div>
                                                 <div className="text-sm text-gray-500">
-                                                    Cotisations : {member.contributions}
+                                                    {t("cotisations")} : {member.contributions}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
@@ -316,7 +316,7 @@ export const MemberManagement = () => {
                     <TabButton
                         active={activeTab === 'members'}
                         icon={Users}
-                        label="Membres"
+                        label={t("membres")}
                         onClick={() => setActiveTab('members')}
                     />
                     <TabButton
@@ -401,7 +401,7 @@ export const MemberManagement = () => {
                                         className="px-6 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200"
                                         onClick={() => setShowConfirmModal(false)}
                                     >
-                                        Annuler
+                                        {t("annuler")}
                                     </motion.button>
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}

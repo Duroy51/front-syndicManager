@@ -257,8 +257,8 @@ export const LoginPage = () => {
             // Affichage d'un pop-up de succès et redirection
             Swal.fire({
                 icon: 'success',
-                title: 'Connexion réussie !',
-                text: 'Vous allez être redirigé.',
+                title: t("connexion_reussie"),
+                text: t("vous_allez_etre_redirige"),
                 confirmButtonText: 'Ok',
             }).then(() => {
                 navigate('/home');
@@ -277,11 +277,11 @@ export const LoginPage = () => {
     };
 
     const animatedTexts = [
-        "Bienvenue sur SyndicManager",
-        "Gérez votre syndicat efficacement",
-        "Simplifiez vos processus administratifs",
-        "Restez connecté avec vos membres",
-        "Prenez des décisions éclairées"
+        t("bienvenue_sur_syndic_manager"),
+        t("gerez_votre_syndicat_efficacement"),
+        t("simplifiez_vos_processus_administratifs"),
+        t("restez_connecte_avec_vos_membres"),
+        t("prenez_des_decisions_eclairees")
     ];
 
     return (
@@ -313,7 +313,7 @@ export const LoginPage = () => {
                     transition={{ duration: 0.5 }}
                 >
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-                        Connexion à SyndicManager
+                        {t("connexion_a_syndic_manager")}
                     </h2>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <Input
@@ -364,12 +364,12 @@ export const LoginPage = () => {
                     </form>
 
                     <div className="mt-6 text-center">
-                        <p className="text-gray-600 mb-4">Ou connectez-vous avec</p>
+                        <p className="text-gray-600 mb-4">{t("ou_connectez_vous_avec")}</p>
                         <Button
                             className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
                             onClick={() => handleAppleSignIn()}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
-                            Se connecter avec Google
+                            {t("se_connecter_avec_google")}
                         </Button>
                     </div>
 

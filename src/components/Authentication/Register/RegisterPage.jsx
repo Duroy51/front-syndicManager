@@ -321,10 +321,10 @@ export const RegisterPage = () => {
                     </div>
                     <h1 className="text-5xl font-bold mb-8">SyndicManager</h1>
                     <AnimatedText texts={[
-                        "Gérez votre syndicat efficacement",
-                        "Simplifiez vos processus administratifs",
-                        "Restez connecté avec vos membres",
-                        "Prenez des décisions éclairées",
+                        t("gerez_votre_syndicat_efficacement"),
+                        t("simplifiez_vos_processus_administratifs"),
+                        t("restez_connecte_avec_vos_membres"),
+                        t("prenez_des_decisions_eclairees"),
                         "Optimisez votre organisation syndicale"
                     ]} />
                 </motion.div>

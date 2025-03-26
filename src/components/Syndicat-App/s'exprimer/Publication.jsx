@@ -10,6 +10,7 @@ import {Post} from './PublicationComponents/Post.jsx'
 import { useTranslation } from 'react-i18next';
 
 
+
 const Button = ({ children, onClick, className = "", variant = "default" }) => {
     const baseStyle = "px-4 py-2 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200";
     const variantStyles = {
@@ -187,7 +188,7 @@ export const Publications = () => {
                                 className="bg-white rounded-2xl p-8 w-full max-w-xl shadow-2xl"
                             >
                                 <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-800">Nouvelle publication</h2>
+                                    <h2 className="text-2xl font-bold text-gray-800">{t("nouvelle_publication")}</h2>
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
@@ -223,7 +224,7 @@ export const Publications = () => {
                                 <TextArea
                                     value={newPostContent}
                                     onChange={(e) => setNewPostContent(e.target.value)}
-                                    placeholder="Que voulez-vous partager ?"
+                                    placeholder={t("que_voulez_vous_partager?")} 
                                     className="mb-6 h-32"
                                 />
 
@@ -269,11 +270,11 @@ export const Publications = () => {
                                     </div>
                                     <div className="flex space-x-4">
                                         <Button variant="outline" onClick={handleCancelPost}>
-                                            Annuler
+                                            {t("annuler")}
                                         </Button>
                                         <Button onClick={handleNewPost}>
                                             <Send className="w-5 h-5 mr-2" />
-                                            Publier
+                                            {t("publier")}
                                         </Button>
                                     </div>
                                 </div>

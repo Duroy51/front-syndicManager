@@ -83,14 +83,14 @@ export const SyndicatApp = () => {
     const { bannerImage, organisationName } = location.state || {};
 
     const navItems = [
-        { id: 'membres', icon: Users, label: 'Membres', badge: 12 },
-        { id: 'événements', icon: Calendar, label: 'Événements', badge: 3 },
-        { id: 'exprimer', icon: MessageCircle, label: "S'exprimer" },
-        { id: 'chat', icon: MessageSquare, label: 'Chat', badge: 5 },
-        { id: 'votes', icon: Vote, label: 'Votes', badge: 2 },
-        { id: 'contributions', icon: CreditCard, label: 'Cotisations' },
+        { id: 'membres', icon: Users, label: t("membres"), badge: 12 },
+        { id: 'événements', icon: Calendar, label: t("evenements"), badge: 3 },
+        { id: 'exprimer', icon: MessageCircle, label: t("s_exprimer") },
+        { id: 'chat', icon: MessageSquare, label: t("chat"), badge: 5 },
+        { id: 'votes', icon: Vote, label: t("votes"), badge: 2 },
+        { id: 'contributions', icon: CreditCard, label: t("cotisations") },
         { id: 'partnerships', icon: Handshake, label: t("partenariats") },
-        { id: 'about', icon: Info, label: 'À propos' },
+        { id: 'about', icon: Info, label: t("a_propos") },
     ];
 
     const notifications = [
@@ -158,7 +158,7 @@ export const SyndicatApp = () => {
                             className="text-center"
                         >
                             <Building className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-                            <h2 className="text-2xl font-bold text-gray-800">Bienvenue sur SyndicManager</h2>
+                            <h2 className="text-2xl font-bold text-gray-800">t("bienvenue_sur_syndic_manager")</h2>
                             <p className="text-gray-600 mt-2">Sélectionnez une section pour commencer</p>
                         </motion.div>
                     </div>

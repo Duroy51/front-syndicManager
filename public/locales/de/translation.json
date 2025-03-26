@@ -195,6 +195,40 @@
       "piece_d_identite_face": "Ausweis (Vorderseite)",
       "piece_d_identite_dos": "Ausweis (Rückseite)",
       "envoyer_ma_demande_d_adhesion": "Meinen Mitgliedschaftsantrag senden"
-    }
+    ,
+
+    
+      "nouvelle_publication": "Neue Veröffentlichung",
+      "que_voulez_vous_partager?": "Was möchten Sie teilen?",
+      "annuler": "Abbrechen",
+      "publier": "Veröffentlichen",
+      "nouvelle_discussion": "Neue Diskussion",
+      "flitres": "Filter",
+      "ou_connectez_vous_avec": "Oder verbinden Sie sich mit",
+      "connexion_a_syndic_manager": "Anmeldung bei SyndicManager",
+      "prenez_des_decisions_eclairees": "Treffen Sie fundierte Entscheidungen",
+      "simplifiez_vos_processus_administratifs": "Vereinfachen Sie Ihre Verwaltungsprozesse",
+      "bienvenue_sur_syndic_manager": "Willkommen bei SyndicManager",
+      "restez_connecte_avec_vos_membres": "Bleiben Sie mit Ihren Mitgliedern in Verbindung",
+      "gerez_votre_syndicat_efficacement": "Verwalten Sie Ihre Gewerkschaft effizient",
+      "se_connecter_avec_google": "Mit Google anmelden",
+      "connexion_reussie": "Anmeldung erfolgreich!",
+      "vous_allez_etre_redirige": "Sie werden weitergeleitet",
+      "ok": "Ok",
+
+        "cotisations": "Beiträge",
+        "votes": "Abstimmungen",
+        "evenements": "Veranstaltungen",
+        "chat": "Chat",
+        "a_propos_de_syndic_manager": "Über SyndicManager"
+,
+        "membresM": "Mitglieder"
+,
+
+"votre_plateforme_de_gestion_syndicale_moderne_et_efficace": "Ihre moderne und effiziente Plattform zur Verwaltung von Gewerkschaften."
+
+      
+      
+}
   
   

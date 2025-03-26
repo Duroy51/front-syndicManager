@@ -242,9 +242,9 @@ export const SyndicatManagement = () => {
                     {/* Statistiques */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         {[
-                            { icon: <Users className="text-indigo-500" />, label: "Membres", value: "1,234" },
+                            { icon: <Users className="text-indigo-500" />, label: t("membres"), value: "1,234" },
                             { icon: <FileText className="text-indigo-500" />, label: "Publications", value: "56" },
-                            { icon: <Calendar className="text-indigo-500" />, label: "Événements", value: "12" },
+                            { icon: <Calendar className="text-indigo-500" />, label: t("evenements"), value: "12" },
                             { icon: <ShoppingBag className="text-indigo-500" />, label: "Produits", value: products.length.toString() },
                         ].map((stat, index) => (
                             <motion.div

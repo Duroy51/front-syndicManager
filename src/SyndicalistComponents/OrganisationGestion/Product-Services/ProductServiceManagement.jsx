@@ -374,7 +374,7 @@ export const ProductsServicesManagement = () => {
                                     onClick={() => setIsAddingItem(false)}
                                     className="px-5 py-2 bg-gray-200 text-gray-700 rounded-md transition"
                                 >
-                                    Annuler
+                                    {t("annuler")}
                                 </motion.button>
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}

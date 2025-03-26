@@ -14,10 +14,10 @@ export const Finances = () => {
     const {t}=useTranslation();
 
     const tabs = [
-        { id: 'overview', label: 'Aperçu', icon: PieChart },
-        { id: 'income', label: '{t("revenus")}', icon: TrendingUp },
-        { id: 'expenses', label: '{t("depenses")}', icon: DollarSign },
-        { id: 'reports', label: '{t("rapports")}', icon: FileText },
+        { id: 'overview', label: t('apercu'), icon: PieChart },
+        { id: 'income', label: t("revenus"), icon: TrendingUp },
+        { id: 'expenses', label: t("depenses"), icon: DollarSign },
+        { id: 'reports', label: t("rapports"), icon: FileText },
     ]
 
 
@@ -99,7 +99,7 @@ export const Finances = () => {
                             className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors flex items-center"
                         >
                             <Filter className="mr-2 h-5 w-5"/>
-                            Filtres
+                            {t("flitres")}
                             <ChevronDown className="ml-2 h-4 w-4"/>
                         </motion.button>
                     </div>

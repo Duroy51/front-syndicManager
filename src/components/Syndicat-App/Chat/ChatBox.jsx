@@ -324,7 +324,7 @@ export const ChatBox = () => {
                             <Button variant="ghost" onClick={() => setView('list')} className="mr-2">
                                 <ArrowLeft className="w-6 h-6" />
                             </Button>
-                            <h2 className="text-xl font-semibold">Nouvelle discussion</h2>
+                            <h2 className="text-xl font-semibold">{t("nouvelle_discussion")}</h2>
                         </div>
                         <div className="mb-4 relative">
                             <Input

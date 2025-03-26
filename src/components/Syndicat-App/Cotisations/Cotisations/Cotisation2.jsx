@@ -15,7 +15,7 @@ const FinanceManagement = () => {
 
     const tabs = [
         { id: 'overview', label: 'Aperçu', icon: PieChart },
-        { id: 'cotisations', label: 'Cotisations', icon: Users },
+        { id: 'cotisations', label: t("cotisations"), icon: Users },
         { id: 'expenses', label: {t("depenses")}, icon: DollarSign },
         { id: 'reports', label: {t("rapports")}, icon: FileText },
     ]
@@ -60,7 +60,7 @@ const FinanceManagement = () => {
                             <h3 className="text-lg font-semibold mb-4">Cotisations vs Dépenses</h3>
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className="text-green-600">Cotisations</p>
+                                    <p className="text-green-600">{t("cotisations")}</p>
                                     <p className="text-2xl font-semibold">{financialData.cotisations.toLocaleString()} €</p>
                                 </div>
                                 <div>
@@ -211,7 +211,7 @@ const FinanceManagement = () => {
                             onClick={() => setShowPaymentForm(false)}
                             className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            Annuler
+                            {t("annuler")}
                         </button>
                         <button
                             type="submit"

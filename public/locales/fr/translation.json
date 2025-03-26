@@ -231,11 +231,35 @@
               "expliquez_nous_pourquoi_vous_souhaitez_rejoindre_notre_syndicat": "Expliquez-nous pourquoi vous souhaitez rejoindre notre syndicat...",
               "piece_d_identite_face": "Pièce d'identité (Face)",
               "piece_d_identite_dos": "Pièce d'identité (Dos)",
-              "envoyer_ma_demande_d_adhesion": "Envoyer ma demande d'adhésion"
+              "envoyer_ma_demande_d_adhesion": "Envoyer ma demande d'adhésion",
+
+
+                "nouvelle_publication": "Nouvelle publication",
+                "que_voulez_vous_partager?": "Que voulez-vous partager?",
+                "annuler": "Annuler",
+                "publier": "Publier",
+                "nouvelle_discussion": "Nouvelle discussion",
+                "flitres": "Filtres",
+                "ou_connectez_vous_avec": "Ou connectez-vous avec",
+                "connexion_a_syndic_manager": "Connexion à SyndicManager",
+                "prenez_des_decisions_eclairees": "Prenez des décisions éclairées",
+                "simplifiez_vos_processus_administratifs": "Simplifiez vos processus administratifs",
+                "bienvenue_sur_syndic_manager": "Bienvenue sur SyndicManager",
+                "restez_connecte_avec_vos_membres": "Restez connecté avec vos membres",
+                "gerez_votre_syndicat_efficacement": "Gérez votre syndicat efficacement",
+                "se_connecter_avec_google": "Se connecter avec Google",
+                "connexion_reussie": "Connexion réussie !",
+                "vous_allez_etre_redirige": "Vous allez être redirigé",
+                "ok": "Ok"
             
           
 
- 
- 
-        }
+ ,
+
+  "cotisations": "Cotisations",
+  "votes": "Votes",
+  "evenements": "Événements",
+  "membresM": "Membres",
+  "chat": "Chat"
+}
 
