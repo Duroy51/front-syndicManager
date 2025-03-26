@@ -1,5 +1,6 @@
 import logo from '../logo.svg';
 import '../App.css';
+import './i18n'; // Importer la configuration i18n
 
 function App() {
   return (

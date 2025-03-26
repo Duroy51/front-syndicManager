@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { fakeUsers } from "../../../services/FakeUsers.js";
 import { generateFakeJWT } from "../../../services/FakeAuth.js";
 import {AppRoutesPaths} from "../../../router/AppRoutesPaths.js";
+import { useTranslation } from 'react-i18next';
 
 export const AppleID = "P3WHTNR897.gloswitch";
 
@@ -67,7 +68,7 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     const [isSDKLoaded, setIsSDKLoaded] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
-
+    const {t} =useTranslation();
 
     // Configuration Google (si vous l'utilisez)
     const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com';
@@ -256,8 +257,8 @@ export const LoginPage = () => {
             // Affichage d'un pop-up de succès et redirection
             Swal.fire({
                 icon: 'success',
-                title: 'Connexion réussie !',
-                text: 'Vous allez être redirigé.',
+                title: t("connexion_reussie"),
+                text: t("vous_allez_etre_redirige"),
                 confirmButtonText: 'Ok',
             }).then(() => {
                 navigate('/home');
@@ -276,11 +277,11 @@ export const LoginPage = () => {
     };
 
     const animatedTexts = [
-        "Bienvenue sur SyndicManager",
-        "Gérez votre syndicat efficacement",
-        "Simplifiez vos processus administratifs",
-        "Restez connecté avec vos membres",
-        "Prenez des décisions éclairées"
+        t("bienvenue_sur_syndic_manager"),
+        t("gerez_votre_syndicat_efficacement"),
+        t("simplifiez_vos_processus_administratifs"),
+        t("restez_connecte_avec_vos_membres"),
+        t("prenez_des_decisions_eclairees")
     ];
 
     return (
@@ -312,7 +313,7 @@ export const LoginPage = () => {
                     transition={{ duration: 0.5 }}
                 >
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-                        Connexion à SyndicManager
+                        {t("connexion_a_syndic_manager")}
                     </h2>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <Input
@@ -347,36 +348,36 @@ export const LoginPage = () => {
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
-                                    Se souvenir de moi
+                                    {t("se_souvenir_de_moi")}
                                 </label>
                             </div>
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                                    Mot de passe oublié ?
+                                    {t("mot_de_passe_oublie")} ?
                                 </a>
                             </div>
                         </div>
 
                         <Button type="submit" disabled={isLoading}>
-                            {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+                            {isLoading ? 'Connexion en cours...' : t("se_connecter")}
                         </Button>
                     </form>
 
                     <div className="mt-6 text-center">
-                        <p className="text-gray-600 mb-4">Ou connectez-vous avec</p>
+                        <p className="text-gray-600 mb-4">{t("ou_connectez_vous_avec")}</p>
                         <Button
                             className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
                             onClick={() => handleAppleSignIn()}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
-                            Se connecter avec Google
+                            {t("se_connecter_avec_google")}
                         </Button>
                     </div>
 
                     <div className="mt-8 text-center">
                         <p className="text-gray-600">
-                            Pas encore de compte ?{' '}
+                            {t("pas_encore_de_compte")}?{' '}
                             <a href="/register" className="text-blue-500 hover:underline">
-                                Inscrivez-vous ici
+                                {t("inscrivez_vous_ici")}
                             </a>
                         </p>
                     </div>

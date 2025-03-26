@@ -1,7 +1,11 @@
 import {motion} from "framer-motion";
 import {ChevronRight, MapPin, UserPlus, Users} from "lucide-react";
 
-export const ExploreCard = ({listSyndicat, containerVariants, itemVariants, details, adherer}) => (
+import { useTranslation } from "react-i18next";
+
+export const ExploreCard = ({listSyndicat, containerVariants, itemVariants, details, adherer}) => {
+    const {t} =useTranslation();
+    return(
     <motion.div
         className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
         variants={containerVariants}
@@ -59,7 +63,7 @@ export const ExploreCard = ({listSyndicat, containerVariants, itemVariants, deta
                         whileTap={{scale: 0.98}}
                         onClick={details}
                     >
-                        <span>Détails</span>
+                        <span>{t("details")}</span>
                         <ChevronRight className="ml-2 h-4 w-4"/>
                     </motion.button>
 
@@ -70,10 +74,11 @@ export const ExploreCard = ({listSyndicat, containerVariants, itemVariants, deta
                         onClick={adherer}
                     >
                         <UserPlus className="mr-2 h-4 w-4"/>
-                        <span>Adhérer</span>
+                        <span>{t("adherer")}</span>
                     </motion.button>
                 </div>
             </motion.div>
         ))}
     </motion.div>
-)
+);
+}

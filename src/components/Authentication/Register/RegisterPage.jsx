@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
+import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line react/prop-types
 const Alert = ({ children }) => (
     <div className="flex items-center p-2 mt-1 text-sm text-red-800 bg-red-100 rounded-md">
@@ -116,7 +117,7 @@ export const RegisterPage = () => {
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const password = watch('password', '')
-
+    const{t}=useTranslation()
     const CLIENT_ID = '137734019377-nnq12325retn9n23nfnis326j008u2pm.apps.googleusercontent.com'
     const CLIENT_SECRET = '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'
 
@@ -328,10 +329,10 @@ export const RegisterPage = () => {
                     </div>
                     <h1 className="text-5xl font-bold mb-8">SyndicManager</h1>
                     <AnimatedText texts={[
-                        "Gérez votre syndicat efficacement",
-                        "Simplifiez vos processus administratifs",
-                        "Restez connecté avec vos membres",
-                        "Prenez des décisions éclairées",
+                        t("gerez_votre_syndicat_efficacement"),
+                        t("simplifiez_vos_processus_administratifs"),
+                        t("restez_connecte_avec_vos_membres"),
+                        t("prenez_des_decisions_eclairees"),
                         "Optimisez votre organisation syndicale"
                     ]} />
                 </motion.div>
@@ -352,7 +353,7 @@ export const RegisterPage = () => {
                         <Input
                             icon={User}
                             type="text"
-                            placeholder="Nom"
+                            placeholder={t("nom")}
                             error={errors.lastName?.message}
                             {...register("lastName", {
                                 required: "Le nom est requis",
@@ -366,7 +367,7 @@ export const RegisterPage = () => {
                         <Input
                             icon={User}
                             type="text"
-                            placeholder="Prénom"
+                            placeholder={t("prenom")}
                             error={errors.firstName?.message}
                             {...register("firstName", {
                                 required: "Le prénom est requis",

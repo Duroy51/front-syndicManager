@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -11,16 +8,16 @@ import {Apercus} from "./Apercus/Apercus";
 import {Cotisations} from "./Cotisations/Cotisations";
 import {Depenses} from "./Dépenses/Depenses";
 import {FinanceManagement} from "./Dépenses/Depenses2";
-
+import { useTranslation } from 'react-i18next';
 export const Finances = () => {
     const [activeTab, setActiveTab] = useState('overview')
-
+    const {t}=useTranslation();
 
     const tabs = [
-        { id: 'overview', label: 'Aperçu', icon: PieChart },
-        { id: 'income', label: 'Revenus', icon: TrendingUp },
-        { id: 'expenses', label: 'Dépenses', icon: DollarSign },
-        { id: 'reports', label: 'Rapports', icon: FileText },
+        { id: 'overview', label: t('apercu'), icon: PieChart },
+        { id: 'income', label: t("revenus"), icon: TrendingUp },
+        { id: 'expenses', label: t("depenses"), icon: DollarSign },
+        { id: 'reports', label: t("rapports"), icon: FileText },
     ]
 
 
@@ -43,7 +40,7 @@ export const Finances = () => {
 
     return (
         <div className="bg-gray-100 min-h-screen p-6">
-            <h1 className="text-3xl font-bold mb-6">Finances</h1>
+            <h1 className="text-3xl font-bold mb-6">{t("finances")}</h1>
             <div className="max-w-6xl mx-auto">
 
 
@@ -74,7 +71,7 @@ export const Finances = () => {
                                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center"
                             >
                                 <Upload className="mr-2 h-5 w-5"/>
-                                Importer
+                                {t("importer")}
                             </motion.button>
                             <motion.button
                                 whileHover={{scale: 1.05}}
@@ -82,7 +79,7 @@ export const Finances = () => {
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
                             >
                                 <Download className="mr-2 h-5 w-5"/>
-                                Exporter
+                                {t("exporter")}
                             </motion.button>
                         </div>
                     </div>
@@ -91,7 +88,7 @@ export const Finances = () => {
                         <div className="relative">
                             <input
                                 type="text"
-                                placeholder="Rechercher..."
+                                placeholder={t("rechercher")}
                                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
@@ -102,7 +99,7 @@ export const Finances = () => {
                             className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors flex items-center"
                         >
                             <Filter className="mr-2 h-5 w-5"/>
-                            Filtres
+                            {t("flitres")}
                             <ChevronDown className="ml-2 h-4 w-4"/>
                         </motion.button>
                     </div>
