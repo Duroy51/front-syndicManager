@@ -211,20 +211,28 @@ export const RegisterPage = () => {
 
         try {
             // Envoi de la requête au serveur
-            const response = await axios.post('https://gateway.yowyob.com/auth-service/auth/register', {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                dateOfBirth: data.dateOfBirth,
-                password: data.password,
+            const response = await fetch('https://gateway.yowyob.com/auth-service/auth/register', {
+                method: 'POST',
+                mode: 'no-cors', // Permet de faire une requête sans vérification CORS
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    dateOfBirth: data.dateOfBirth,
+                    password: data.password
+                })
             });
+
 
             console.log('Réponse complète du serveur:', response);
 
             const responseData = response?.data;
             const tokenData = responseData?.data?.token;
 
-            if (tokenData?.Bearer) {
+            if (response.status === 200) {
                 const token = tokenData.Bearer;
 
                 saveUserSession(data.email, token);
