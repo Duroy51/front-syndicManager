@@ -6,7 +6,6 @@ import {CommentModal} from "@/components/Syndicat-App/s'exprimer/CommentComponen
 
 import { useTranslation } from "react-i18next";
 
-import i18n from "../../../../i18n";
 export const Post = ({ post, onUpdatePost }) => {
     const [liked, setLiked] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);

@@ -6,7 +6,6 @@ import {EmojiPicker} from './EmojiPicker';
 
 import { useTranslation } from 'react-i18next';
 
-import i18n from '../../../../i18n';
 export const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
     const [newComment, setNewComment] = useState('');
     const [commentImage, setCommentImage] = useState(null);

@@ -4,7 +4,6 @@ import {Reply} from './CommentReponse.jsx'
 
 import { useTranslation } from 'react-i18next';
 
-import i18n from '../../../../i18n.js';
 export const Comment = ({ comment, onLike, onReply, onToggleReplies, showReplies }) => {
     const {t} = useTranslation();
     return (
