@@ -18,8 +18,8 @@ export const Apercus = () => {
         { id: 1, description: t("cotisations_mensuelles"), amount: 15000, type: 'income' },
         { id: 2, description: t("frais_de_location_de_salle"), amount: -500, type: 'expense' },
         { id: 3, description: t("don_de_soutien"), amount: 1000, type: 'income' },
-        { id: 4, description: {t("achat_de_fournitures_de_bureau")}, amount: -200, type: 'expense' },
-        { id: 5, description: {t("remboursement_de_frais")}, amount: -150, type: 'expense' },
+        { id: 4, description: t("achat_de_fournitures_de_bureau"), amount: -200, type: 'expense' },
+        { id: 5, description: t("remboursement_de_frais"), amount: -150, type: 'expense' },
     ]
 
     return (

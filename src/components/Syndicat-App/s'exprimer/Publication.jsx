@@ -7,6 +7,7 @@ import {
 import profile from '../../../images/bproo.png';
 import {VideoPreview} from './PublicationComponents/VideoPreview.jsx'
 import {Post} from './PublicationComponents/Post.jsx'
+import { useTranslation } from 'react-i18next';
 
 
 const Button = ({ children, onClick, className = "", variant = "default" }) => {
@@ -44,6 +45,7 @@ const TextArea = ({ value, onChange, placeholder, className = "" }) => (
 
 
 export const Publications = () => {
+    const{t}=useTranslation()
     const [posts, setPosts] = useState([
         {
             id: 1,

@@ -6,6 +6,7 @@ import {
     Users, CreditCard, Mail, Calendar, CheckCircle, XCircle,
     Paperclip, Trash2, Edit2
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export const FinanceManagement = () => {
     const [activeTab, setActiveTab] = useState('overview')
@@ -13,12 +14,12 @@ export const FinanceManagement = () => {
     const [showExpenseForm, setShowExpenseForm] = useState(false)
     const [filterCategory, setFilterCategory] = useState('')
     const [filterDate, setFilterDate] = useState('')
-
+    const{t}=useTranslation()
     const tabs = [
         { id: 'overview', label: 'Aperçu', icon: PieChart },
         { id: 'cotisations', label: 'Cotisations', icon: Users },
-        { id: 'expenses', label: {t("depenses")}, icon: DollarSign },
-        { id: 'reports', label: {t("rapports")}, icon: FileText },
+        { id: 'expenses', label: t("depenses"), icon: DollarSign },
+        { id: 'reports', label: t("rapports"), icon: FileText },
     ]
 
     const financialData = {

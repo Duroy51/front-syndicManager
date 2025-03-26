@@ -85,11 +85,11 @@ export const SyndicatApp = () => {
     const navItems = [
         { id: 'membres', icon: Users, label: 'Membres', badge: 12 },
         { id: 'événements', icon: Calendar, label: 'Événements', badge: 3 },
-        { id: 'exprimer', icon: MessageCircle, label: S'exprimer },
+        { id: 'exprimer', icon: MessageCircle, label: "S'exprimer" },
         { id: 'chat', icon: MessageSquare, label: 'Chat', badge: 5 },
         { id: 'votes', icon: Vote, label: 'Votes', badge: 2 },
         { id: 'contributions', icon: CreditCard, label: 'Cotisations' },
-        { id: 'partnerships', icon: Handshake, label: {t("partenariats")} },
+        { id: 'partnerships', icon: Handshake, label: t("partenariats") },
         { id: 'about', icon: Info, label: 'À propos' },
     ];
 
@@ -144,7 +144,7 @@ export const SyndicatApp = () => {
                             <Shield className="w-16 h-16 text-blue-500 mx-auto mb-6" />
                             <h1 className="text-4xl font-bold text-gray-800 mb-4">{t("a_propos_de_syndic_manager")}</h1>
                             <p className="text-gray-600 max-w-2xl mx-auto">
-                                t("votre_plateforme_de_gestion_syndicale_moderne_et_efficace")
+                                {t("votre_plateforme_de_gestion_syndicale_moderne_et_efficace")}
                             </p>
                         </motion.div>
                     </div>

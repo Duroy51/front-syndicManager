@@ -13,6 +13,7 @@ import {
     Award,
     TrendingUp
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const VoteCard = ({ vote }) => {
     const [userVote, setUserVote] = useState(null);
@@ -157,6 +158,7 @@ const VoteCard = ({ vote }) => {
 };
 
 export const VotesList = () => {
+    const {t}=useTranslation()
     const votes = [
         {
             id: 1,
