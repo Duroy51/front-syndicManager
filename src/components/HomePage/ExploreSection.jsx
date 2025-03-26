@@ -259,7 +259,7 @@ export const Explorer = () => {
                         >
                             <div className="p-6 border-b border-gray-100 flex justify-between items-center">
                                 <h3 className="text-2xl font-semibold text-gray-900">
-                                    Adhésion à {selectedSyndicat?.name}
+                                    {t("adhesion_ad")} {selectedSyndicat?.name}
                                 </h3>
                                 <button
                                     className="p-2 hover:bg-gray-50 rounded-full transition-colors"

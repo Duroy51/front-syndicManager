@@ -169,7 +169,35 @@
     "categorie": "Kategorie",
     "adresse": "Adresse",
     "site_web": "Webseite",
-    "avantages": "Vorteile"
-}
+    "avantages": "Vorteile",
+
+
+
+      "espace_membre": "Mitgliederbereich",
+      "notre_mission": "Unsere Mission",
+      "nous_contacter": "Kontaktieren Sie uns",
+      "membres_actifs": "Aktive Mitglieder",
+      "delegues": "Delegierte",
+      "sections_locales": "Lokale Sektionen",
+      "annees_d_existence": "Jahre der Existenz",
+      "notre_histoire": "Unsere Geschichte",
+      "nos_implantations": "Unsere Standorte",
+      "equipe_directrice": "Führungsteam",
+      "dernieres_actualites": "Neueste Nachrichten",
+      "agenda_syndical": "Gewerkschaftsagenda",
+      "documents_officiels": "Offizielle Dokumente",
+      "nos_services": "Unsere Dienstleistungen",
+      "contacter_un_conseiller": "Einen Berater kontaktieren",
+      "boutique_du_syndicat": "Gewerkschaftsshop",
+      "commander": "Bestellen",
+      "adhesion_ad": "Mitgliedschaft bei",
+      "rejoignez": "Beitreten",
+      "votre_motivation": "Ihre Motivation",
+      "photo_d_identite": "Ausweisfoto",
+      "expliquez_nous_pourquoi_vous_souhaitez_rejoindre_notre_syndicat": "Erklären Sie, warum Sie unserer Gewerkschaft beitreten möchten...",
+      "piece_d_identite_face": "Ausweis (Vorderseite)",
+      "piece_d_identite_dos": "Ausweis (Rückseite)",
+      "envoyer_ma_demande_d_adhesion": "Meinen Mitgliedschaftsantrag senden"
+    }
   
   

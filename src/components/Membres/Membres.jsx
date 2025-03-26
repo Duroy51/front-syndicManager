@@ -89,7 +89,7 @@ export const MemberManagement = () => {
                     <StatCard
                         icon={Users}
                         value={members.length}
-                        label="Membres actifs"
+                        label={t("membres_actifs")}
                         color="border-blue-500"
                     />
                     <StatCard
