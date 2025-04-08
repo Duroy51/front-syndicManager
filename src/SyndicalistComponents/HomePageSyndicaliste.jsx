@@ -279,8 +279,11 @@ export const SyndicalistHomePage = () => {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             className={`w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center ${isSidebarOpen ? "justify-center" : ""}`}
+                            
                         >
-                            <LogOut className="w-5 h-5" />
+                            <LogOut className="w-5 h-5"
+
+                            />
                             {isSidebarOpen && <span className="font-medium ml-2">Déconnexion</span>}
                         </motion.button>
                     </div>

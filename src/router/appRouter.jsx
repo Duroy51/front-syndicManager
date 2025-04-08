@@ -54,24 +54,28 @@ export function AppRoute() {
     return (
         <React.Suspense fallback={<CenteredSpinner/>}>
             <Routes>
-                {/* Routes publiques */}
+                {/* Routes publiques Du Login, Register */}
                 <Route path={AppRoutesPaths.loginPage} element={<LoginPage/>}/>
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
                 <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
 
-                {/* Route conditionnelle pour la page d'accueil */}
+
+
+
+                {/* Route des utilisateurs du type business*/}
                 <Route
-                    path={AppRoutesPaths.homePage}
+                    path={AppRoutesPaths.syndicalistHomePage}
                     element={
                         <AuthGuard>
-                            <HomePageWrapper userRole={userRole} />
+                            <SyndicalistHomePage />
                         </AuthGuard>
                     }
                 />
 
 
-                {/* Autres routes protégées */}
+
+                {/* Route pour les Simples utilisateurs */}
                 <Route
                     path={AppRoutesPaths.createSyndicat}
                     element={
@@ -81,9 +85,22 @@ export function AppRoute() {
                     }
                 />
                 <Route
-                    path={AppRoutesPaths.syndicatApp}
-                    element={<SyndicatApp/>}
+                    path={AppRoutesPaths.userHomePage}
+                    element={
+                        <AuthGuard>
+                            <HomePage/>
+                        </AuthGuard>
+                    }
                 />
+                <Route
+                    path={AppRoutesPaths.userSyndicatApp}
+                    element={
+                        <AuthGuard>
+                            <SyndicatApp/>
+                        </AuthGuard>
+                    }
+                />
+
             </Routes>
         </React.Suspense>
     );

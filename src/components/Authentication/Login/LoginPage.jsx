@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { fakeUsers } from "../../../services/FakeUsers.js";
 import { generateFakeJWT } from "../../../services/FakeAuth.js";
 import {AppRoutesPaths} from "../../../router/AppRoutesPaths.js";
+import {getRoleFromToken} from "@/services/AccountService.js";
 
 export const AppleID = "P3WHTNR897.gloswitch";
 
@@ -260,7 +261,12 @@ export const LoginPage = () => {
                 text: 'Vous allez être redirigé.',
                 confirmButtonText: 'Ok',
             }).then(() => {
-                navigate('/home');
+                const userRole = getRoleFromToken();
+                if(userRole === "user") {
+                    navigate('/user/home');
+                } else if(userRole === "business"){
+                    navigate('/business/home');
+                }
             });
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
