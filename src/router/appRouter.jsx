@@ -51,6 +51,13 @@ const ForumTopic = React.lazy(async () => ({
     default: (await import("../components/Communication/ForumTopic.jsx")).default,
 }));
 
+const EventsTest = React.lazy(async () => ({
+    default: (await import("../globalComponents/Evenement/EventsList")).EventsList
+}))
+const PublicationsTest = React.lazy(async () => ({
+    default: (await import("../globalComponents/Publication/Publication")).Publication
+}))
+
 export const AppRoutesPaths = {
     loginPage: "/login",
     registerPage: "/register",
@@ -75,8 +82,9 @@ export const AppRoutesPaths = {
         forum: "/communication/forum",
         forumTopic: "/communication/forum/topic/:id",
         chatbot: "/communication/chatbot"
-    }
-
+    },
+    eventsTest: "/test/events",
+    publicationsTest: "/test/publications", 
 }
 
 const CenteredSpinner = () => (
@@ -135,6 +143,8 @@ export function AppRoute() {
                         </AuthGuard>
                     }
                 />
+                <Route path={AppRoutesPaths.eventsTest} element={<EventsTest/>}/>
+                <Route path={AppRoutesPaths.publicationsTest} element={<PublicationsTest/>}/>
 
                 {/* Autres routes protégées */}
                 <Route
