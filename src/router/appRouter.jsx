@@ -1,15 +1,9 @@
 import React from "react"
-import { Route, Routes, Navigate } from "react-router-dom"
-import { Circles } from 'react-loader-spinner';
+import { Route, Routes } from "react-router-dom"
 import AuthGuard from '../helpers/AuthGuard.jsx';
 import {getRoleFromToken} from "../services/AccountService.js";
 import {AppRoutesPaths} from "./AppRoutesPaths.js";
 import {CenteredSpinner} from "./Spinner.jsx";
-import {HomePageWrapper} from "./Provider.jsx";
-
-
-
-
 
 
 const LoginPage = React.lazy(async () => ({
