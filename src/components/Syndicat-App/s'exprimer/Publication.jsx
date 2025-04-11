@@ -7,6 +7,8 @@ import {
 import profile from '../../../images/bproo.png';
 import {VideoPreview} from './PublicationComponents/VideoPreview.jsx'
 import {Post} from './PublicationComponents/Post.jsx'
+import { useTranslation } from 'react-i18next';
+
 
 
 const Button = ({ children, onClick, className = "", variant = "default" }) => {
@@ -44,6 +46,7 @@ const TextArea = ({ value, onChange, placeholder, className = "" }) => (
 
 
 export const Publications = () => {
+    const{t}=useTranslation()
     const [posts, setPosts] = useState([
         {
             id: 1,
@@ -146,10 +149,10 @@ export const Publications = () => {
                     className="text-center mb-12"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                        S'exprimer
+                        {t("s_exprimer")}
                     </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Partagez vos idées, vos expériences et vos réflexions avec la communauté.
+                        {t("partagez_vos_idees_vos_experiences_et_vos_reflexions_avec_la_communaute")}
                     </p>
                 </motion.div>
 
@@ -185,7 +188,7 @@ export const Publications = () => {
                                 className="bg-white rounded-2xl p-8 w-full max-w-xl shadow-2xl"
                             >
                                 <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-800">Nouvelle publication</h2>
+                                    <h2 className="text-2xl font-bold text-gray-800">{t("nouvelle_publication")}</h2>
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
@@ -221,7 +224,7 @@ export const Publications = () => {
                                 <TextArea
                                     value={newPostContent}
                                     onChange={(e) => setNewPostContent(e.target.value)}
-                                    placeholder="Que voulez-vous partager ?"
+                                    placeholder={t("que_voulez_vous_partager?")} 
                                     className="mb-6 h-32"
                                 />
 
@@ -267,11 +270,11 @@ export const Publications = () => {
                                     </div>
                                     <div className="flex space-x-4">
                                         <Button variant="outline" onClick={handleCancelPost}>
-                                            Annuler
+                                            {t("annuler")}
                                         </Button>
                                         <Button onClick={handleNewPost}>
                                             <Send className="w-5 h-5 mr-2" />
-                                            Publier
+                                            {t("publier")}
                                         </Button>
                                     </div>
                                 </div>

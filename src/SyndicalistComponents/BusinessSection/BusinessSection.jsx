@@ -12,7 +12,7 @@ export const BusinessNavigationTabs = () => {
 
     const tabs = [
         { key: "planing", icon: <Calendar className="inline-block mr-2" />, label: "Planning" },
-        { key: "evenement", icon: <MapPin className="inline-block mr-2" />, label: "Événements" },
+        { key: "evenement", icon: <MapPin className="inline-block mr-2" />, label: t("evenements") },
         { key: "reservation", icon: <BookOpen className="inline-block mr-2" />, label: "Réservation" },
     ];
 

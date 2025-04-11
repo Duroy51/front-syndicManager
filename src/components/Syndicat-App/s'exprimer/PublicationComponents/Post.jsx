@@ -4,7 +4,7 @@ import {motion} from "framer-motion";
 import {Bookmark, Clock, Flag, Heart, MessageCircle} from "lucide-react";
 import {CommentModal} from "@/components/Syndicat-App/s'exprimer/CommentComponent/Principal_Comment.jsx";
 
-
+import { useTranslation } from "react-i18next";
 
 export const Post = ({ post, onUpdatePost }) => {
     const [liked, setLiked] = useState(false);
@@ -12,6 +12,7 @@ export const Post = ({ post, onUpdatePost }) => {
     const [bookmarked, setBookmarked] = useState(false);
     const [currentTimestamp, setCurrentTimestamp] = useState(post.timestamp);
 
+    const { t } = useTranslation();
     useEffect(() => {
         const interval = setInterval(() => {
             if (post.createdAt) {
@@ -117,7 +118,7 @@ export const Post = ({ post, onUpdatePost }) => {
                             } transition-all duration-200`}
                         >
                             <Heart className="w-5 h-5 mr-2" fill={liked ? "currentColor" : "none"} />
-                            J'aime
+                            {t("jaime")}
                         </motion.button>
 
                         <motion.button
@@ -127,7 +128,7 @@ export const Post = ({ post, onUpdatePost }) => {
                             className="flex items-center px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200"
                         >
                             <MessageCircle className="w-5 h-5 mr-2" />
-                            Commenter
+                            {t("commenter")}
                         </motion.button>
 
                         <motion.button
@@ -136,7 +137,7 @@ export const Post = ({ post, onUpdatePost }) => {
                             className="flex items-center px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200"
                         >
                             <Flag className="w-5 h-5 mr-2" />
-                            Signaler
+                            {t("signaler")}
                         </motion.button>
                     </div>
                 </div>

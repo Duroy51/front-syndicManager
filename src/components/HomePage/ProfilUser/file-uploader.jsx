@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Upload, CheckCircle, AlertCircle } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
+
 export const FileUploader = ({
                                  label,
                                  icon,
@@ -13,7 +16,7 @@ export const FileUploader = ({
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
     const fileInputRef = useRef(null);
-
+    const{t}= useTranslation();
     const handleFileChange = (e) => {
         const selectedFile = e.target.files?.[0];
         if (selectedFile) {
@@ -75,7 +78,7 @@ export const FileUploader = ({
                     <div>
                         <Upload className="mx-auto mb-4 text-gray-400" size={48} />
                         <p className="text-gray-500">
-                            Glissez et déposez votre fichier ici, ou cliquez pour sélectionner
+                            {t("glissez_et_deposez_votre_fichier_ici_ou_cliquer_pour_selectionner")}
                         </p>
                     </div>
                 )}

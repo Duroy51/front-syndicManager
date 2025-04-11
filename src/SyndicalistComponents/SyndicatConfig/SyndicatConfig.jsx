@@ -27,6 +27,8 @@ import { ServiceForm } from "./service-form"
 import { BranchForm } from "./branch-form"
 import { Save } from "lucide-react"
 
+import { useTranslation } from "react-i18next"
+
 // Variants pour l'animation de conteneur et des sections
 const containerVariants = {
     hidden: {},
@@ -43,6 +45,7 @@ const sectionVariants = {
 }
 
 export const SyndicatManagement = () => {
+    const {t}=useTranslation();
     const [syndicatName, setSyndicatName] = useState("Syndicat des Mototaximan de Douala")
     const [syndicatType, setSyndicatType] = useState("Syndicat professionnel")
     const [syndicatDescription, setSyndicatDescription] = useState(
@@ -239,9 +242,9 @@ export const SyndicatManagement = () => {
                     {/* Statistiques */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         {[
-                            { icon: <Users className="text-indigo-500" />, label: "Membres", value: "1,234" },
+                            { icon: <Users className="text-indigo-500" />, label: t("membres"), value: "1,234" },
                             { icon: <FileText className="text-indigo-500" />, label: "Publications", value: "56" },
-                            { icon: <Calendar className="text-indigo-500" />, label: "Événements", value: "12" },
+                            { icon: <Calendar className="text-indigo-500" />, label: t("evenements"), value: "12" },
                             { icon: <ShoppingBag className="text-indigo-500" />, label: "Produits", value: products.length.toString() },
                         ].map((stat, index) => (
                             <motion.div
@@ -413,7 +416,7 @@ export const SyndicatManagement = () => {
                 >
                     <h2 className="text-3xl font-bold mb-6 text-indigo-900 flex items-center">
                         <Settings className="mr-2 text-indigo-500" />
-                        Configuration du profil
+                        {t("configuration_du_profil")}
                     </h2>
                     <div className="space-y-6">
                         <div>
@@ -486,7 +489,7 @@ export const SyndicatManagement = () => {
                         <div>
                             <label htmlFor="contactPhone" className="block text-sm font-medium text-indigo-700 mb-2 flex items-center">
                                 <Phone className="mr-2 text-indigo-500" />
-                                Téléphone
+                                {t("telephone")}
                             </label>
                             <input
                                 type="tel"
@@ -499,7 +502,7 @@ export const SyndicatManagement = () => {
                         <div>
                             <label htmlFor="contactEmail" className="block text-sm font-medium text-indigo-700 mb-2 flex items-center">
                                 <Mail className="mr-2 text-indigo-500" />
-                                Email
+                                {t("email")}
                             </label>
                             <input
                                 type="email"
@@ -557,7 +560,7 @@ export const SyndicatManagement = () => {
                         className="mt-6 flex items-center justify-center w-full py-3 bg-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:bg-indigo-800 transition-colors duration-200"
                     >
                         <Save className="mr-2" />
-                        Enregistrer les modifications
+                        {t("enregistrer_les_modifications")}
                     </motion.button>
                 </motion.section>
 

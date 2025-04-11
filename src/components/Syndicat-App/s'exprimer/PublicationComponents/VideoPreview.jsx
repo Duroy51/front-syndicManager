@@ -95,7 +95,7 @@ export const VideoPreview = ({ onClose }) => {
                     </div> </div>
                 <div className="mt-6 flex justify-end space-x-4">
                     <Button variant="outline" onClick={onClose}>
-                        Annuler
+                        {t("annuler")}
                     </Button>
                     <Button>
                         Capturer

@@ -5,6 +5,7 @@ import {
     Phone, Mail, Globe, MapPin, Tag, Calendar, Gift
 } from 'lucide-react'
 
+import { useTranslation } from 'react-i18next'
 // Custom Button component
 const Button = ({ children, onClick, className = "", variant = "default" }) => {
     const baseStyle = "px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2"
@@ -124,6 +125,8 @@ const PartnerCard = ({ partner }) => {
 
 // Main component
 export const Partnerships = () => {
+    const {t} =useTranslation();
+
     const [partners, setPartners] = useState([
         {
             id: 1,
@@ -214,7 +217,7 @@ export const Partnerships = () => {
         <div className="container mx-auto p-4 relative min-h-screen bg-gray-100">
             <h1 className="text-3xl font-bold text-blue-600 mb-6 flex items-center">
                 <Handshake className="w-8 h-8 mr-2" />
-                Partenariats
+                {t("partenariats")}
             </h1>
 
             {partners.map(partner => (
@@ -252,67 +255,67 @@ export const Partnerships = () => {
                             </div>
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">{t("nom")}</label>
                                     <Input
                                         id="name"
                                         value={newPartner.name}
                                         onChange={(e) => setNewPartner(prev => ({ ...prev, name: e.target.value }))}
-                                        placeholder="Nom du partenaire"
+                                        placeholder= {t("nom_du_partenaire")}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">{t("categorie")}</label>
                                     <Input
                                         id="category"
                                         value={newPartner.category}
                                         onChange={(e) => setNewPartner(prev => ({ ...prev, category: e.target.value }))}
-                                        placeholder="Catégorie du partenaire"
+                                        placeholder= {t("categorie_du_partenaire")}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+                                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">{t("adresse")}</label>
                                     <Input
                                         id="address"
                                         value={newPartner.address}
                                         onChange={(e) => setNewPartner(prev => ({ ...prev, address: e.target.value }))}
-                                        placeholder="Adresse du partenaire"
+                                        placeholder= {t("adresse_du_partenaire")}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">{t("telephone")}</label>
                                     <Input
                                         id="phone"
                                         value={newPartner.phone}
                                         onChange={(e) => setNewPartner(prev => ({ ...prev, phone: e.target.value }))}
-                                        placeholder="Numéro de téléphone"
+                                        placeholder= {t("numero_de_telephone")}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">{t("email")}</label>
                                     <Input
                                         id="email"
                                         value={newPartner.email}
                                         onChange={(e) => setNewPartner(prev => ({ ...prev, email: e.target.value }))}
-                                        placeholder="Adresse email"
+                                        placeholder= {t("adresse_email")}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">Site web</label>
+                                    <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">{t("site_web")}</label>
                                     <Input
                                         id="website"
                                         value={newPartner.website}
                                         onChange={(e) => setNewPartner(prev => ({ ...prev, website: e.target.value }))}
-                                        placeholder="Site web du partenaire"
+                                        placeholder= {t("site_web_du_partenaire")}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Avantages</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("avantages")}</label>
                                     {newPartner.benefits.map((benefit, index) => (
                                         <div key={index} className="flex items-center mb-2">
                                             <Input
                                                 value={benefit}
                                                 onChange={(e) => handleBenefitChange(index, e.target.value)}
-                                                placeholder={`Avantage ${index + 1}`}
+                                                placeholder={`t("avantage") ${index + 1}`}
                                                 className="flex-grow mr-2"
                                             />
                                             <Button variant="ghost" onClick={() => handleRemoveBenefit(index)}>
@@ -328,7 +331,7 @@ export const Partnerships = () => {
                             </div>
                             <div className="mt-6 flex justify-end">
                                 <Button onClick={handleNewPartner}>
-                                    Ajouter le partenaire
+                                    t{("ajouter_le_partenaire")}
                                 </Button>
                             </div>
                         </motion.div>

@@ -3,22 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {EventsList} from "../Evenement/Evenement";
 import {ChatBox} from "../Chat/ChatBox";
 import {VotesList} from "../Vote/VoteSpace";
-import {ContributionsList, Finances} from "../Cotisations/Finances";
+import {ContributionsList, Finances} from "../t("cotisations")/Finances";
 import {PartnershipsList} from "../Partenaire/Partenaires";
 import { Calendar, MessageSquare, Vote, CreditCard, Handshake, Home, Bell, User, LogOut, ChevronRight, Search } from 'lucide-react'
 import {useNavigate} from "react-router-dom";
 import {Footer} from "./Footer"
+import { useTranslation } from "react-i18next";
+import i18n from '../../../i18n';
+
 
 export const SyndicatApp2 = () => {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState('événements')
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const navigate = useNavigate();
     const navItems = [
-        { id: 'événements', icon: Calendar, label: 'Événements' },
-        { id: 'chat', icon: MessageSquare, label: 'Chat' },
-        { id: 'votes', icon: Vote, label: 'Votes' },
-        { id: 'contributions', icon: CreditCard, label: 'Cotisations' },
-        { id: 'partnerships', icon: Handshake, label: 'Partenariats' },
+        { id: 'événements', icon: Calendar, label: t("evenements") },
+        { id: 'chat', icon: MessageSquare, label: t("chat") },
+        { id: 'votes', icon: Vote, label: t("votes") },
+        { id: 'contributions', icon: CreditCard, label: t("cotisations") },
+        { id: 'partnerships', icon: Handshake, label: t("partenariats") },
     ]
 
     const renderContent = () => {
@@ -80,7 +84,7 @@ export const SyndicatApp2 = () => {
                             onClick={() => navigate('/home')}
                         >
                             <Home className="mr-2 h-4 w-4" />
-                            Acceuil
+                            {t("accueil")}
                         </motion.button>
                     </div>
                 </motion.div>

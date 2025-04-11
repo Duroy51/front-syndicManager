@@ -1,7 +1,9 @@
-
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const UserProfile = () => {
+  const {t}= useTranslation();
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -32,13 +34,13 @@ const UserProfile = () => {
 
   return (
     <div className="max-w-3xl mx-auto my-8 p-8 bg-gray-50 rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Configuration du profil</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t("configuration_du_profil")}</h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Prénom */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">Prénom</label>
+            <label className="block text-sm font-medium text-gray-700">{t("prenom")}</label>
             <input
               type="text"
               name="firstName"
@@ -51,7 +53,7 @@ const UserProfile = () => {
 
           {/* Nom */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">Nom</label>
+            <label className="block text-sm font-medium text-gray-700">{t("nom")}</label>
             <input
               type="text"
               name="lastName"
@@ -65,7 +67,7 @@ const UserProfile = () => {
 
         {/* Email */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <label className="block text-sm font-medium text-gray-700">{t("email")}</label>
           <input
             type="email"
             name="email"

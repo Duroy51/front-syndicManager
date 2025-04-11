@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plus, Users, MessageCircle, Star } from 'lucide-react';
+import { t } from 'i18next'; // Add import statement for the t function
 
 const DashboardSection = ({ syndicats }) => (
     <div className="space-y-8">
@@ -18,17 +19,18 @@ const DashboardSection = ({ syndicats }) => (
                         <div className="flex items-center justify-between">
                             <div className="flex items-center text-sm text-gray-600">
                                 <Users className="h-5 w-5 mr-1 text-blue-500" />
-                                <span>{syndicat.members} membres</span>
+                                <span>{syndicat.members} {t("membresM")}</span>
                             </div>
                             {syndicat.newMessages > 0 && (
                                 <span className="px-3 py-1 bg-blue-500 text-white rounded-full text-xs flex items-center">
                                     <MessageCircle className="h-4 w-4 mr-1" />
-                                    {syndicat.newMessages} messages
+                                    {syndicat.newMessages} 
+                                    {t("messages")}
                                 </span>
                             )}
                         </div>
                         <button className="w-full px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold">
-                            Accéder au syndicat
+                            {t("accéder_au_syndicat")}
                         </button>
                     </div>
                 </div>
@@ -38,12 +40,12 @@ const DashboardSection = ({ syndicats }) => (
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-lg shadow-lg p-8 text-white">
             <div className="flex justify-between items-center">
                 <div>
-                    <h2 className="text-3xl font-bold mb-2">Créez votre propre syndicat</h2>
-                    <p className="text-blue-200">Lancez votre propre syndicat et rassemblez des membres autour de votre cause.</p>
+                    <h2 className="text-3xl font-bold mb-2">{t("créez_votre_propre_syndicat")}</h2>
+                    <p className="text-blue-200">{t("lancez_votre_propre_syndicat_et_rassemblez_des_membres_autour_de_votre_cause")}</p>
                 </div>
                 <button className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors duration-300 flex items-center">
                     <Plus className="h-5 w-5 mr-2" />
-                    Créer un Syndicat
+                    {t("créer_un_syndicat")}
                 </button>
             </div>
         </div>

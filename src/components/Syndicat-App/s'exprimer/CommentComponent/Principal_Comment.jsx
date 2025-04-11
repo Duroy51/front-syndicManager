@@ -4,12 +4,16 @@ import { Smile, Image as ImageIcon, Send, X, Clock } from 'lucide-react';
 import {Comment} from './Comment';
 import {EmojiPicker} from './EmojiPicker';
 
+import { useTranslation } from 'react-i18next';
+
 export const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
     const [newComment, setNewComment] = useState('');
     const [commentImage, setCommentImage] = useState(null);
     const [replyToComment, setReplyToComment] = useState(null);
     const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
     const fileInputRef = useRef(null);
+
+    const {t}=useTranslation()
 
     const [comments, setComments] = useState(
         post.comments.map((comment) => ({
@@ -120,7 +124,7 @@ export const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="p-6 border-b flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-2xl">
-                            <h2 className="text-2xl font-bold text-gray-800">Publication</h2>
+                            <h2 className="text-2xl font-bold text-gray-800">{t("publication")}</h2>
                             <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
@@ -211,7 +215,7 @@ export const CommentModal = ({ post, isOpen, onClose, onAddComment }) => {
                                         type="text"
                                         value={newComment}
                                         onChange={(e) => setNewComment(e.target.value)}
-                                        placeholder="Écrivez un commentaire..."
+                                        placeholder={t("ecrivez_un_commentaire")}
                                         className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                                         onKeyPress={(e) => e.key === 'Enter' && handleSubmitComment()}
                                     />
