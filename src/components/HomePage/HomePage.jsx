@@ -10,8 +10,9 @@ import { useNavigate } from "react-router-dom"
 import { logout, getFirstNameToken, getLastNameToken, getProfilFromToken } from "../../services/AccountService"
 import { AcceuilSection } from "./AcceuilSection.jsx"
 import { MesSyndicats } from "./MesSyndicatSection.jsx"
-import { Explorer } from "./ExploreSection.jsx"
+import { Explorer } from "./ExploreSection.jsx" 
 import { ProfilUser } from "./ProfilUser/ProfilUser.jsx"
+import { SyndicatDashboard } from "./SyndicatDashboard.jsx"
 
 const navItems = [
     {
@@ -19,7 +20,7 @@ const navItems = [
         icon: Home,
         label: "Accueil",
         gradient: "from-blue-500 to-indigo-600",
-        description: "Actualité",
+        description: "Tableau de bord",
     },
     {
         id: "syndicats",
@@ -297,7 +298,7 @@ export const HomePage = () => {
 
     const renderContent = useCallback(() => {
         const sections = {
-            dashboard: <AcceuilSection />,
+            dashboard: <SyndicatDashboard />,
             syndicats: <MesSyndicats />,
             explorer: <Explorer />,
             parametres: <ProfilUser />

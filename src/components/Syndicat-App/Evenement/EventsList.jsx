@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Clock, User, Image as ImageIcon, MoreHorizontal, Plus, Users, X, Heart, Share2, MessageCircle } from 'lucide-react';
+import { EventForm } from './EventForm';
+
 export const EventsList = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [showEventForm, setShowEventForm] = useState(false);
     const [events, setEvents] = useState([
         {
             id: 1,
@@ -314,6 +317,10 @@ export const EventsList = () => {
         );
     };
 
+    const handleCreateEvent = (newEvent) => {
+        setEvents([newEvent, ...events]);
+    };
+
     return (
         <div className="max-w-4xl mx-auto py-12 px-4">
             <motion.div 
@@ -324,6 +331,7 @@ export const EventsList = () => {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => setShowEventForm(true)}
                     className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 px-8 rounded-xl inline-flex items-center text-lg transition duration-200 shadow-lg"
                 >
                     <Plus className="mr-2 h-5 w-5" />
@@ -340,6 +348,16 @@ export const EventsList = () => {
             <AnimatePresence>
                 {selectedEvent && (
                     <ParticipantsList event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {showEventForm && (
+                    <EventForm
+                        isOpen={showEventForm}
+                        onClose={() => setShowEventForm(false)}
+                        onSubmit={handleCreateEvent}
+                    />
                 )}
             </AnimatePresence>
         </div>

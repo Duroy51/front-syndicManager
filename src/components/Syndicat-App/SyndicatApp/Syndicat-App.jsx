@@ -6,7 +6,7 @@ import {
     Menu, X, AlertCircle, CheckCircle, Users,
     MessageCircle, Info, Building, Shield
 } from 'lucide-react';
-import { EventsList } from "../Evenement/Evenement";
+import { EventsList } from "../Evenement/EventsList";
 import { VotesList } from "../Vote/VoteSpace";
 import { ChatBox } from "../Chat/ChatBox";
 import { Finances } from "../Cotisations/Finances";

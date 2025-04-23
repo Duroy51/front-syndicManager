@@ -2,20 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-    X,
-    Users,
-    Calendar,
-    MapPin,
-    Zap,
-    Heart,
-    Share2,
-    MessageCircle,
-    Clock,
-    User,
-    Bookmark,
-    Send,
-} from "lucide-react"
+import { X, Users, Calendar, MapPin, Zap, Heart, Share2, MessageCircle, Clock, User, Bookmark, Send,} from "lucide-react"
 import { getFirstNameToken, getLastNameToken, getUserIdFromToken } from "../../services/AccountService.js"
 import { CreateSyndicatForm } from "../NewCreateSyndicatPage/CreateSyndicatForm.jsx"
 

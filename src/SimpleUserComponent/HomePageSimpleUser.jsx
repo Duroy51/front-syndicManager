@@ -86,6 +86,7 @@ export const SimpleUserHomePage = () => {
         switch (activeSection) {
             case "dashboard":
                 return (
+                
                     <div className="p-6">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -146,6 +147,7 @@ export const SimpleUserHomePage = () => {
                             </div>
                         </motion.div>
                     </div>
+                    
                 )
             case "explorer":
                 return <Explorer />
