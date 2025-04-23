@@ -7,14 +7,17 @@ import {useNavigate} from "react-router-dom";
 
 const TOKEN_KEY = 'token'; // Clé pour le stockage du token dans localStorage
 const TOKEN_SYND = 'organisationToken';
+const REFRESH_TOKEN_KEY = 'refreshToken';
+const USER_DATA_KEY = 'user';
+const LAST_ACTIVE_KEY = 'lastActive';
 
 /**
  * Sauvegarde le token dans le stockage local.
  * @param {string} token - Le token d'authentification.
  */
 export const saveToken = (token) => {
-
     localStorage.setItem(TOKEN_KEY, token);
+
 };
 
 
@@ -33,6 +36,16 @@ export const getToken = () => {
 
 export const getOrganisationToken = () => {
     return localStorage.getItem(TOKEN_SYND);
+};
+
+
+/**
+ * Récupère les données utilisateur depuis le stockage local
+ * @returns {Object|null} - Les données utilisateur ou null
+ */
+export const getUserData = () => {
+    const userData = localStorage.getItem(USER_DATA_KEY);
+    return userData ? JSON.parse(userData) : null;
 };
 
 /**
@@ -113,17 +126,6 @@ export const logout = () => {
 
 };
 
-/**
- * Récupère les informations de l'utilisateur connecté (à partir du token).
- * @returns {Object|null} - Les informations de l'utilisateur ou null.
- */
-export const getUserInfo = () => {
-    const token = getToken();
-    if (token) {
-        return decodeToken(token);
-    }
-    return null;
-};
 
 /**
  * Récupère l'email de l'utilisateur depuis le token.
@@ -137,18 +139,7 @@ export const getEmailToken = () => {
     return decoded?.email || null;
 };
 
-/**
- * récupère le role de l'utilisateur via le toke,.
- * @return {string|null} -le role de l'utilisateur connecté
- */
 
-export  const getRoleFromToken = () => {
-    const token = getToken();
-    if(!token) return null;
-
-    const decoded = decodeToken(token);
-    return decoded?.role || null;
-}
 /**
  * Récupère le prénom de l'utilisateur depuis le token.
  * @returns {string|null} - Le prénom de l'utilisateur ou null si non disponible.
@@ -180,17 +171,7 @@ export const getLastNameToken = () => {
     return decoded?.Prenom || null;
 };
 
-/**
- * Récupère l'ID de l'utilisateur depuis le token.
- * @returns {string|null} - L'ID de l'utilisateur ou null si non disponible.
- */
-export const getUserIdFromToken = () => {
-    const token = getToken();
-    if (!token) return null;
 
-    const decoded = decodeToken(token);
-    return decoded?.userId || null;
-};
 
 /**
  * Récupère la date d'expiration du token.
@@ -204,6 +185,105 @@ export const getTokenExpiration = () => {
     return decoded?.exp ? new Date(decoded.exp * 1000) : null;
 };
 
+
+/**
+ * Récupère les informations de l'utilisateur connecté (à partir du token).
+ * @returns {Object|null} - Les informations de l'utilisateur ou null.
+ */
+export const getUserInfo = () => {
+    const token = getToken();
+    if (token) {
+        return decodeToken(token);
+    }
+    return null;
+};
+
+/**
+ * Récupère l'email de l'utilisateur depuis le token.
+ * @returns {string|null} - L'email de l'utilisateur ou null si non disponible.
+ */
+export const getEmailFromToken = () => {
+    const token = getToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.email || decoded?.sub || null;
+};
+
+/**
+ * Récupère le nom complet de l'utilisateur depuis le token.
+ * @returns {string|null} - Le nom complet ou null si non disponible.
+ */
+export const getFullNameFromToken = () => {
+    const token = getToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    const userData = decoded?.user ? JSON.parse(decoded.user) : decoded;
+
+    // Essaie plusieurs propriétés possibles pour le nom
+    const name = userData?.name || userData?.fullName || userData?.nom;
+    if (name) return name;
+
+    // Si pas de nom complet, essaie de combiner prénom et nom
+    const firstName = userData?.firstName || userData?.prenom || userData?.firstname;
+    const lastName = userData?.lastName || userData?.nom_famille || userData?.lastname;
+
+    if (firstName && lastName) {
+        return `${firstName} ${lastName}`;
+    } else if (firstName) {
+        return firstName;
+    } else if (lastName) {
+        return lastName;
+    }
+
+    return null;
+};
+
+/**
+ * Récupère le rôle de l'utilisateur via le token.
+ * @returns {string|null} - Le rôle de l'utilisateur connecté ou null si non disponible.
+ */
+export const getRoleFromToken = () => {
+    const token = getToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    return decoded?.role || decoded?.authorities || null;
+};
+
+/**
+ * Vérifie si l'utilisateur a un rôle spécifique
+ * @param {string|Array<string>} requiredRoles - Le(s) rôle(s) requis
+ * @returns {boolean} - Vrai si l'utilisateur a le rôle requis
+ */
+export const hasRole = (requiredRoles) => {
+    const userRole = getRoleFromToken();
+    if (!userRole) return false;
+
+    if (Array.isArray(requiredRoles)) {
+        return requiredRoles.some(role => userRole === role || userRole.includes(role));
+    }
+
+    return userRole === requiredRoles || userRole.includes(requiredRoles);
+};
+
+
+/**
+ * Récupère l'ID de l'utilisateur depuis le token.
+ * @returns {string|null} - L'ID de l'utilisateur ou null si non disponible.
+ */
+export const getUserIdFromToken = () => {
+    const token = getToken();
+    if (!token) return null;
+
+    const decoded = decodeToken(token);
+    const userData = decoded?.user ? JSON.parse(decoded.user) : decoded;
+
+    return userData?.id || null;
+};
+
+
 /**
  * Vérifie si le token est expiré.
  * @returns {boolean} - Vrai si le token est expiré, faux sinon.
@@ -213,49 +293,15 @@ export const isTokenExpired = () => {
     return expirationDate ? Date.now() > expirationDate.getTime() : true;
 };
 
-
 /**
- * Suite de méthodes pour gérer la connexion à un syndicat donné
- *
+ * Calcule le temps restant avant l'expiration du token en secondes
+ * @returns {number|null} - Temps restant en secondes ou null si non disponible
  */
+export const getTokenRemainingTime = () => {
+    const expirationDate = getTokenExpiration();
+    if (!expirationDate) return null;
 
-export const getOrganisationName = () => {
-    const token = getOrganisationToken();
-    if (!token) return null;
-
-    const decoded = decodeToken(token);
-    return decoded?.name || null;
-};
-
-export const getOrganisationDescription = () => {
-    const token = getOrganisationToken();
-    if (!token) return null;
-
-    const decoded = decodeToken(token);
-    return decoded?.description || null;
-};
-
-export const getOrganisationDomain = () => {
-    const token = getOrganisationToken();
-    if (!token) return null;
-
-    const decoded = decodeToken(token);
-    return decoded?.domain || null;
-};
-
-export const getUserRole = () => {
-    const token = getOrganisationToken();
-    if (!token) return null;
-
-    const decoded = decodeToken(token);
-    return decoded?.role || null;
-};
-
-export const getOrganisationId = () => {
-    const token = getOrganisationToken();
-    if (!token) return null;
-
-    const decoded = decodeToken(token);
-    return decoded?.organisationId || null;
+    const remainingMs = expirationDate.getTime() - Date.now();
+    return Math.max(0, Math.floor(remainingMs / 1000));
 };
 
