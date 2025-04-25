@@ -33,66 +33,17 @@ const SyndicatApp = React.lazy(async () => ({
 const Profil = React.lazy(async () => ({
     default: (await import("../components/ProfilPage/ProfilPage.jsx")).SyndicatProfile
 }))
-const ContentManager = React.lazy(async () => ({
-    default: (await import("../components/Education/ContentManager.jsx")).default,
-  }));
-  const CommunicationManager = React.lazy(async () => ({
-    default: (await import("../components/Communication/CommunicationManager.jsx")).default,
-}));
-const ForumTopic = React.lazy(async () => ({
-    default: (await import("../components/Communication/ForumTopic.jsx")).default,
-}));
 
 const EventsTest = React.lazy(async () => ({
     default: (await import("../globalComponents/Evenement/EventsList")).EventsList
 }))
 const PublicationsTest = React.lazy(async () => ({
     default: (await import("../globalComponents/Publication/Publication")).Publication
-}))
+}));
 
-export const AppRoutesPaths = {
-    loginPage: "/login",
-    registerPage: "/register",
-    welcomePage: "/",
-    homePage: "/home",
-    createSyndicat: "/home/createSyndicat",
-    syndicatApp: "/syndicat-app",
-    profil: "/profile",
-    education: {
-        base: "/education",
-        blog: "/education/blog",
-        blogArticle: "/education/blog/article/:id",
-        podcast: "/education/podcast",
-        newsletter: "/education/newsletter",
-        podcastTag: "/education/podcast/tag/:tag",
-        privacy: "/education/privacy",
-        archives: "/education/newsletter/archives"
-    },
-    communication: {
-        base: "/communication",
-        chat: "/communication/chat",
-        forum: "/communication/forum",
-        forumTopic: "/communication/forum/topic/:id",
-        chatbot: "/communication/chatbot"
-    },
-    eventsTest: "/test/events",
-    publicationsTest: "/test/publications", 
-}
 
-const CenteredSpinner = () => (
-    <div className="flex items-center justify-center h-screen">
-        <Circles
-            height="40"
-            width="40"
-            color="#3498db"
-            ariaLabel="circles-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-        />
-        <span className="ml-4 text-gray-600">Chargement...</span>
-    </div>
-);
+
+
 
 // Composant qui gère le rendu conditionnel de la page d'accueil selon le rôle
 const HomePageWrapper = ({ userRole }) => {

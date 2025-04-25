@@ -13,6 +13,7 @@ import timeAgo from '../utils/timeAgo';
 import profile from '../images/bproo.png';
 
 import { useTranslation } from "react-i18next"
+import { SyndicatDashboard } from "./SyndicatDashboard.jsx"
 const navItems = [
     {
         id: "dashboard",
@@ -133,7 +134,7 @@ export const SyndicalistHomePage = () => {
     const renderContent = () => {
         switch (activeSection) {
             case "dashboard":
-                return <AcceuilSection />
+                return <SyndicatDashboard />
             case "organisation":
                 return <OrganisationNavigationTabs />
             case "business":

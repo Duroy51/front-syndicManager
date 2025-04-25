@@ -12,7 +12,6 @@ import { AcceuilSection } from "./AcceuilSection.jsx"
 import { MesSyndicats } from "./MesSyndicatSection.jsx"
 import { Explorer } from "./ExploreSection.jsx" 
 import { ProfilUser } from "./ProfilUser/ProfilUser.jsx"
-import { SyndicatDashboard } from "./SyndicatDashboard.jsx"
 
 const navItems = [
     {
@@ -20,7 +19,7 @@ const navItems = [
         icon: Home,
         label: "Accueil",
         gradient: "from-blue-500 to-indigo-600",
-        description: "Tableau de bord",
+        description: "Actualité",
     },
     {
         id: "syndicats",
@@ -298,7 +297,7 @@ export const HomePage = () => {
 
     const renderContent = useCallback(() => {
         const sections = {
-            dashboard: <SyndicatDashboard />,
+            dashboard: <AcceuilSection/>,
             syndicats: <MesSyndicats />,
             explorer: <Explorer />,
             parametres: <ProfilUser />

@@ -25,8 +25,7 @@ import {
     getLastNameToken,
     getUserIdFromToken
 } from "../../services/AccountService.js"
-import { X, Users, Calendar, MapPin, Zap, Heart, Share2, MessageCircle, Clock, User, Bookmark, Send,} from "lucide-react"
-import { getFirstNameToken, getLastNameToken, getUserIdFromToken } from "../../services/AccountService.js"
+
 import { CreateSyndicatForm } from "../NewCreateSyndicatPage/CreateSyndicatForm.jsx"
 
 

@@ -5,7 +5,7 @@ import { Users,TrendingUp,Calendar,DollarSign,Clock,CheckCircle,AlertTriangle,Ba
 } from "lucide-react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title } from 'chart.js';
 import { Pie, Bar, Line } from 'react-chartjs-2';
-import { getFirstNameToken, getLastNameToken } from "../../services/AccountService.js";
+
 
 // Register ChartJS components
 ChartJS.register(
