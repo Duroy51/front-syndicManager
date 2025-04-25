@@ -9,14 +9,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // Toute requête vers /auth-service sera redirigée vers le serveur cible.
-      '/auth-service': {
+      '/auth-api': {
         target: 'https://gateway.yowyob.com',
         changeOrigin: true,
-        secure: false, // À utiliser si le certificat du serveur n'est pas validé
-        // Vous pouvez éventuellement réécrire le chemin si besoin :
-        // rewrite: (path) => path.replace(/^\/auth-service/, '')
-      },
+        rewrite: (path) => path.replace(/^\/auth-api/, '')
+      }
     }
   },
 

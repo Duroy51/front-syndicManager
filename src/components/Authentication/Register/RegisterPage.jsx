@@ -211,63 +211,51 @@ export const RegisterPage = () => {
         setIsLoading(true);
 
         try {
-            // Envoi de la requête au serveur
-            const response = await axios.post('https://gateway.yowyob.com/auth-service/auth/register', {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                dateOfBirth: data.dateOfBirth,
-                password: data.password,
-            });
+            const response = await fetch(
+                '/auth-api/auth-service/auth/register',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: data.email,
+                        name: data.firstName + ' ' + data.lastName,
+                        email: data.email,
+                        dateOfBirth: data.dateOfBirth,
+                        password: data.password,
+                        phone_number: null,
+                    })
+                }
+            );
 
-            console.log('Réponse complète du serveur:', response);
+            // Parser le JSON renvoyé
+            const result = await response.json();
+            console.log(result)
+            if (response.ok) {
+                console.log('Utilisateur créé :', result);
 
-            const responseData = response?.data;
-            const tokenData = responseData?.data?.token;
-
-            if (tokenData?.Bearer) {
-                const token = tokenData.Bearer;
-
-                saveUserSession(data.email, token);
-
-                // Affichage d'un pop-up de succès
-                Swal.fire({
+                await Swal.fire({
                     icon: 'success',
-                    title: 'Inscription réussie !',
-                    text: responseData.text || 'Votre compte a été créé avec succès.',
+                    title: 'Inscription réussie!',
+                    text: `Bienvenue, ${result.name}! Votre compte a été créé.`,
                     confirmButtonText: 'Ok',
-                }).then(() => {
-                    // Affichage d'un second pop-up de chargement
-                    Swal.fire({
-                        title: 'Redirection en cours...',
-                        text: 'Veuillez patienter un instant.',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        willOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
-
-                    // Ajout d'un délai avant la redirection
-                    setTimeout(() => {
-                        Swal.close(); // Fermer le pop-up de chargement
-                        navigate('/home'); // Redirection
-                    }, 2000); // 2 secondes
                 });
-            } else {
-                // Si le token est absent
-                throw new Error('Le token est manquant dans la réponse du serveur.');
-            }
-        } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error);
 
-            // Gestion des erreurs avec un pop-up d'erreur
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: error.response?.data?.text || 'Une erreur est survenue. Veuillez réessayer.',
-                confirmButtonText: 'Ok',
-            });
+                navigate('/login');
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: result.errors.email || 'Une erreur est survenue. Veuillez réessayer.',
+                    confirmButtonText: 'Ok',
+                });
+                throw new Error(result.message || 'Échec de l\'inscription');
+            }
+
+        } catch (error) {
+            console.error('Erreur lors de l\'inscription :', error);
+
         } finally {
             setIsLoading(false);
         }

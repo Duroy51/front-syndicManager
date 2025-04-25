@@ -78,7 +78,7 @@ export const MesSyndicats = () => {
             if (fakeResponse.data.data && fakeResponse.data.data.organisationToken) {
                 localStorage.setItem("organisationToken", fakeResponse.data.data.organisationToken.Bearer);
                 setLoading(false);
-                navigate("/syndicat-app", { state: { bannerImage: syndicat.image, organisationName: syndicat.name } });
+                navigate("/user/syndicat-app", { state: { bannerImage: syndicat.image, organisationName: syndicat.name } });
                 Swal.fire({
                     title: t("succèsTitre"),
                     confirmButtonText: t("boutonConfirmer"),

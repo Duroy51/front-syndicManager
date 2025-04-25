@@ -19,7 +19,12 @@ import {
     Bookmark,
     Send,
 } from "lucide-react"
-import { getFirstNameToken, getLastNameToken, getUserIdFromToken } from "../../services/AccountService.js"
+import {
+    getFirstNameToken,
+    getFullNameFromToken,
+    getLastNameToken,
+    getUserIdFromToken
+} from "../../services/AccountService.js"
 import { CreateSyndicatForm } from "../NewCreateSyndicatPage/CreateSyndicatForm.jsx"
 
 
@@ -648,8 +653,7 @@ const fakeEvents = [
 ]
 
 export const AcceuilSection = () => {
-    const [lastName, setLastName] = useState(null)
-    const [firstName, setFirstName] = useState(null)
+    const [fullName, setFullName] = useState(null)
     const [showCreateSyndicatForm, setCreateSyndicatForm] = useState(false)
     const [feed, setFeed] = useState([])
     const {t} = useTranslation();
@@ -657,8 +661,7 @@ export const AcceuilSection = () => {
     const userId = getUserIdFromToken()
 
     useEffect(() => {
-        setFirstName(getFirstNameToken())
-        setLastName(getLastNameToken())
+        setFullName(getFullNameFromToken())
 
         // Combine and shuffle publications and events
         const combinedFeed = [...fakePublications, ...fakeEvents].sort(() => Math.random() - 0.5)
@@ -679,7 +682,7 @@ export const AcceuilSection = () => {
             if (newComment.trim()) {
                 item.comments.push({
                     author: {
-                        name: `${firstName} ${lastName}`,
+                        name: `${fullName} `,
                         avatar: "/placeholder-user.jpg", // You may want to replace this with the actual user's avatar
                     },
                     content: newComment.trim(),
@@ -1002,7 +1005,7 @@ export const AcceuilSection = () => {
                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Bienvenue, {firstName} {lastName} !
+              Bienvenue, {fullName}  !
             </span>
                     </h1>
                     <p className="text-xl text-gray-600 mb-8">{t("votre_portail_syndical_personnalise")}</p>

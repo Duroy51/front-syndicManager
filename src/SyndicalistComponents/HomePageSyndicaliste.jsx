@@ -4,13 +4,10 @@ import {
     Building,
     LifeBuoy,
     Building2,
-    Edit,
     Search,
     Bell,
     Settings,
     Home,
-    Users,
-    Compass,
     ChevronRight,
     Calendar,
     FileText,
@@ -22,11 +19,8 @@ import {
     Briefcase,
 } from "lucide-react"
 import { AcceuilSection } from "../components/HomePage/AcceuilSection.jsx"
-import { MesSyndicats } from "../components/HomePage/MesSyndicatSection.jsx"
 import { Explorer } from "../components/HomePage/ExploreSection.jsx"
-import { SyndicatConfigSection } from "./SyndicatConfigSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
-import {SyndicatManagement} from "./SyndicatConfig/SyndicatConfig.jsx";
 import {ProfilUser} from "../components/HomePage/ProfilUser/ProfilUser.jsx";
 import {OrganisationNavigationTabs} from "./OrganisationGestion/OrganisationSection.jsx";
 import {BusinessNavigationTabs} from "./BusinessSection/BusinessSection.jsx";
@@ -282,8 +276,11 @@ export const SyndicalistHomePage = () => {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             className={`w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center ${isSidebarOpen ? "justify-center" : ""}`}
+
                         >
-                            <LogOut className="w-5 h-5" />
+                            <LogOut className="w-5 h-5"
+
+                            />
                             {isSidebarOpen && <span className="font-medium ml-2">Déconnexion</span>}
                         </motion.button>
                     </div>

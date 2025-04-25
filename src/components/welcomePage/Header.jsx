@@ -3,7 +3,7 @@ import { Building, LogIn, UserPlus, Home, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../LanguageSwitcher';
+import LanguageSwitcher from '../LanguageSwitcher.jsx';
 import i18n from '../../i18n'; // Chemin correct vers votre instance i18n
 
 function Header() {

@@ -5,7 +5,7 @@ export const fakeUsers = [
         email: "simpleUser.test@gmail.com",
         firstName: "Charles",
         lastName: "Atangana",
-        role: "syndiqué",
+        role: "user",
         password: "password",
         profile: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
     },
@@ -14,7 +14,7 @@ export const fakeUsers = [
         email: "syndicalist.test@gmail.com",
         firstName: "Ivan",
         lastName: "Tsafack",
-        role: "syndicalist",
+        role: "business",
         password: "password",
     },
     {

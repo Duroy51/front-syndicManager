@@ -10,7 +10,9 @@ import Swal from "sweetalert2";
 import { fakeUsers } from "../../../services/FakeUsers.js";
 import { generateFakeJWT } from "../../../services/FakeAuth.js";
 import {AppRoutesPaths} from "../../../router/AppRoutesPaths.js";
+import {getRoleFromToken} from "@/services/AccountService.js";
 import { useTranslation } from 'react-i18next';
+
 
 export const AppleID = "P3WHTNR897.gloswitch";
 
@@ -234,41 +236,43 @@ export const LoginPage = () => {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            // Ici, nous simulons la connexion en recherchant l'utilisateur dans fakeUsers
-            const user = fakeUsers.find(
-                (u) => u.email === data.email && u.password === data.password
+
+            const response = await axios.post(
+                '/auth-api/auth-service/auth/login',
+                {
+                    username: data.email,
+                    password: data.password
+                }
             );
 
-            if (!user) {
-                throw new Error("Identifiants invalides");
-            }
+            console.log('Réponse de l\'API:', response.data);
 
-            // Génération du token JWT fictif avec la structure souhaitée
-            const jwt = generateFakeJWT(user);
-            // Stockage du token (la propriété Bearer contient le JWT)
-            localStorage.setItem("token", jwt.Bearer);
-            localStorage.setItem("user", JSON.stringify({
-                id: user.id,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-            }));
+            // Stockage des données utilisateur et du token
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            // Affichage d'un pop-up de succès et redirection
+            // Affichage du pop-up de succès et redirection
             Swal.fire({
                 icon: 'success',
                 title: t("connexion_reussie"),
                 text: t("vous_allez_etre_redirige"),
                 confirmButtonText: 'Ok',
             }).then(() => {
-                navigate('/home');
+
+                navigate('/user/home');
             });
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
+
+            // Gestion spécifique des erreurs d'API
+            const errorMessage = error.response?.data?.message ||
+                error.message ||
+                'Une erreur est survenue. Veuillez réessayer.';
+
             Swal.fire({
                 icon: 'error',
                 title: 'Erreur',
-                text: error.message || 'Une erreur est survenue. Veuillez réessayer.',
+                text: errorMessage,
                 confirmButtonText: 'Ok',
             });
         } finally {
