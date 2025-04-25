@@ -16,7 +16,6 @@ import { MemberManagement } from "../../Membres/Membres";
 import { Publications } from "../s'exprimer/Publication";
 
 import { useTranslation } from "react-i18next";
-import i18n from '../../../i18n';
 
 
 // Composant d'affichage du badge de notification

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Upload, CheckCircle, AlertCircle } from "lucide-react";
-
+import { useTranslation } from "react-i18next";
 export const FileUploader = ({
                                  label,
                                  icon,
@@ -13,7 +13,7 @@ export const FileUploader = ({
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
     const fileInputRef = useRef(null);
-
+    const {t}=useTranslation()                  
     const handleFileChange = (e) => {
         const selectedFile = e.target.files?.[0];
         if (selectedFile) {

@@ -25,5 +25,7 @@ export const fakeUsers = [
         role: "guest",
         password: "password",
     },
-    // Vous pouvez ajouter d'autres utilisateurs fictifs si besoin
+   
+
+// Vous pouvez ajouter d'autres utilisateurs fictifs si besoin
 ];
