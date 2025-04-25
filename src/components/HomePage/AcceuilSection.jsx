@@ -2,9 +2,33 @@
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+
+
+import { useTranslation } from "react-i18next"
+import {
+    X,
+    Users,
+    Calendar,
+    MapPin,
+    Zap,
+    Heart,
+    Share2,
+    MessageCircle,
+    Clock,
+    User,
+    Bookmark,
+    Send,
+} from "lucide-react"
+import {
+    getFirstNameToken,
+    getFullNameFromToken,
+    getLastNameToken,
+    getUserIdFromToken
+} from "../../services/AccountService.js"
 import { X, Users, Calendar, MapPin, Zap, Heart, Share2, MessageCircle, Clock, User, Bookmark, Send,} from "lucide-react"
 import { getFirstNameToken, getLastNameToken, getUserIdFromToken } from "../../services/AccountService.js"
 import { CreateSyndicatForm } from "../NewCreateSyndicatPage/CreateSyndicatForm.jsx"
+
 
 const stats = [
     { id: 1, title: "Membres", value: 1200, icon: Users },
@@ -631,16 +655,15 @@ const fakeEvents = [
 ]
 
 export const AcceuilSection = () => {
-    const [lastName, setLastName] = useState(null)
-    const [firstName, setFirstName] = useState(null)
+    const [fullName, setFullName] = useState(null)
     const [showCreateSyndicatForm, setCreateSyndicatForm] = useState(false)
     const [feed, setFeed] = useState([])
+    const {t} = useTranslation();
 
     const userId = getUserIdFromToken()
 
     useEffect(() => {
-        setFirstName(getFirstNameToken())
-        setLastName(getLastNameToken())
+        setFullName(getFullNameFromToken())
 
         // Combine and shuffle publications and events
         const combinedFeed = [...fakePublications, ...fakeEvents].sort(() => Math.random() - 0.5)
@@ -661,7 +684,7 @@ export const AcceuilSection = () => {
             if (newComment.trim()) {
                 item.comments.push({
                     author: {
-                        name: `${firstName} ${lastName}`,
+                        name: `${fullName} `,
                         avatar: "/placeholder-user.jpg", // You may want to replace this with the actual user's avatar
                     },
                     content: newComment.trim(),
@@ -756,7 +779,7 @@ export const AcceuilSection = () => {
                                     } transition-all duration-200`}
                                 >
                                     <Heart className="w-5 h-5 mr-2" fill={liked ? "currentColor" : "none"} />
-                                    J'aime
+                                    {t("jaime")}
                                 </motion.button>
 
                                 <motion.button
@@ -766,7 +789,7 @@ export const AcceuilSection = () => {
                                     className="flex items-center px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200"
                                 >
                                     <MessageCircle className="w-5 h-5 mr-2" />
-                                    Commenter
+                                    {t("commenter")}
                                 </motion.button>
 
                                 <motion.button
@@ -775,7 +798,7 @@ export const AcceuilSection = () => {
                                     className="flex items-center px-4 py-2 rounded-xl text-gray-600 hover:bg-gray-50 transition-all duration-200"
                                 >
                                     <Share2 className="w-5 h-5 mr-2" />
-                                    Partager
+                                    {t("partager")}
                                 </motion.button>
                             </div>
                             <AnimatePresence>
@@ -828,7 +851,7 @@ export const AcceuilSection = () => {
                                                     type="text"
                                                     value={newComment}
                                                     onChange={(e) => setNewComment(e.target.value)}
-                                                    placeholder="Écrivez un commentaire..."
+                                                    placeholder={t("ecrivez_un_commentaire")}
                                                     className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                                 />
                                                 <button
@@ -848,6 +871,7 @@ export const AcceuilSection = () => {
             )
         } else {
             // This is an event
+            
             return (
                 <motion.div
                     variants={itemVariants}
@@ -856,7 +880,7 @@ export const AcceuilSection = () => {
                     {item.isUpcoming && (
                         <div className="absolute top-4 right-4 z-10">
               <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
-                À venir
+                {t("àVenir")}
               </span>
                         </div>
                     )}
@@ -967,7 +991,7 @@ export const AcceuilSection = () => {
                                 className="w-full py-4 rounded-xl transition duration-200 flex items-center justify-center font-semibold text-lg shadow-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700"
                             >
                                 <Calendar className="w-6 h-6 mr-2" />
-                                Participer à l'événement
+                                {t("participerÉvénement")}
                             </motion.button>
                         </div>
                     </div>
@@ -983,10 +1007,10 @@ export const AcceuilSection = () => {
                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Bienvenue, {firstName} {lastName} !
+              Bienvenue, {fullName}  !
             </span>
                     </h1>
-                    <p className="text-xl text-gray-600 mb-8">Votre portail syndical personnalisé</p>
+                    <p className="text-xl text-gray-600 mb-8">{t("votre_portail_syndical_personnalise")}</p>
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -994,13 +1018,13 @@ export const AcceuilSection = () => {
                         className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                     >
                         <Zap className="w-6 h-6 inline-block mr-2" />
-                        Lancer Votre syndicat
+                        {t("lancer_votre_syndicat")}
                     </motion.button>
                 </motion.div>
 
                 {/* Feed Section */}
                 <div className="max-w-3xl mx-auto">
-                    <h2 className="text-2xl font-bold mb-6">Actualités et Événements</h2>
+                    <h2 className="text-2xl font-bold mb-6">{t("actualites_et_evenements")}</h2>
                     <motion.div variants={containerVariants} initial="hidden" animate="visible">
                         {feed.map((item) => (
                             <FeedItem key={item.id} item={item} />

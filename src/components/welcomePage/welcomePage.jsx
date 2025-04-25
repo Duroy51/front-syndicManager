@@ -28,7 +28,6 @@ const Section = ({ children, className = '', gradient = false }) => {
         triggerOnce: true,
         threshold: 0.1,
     });
-
     return (
         <motion.section
             ref={ref}
@@ -460,14 +459,14 @@ export const WelcomePage = () => {
                                             {post.image && (
                                                 <img
                                                     src={post.image}
-                                                    alt="Publication"
+                                                    alt={t("publication")}
                                                     className="mt-4 rounded-lg w-full h-48 object-cover"
                                                 />
                                             )}
                                             <div className="flex items-center gap-4 mt-4 text-sm text-gray-500">
                                                 <div className="flex items-center">
                                                     <Heart className="w-4 h-4 mr-1" />
-                                                    {post.likes} j'aime
+                                                    {post.likes} {t("jaime")}
                                                 </div>
                                                 <div className="flex items-center">
                                                     <MessageCircle className="w-4 h-4 mr-1" />
@@ -563,7 +562,7 @@ export const WelcomePage = () => {
                             <h4 className="text-lg font-semibold mb-4">Contact</h4>
                             <ul className="space-y-2">
                                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Nous contacter</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Partenariats</a></li>
+                                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{t("partenariats")}</a></li>
                                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Carrières</a></li>
                                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Presse</a></li>
                             </ul>

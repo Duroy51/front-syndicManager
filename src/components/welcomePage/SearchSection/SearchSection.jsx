@@ -2,6 +2,7 @@ import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Filter, Building } from "lucide-react"
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 // Données simulées pour les syndicats et les recherches populaires
 const allSyndicats = [
@@ -20,7 +21,7 @@ export default function SearchInterface({ isOpen, onClose }) {
     const [selectedCategory, setSelectedCategory] = useState("Tous")
     const [hasSearched, setHasSearched] = useState(false)
     const navigate = useNavigate();
-
+    const {t}=useTranslation();
     const handleSearch = useCallback(() => {
         const filtered = allSyndicats.filter(
             (syndicat) =>
@@ -60,7 +61,7 @@ export default function SearchInterface({ isOpen, onClose }) {
                             <div className="flex items-center mb-6">
                                 <input
                                     type="text"
-                                    placeholder="Rechercher un syndicat..."
+                                    placeholder={t("rechercher_syndicat")}
                                     className="flex-grow text-lg focus:outline-none border-b-2 border-blue-500 pb-2"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -70,7 +71,7 @@ export default function SearchInterface({ isOpen, onClose }) {
                                     onClick={handleSearch}
                                     className="ml-4 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition duration-300"
                                 >
-                                    Rechercher
+                                    {t("rechercher")}
                                 </button>
                                 <button onClick={onClose} className="ml-4 text-gray-400 hover:text-gray-600">
                                     <X className="h-6 w-6" />

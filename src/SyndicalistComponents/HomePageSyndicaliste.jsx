@@ -4,17 +4,15 @@ import { Building,LifeBuoy,Plus,Flag, MessageCircle, Heart,Smile,Eye,Bookmark,Cl
     X,AlertCircle,CheckCircle,ChevronLeft,Briefcase,
 } from "lucide-react"
 import { AcceuilSection } from "../components/HomePage/AcceuilSection.jsx"
-import { MesSyndicats } from "../components/HomePage/MesSyndicatSection.jsx"
 import { Explorer } from "../components/HomePage/ExploreSection.jsx"
-import { SyndicatConfigSection } from "./SyndicatConfigSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
-import {SyndicatManagement} from "./SyndicatConfig/SyndicatConfig.jsx";
 import {ProfilUser} from "../components/HomePage/ProfilUser/ProfilUser.jsx";
 import {OrganisationNavigationTabs} from "./OrganisationGestion/OrganisationSection.jsx";
 import {BusinessNavigationTabs} from "./BusinessSection/BusinessSection.jsx";
 import timeAgo from '../utils/timeAgo';
 import profile from '../images/bproo.png';
 
+import { useTranslation } from "react-i18next"
 const navItems = [
     {
         id: "dashboard",
@@ -114,6 +112,8 @@ export const SyndicalistHomePage = () => {
     const [lastName, setLastName] = useState(null)
     const [firstName, setFirstName] = useState(null)
 
+    const {t}  =useTranslation();
+
     useEffect(() => {
         const savedSection = localStorage.getItem("activeSection")
         if (savedSection) {
@@ -182,7 +182,7 @@ export const SyndicalistHomePage = () => {
                             <div className="relative">
                                 <input
                                     type="text"
-                                    placeholder="Rechercher..."
+                                    placeholder={t("rechercher")}
                                     className="w-64 pl-10 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -262,8 +262,11 @@ export const SyndicalistHomePage = () => {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             className={`w-full p-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center ${isSidebarOpen ? "justify-center" : ""}`}
+
                         >
-                            <LogOut className="w-5 h-5" />
+                            <LogOut className="w-5 h-5"
+
+                            />
                             {isSidebarOpen && <span className="font-medium ml-2">Déconnexion</span>}
                         </motion.button>
                     </div>
@@ -299,7 +302,7 @@ export const SyndicalistHomePage = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">{t("notifications")}</h3>
                                         <p className="text-sm text-gray-500">Vous avez 4 nouvelles notifications</p>
                                     </div>
                                     <motion.button
@@ -323,7 +326,7 @@ export const SyndicalistHomePage = () => {
                                     whileTap={{ scale: 0.98 }}
                                     className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                                 >
-                                    Voir toutes les notifications
+                                    {t("voir_toutes_les_notifications")}
                                 </motion.button>
                             </div>
                         </motion.div>

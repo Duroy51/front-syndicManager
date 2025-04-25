@@ -1,22 +1,25 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/amadeus': {
-        target: 'https://test.api.amadeus.com',
+      '/auth-api': {
+        target: 'https://gateway.yowyob.com',
         changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api\/amadeus/, '')
+        rewrite: (path) => path.replace(/^\/auth-api/, '')
       }
     }
   },
+
   resolve: {
     alias: {
-      '@': '/src',
+      '@': path.resolve(__dirname,'./src'),
     },
   },
   esbuild: {
@@ -24,5 +27,5 @@ export default defineConfig({
     include: /src\/.*\.[jt]sx?$/, // Inclut tous les fichiers .js, .jsx, .ts, .tsx dans src/
     exclude: /node_modules/, // Exclut node_modules
   },
-});
+})
 

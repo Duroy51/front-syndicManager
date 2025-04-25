@@ -1,19 +1,11 @@
 import React from "react"
-import { Route, Routes, Navigate } from "react-router-dom"
-import { Circles } from 'react-loader-spinner';
+import { Route, Routes } from "react-router-dom"
 import AuthGuard from '../helpers/AuthGuard.jsx';
 import {getRoleFromToken} from "../services/AccountService.js";
-/*import { 
-    MemoizedBlogContent,
-    MemoizedPodcastContent,
-    MemoizedNewsletterContent,
-    MemoizedPrivacyPolicy,
-    MemoizedNewsletterArchives
-  } from '../components/Education/ContentManager.jsx';
-import PodcastTagPage from '../components/Education/PodcastTagPage';
-  import ArticleDetail from '../components/Education/ArticleDetail';
-*/ 
-// Imports avec React.lazy
+import {AppRoutesPaths} from "./AppRoutesPaths.js";
+import {CenteredSpinner} from "./Spinner.jsx";
+
+
 const LoginPage = React.lazy(async () => ({
     default: (await import("../components/Authentication/Login/LoginPage")).LoginPage
 }))
@@ -116,37 +108,44 @@ const HomePageWrapper = ({ userRole }) => {
     }
 };
 
+
+
+
+
+
+
+
 export function AppRoute() {
-    // Vous devrez implémenter une façon d'obtenir le rôle de l'utilisateur
-    // Par exemple, depuis un contexte d'authentification ou un état global
-    const userRole = getRoleFromToken(); // À remplacer par votre logique d'obtention du rôle
+
+    const userRole = getRoleFromToken();
 
     return (
         <React.Suspense fallback={<CenteredSpinner/>}>
             <Routes>
-                {/* Routes publiques */}
+                {/* Routes publiques Du Login, Register */}
                 <Route path={AppRoutesPaths.loginPage} element={<LoginPage/>}/>
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
                 <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
-                <Route path={`${AppRoutesPaths.education.base}/*`} element={<ContentManager />}/>
-                            {/* Routes pour la communication */}
-                <Route path={`${AppRoutesPaths.communication.base}/*`} element={<CommunicationManager />} />
-                <Route path={AppRoutesPaths.communication.forumTopic} element={<ForumTopic />} />
 
-                {/* Route conditionnelle pour la page d'accueil */}
+
+
+
+                {/* Route des utilisateurs du type business*/}
                 <Route
-                    path={AppRoutesPaths.homePage}
+                    path={AppRoutesPaths.syndicalistHomePage}
                     element={
                         <AuthGuard>
-                            <HomePageWrapper userRole={userRole} />
+                            <SyndicalistHomePage />
                         </AuthGuard>
                     }
                 />
                 <Route path={AppRoutesPaths.eventsTest} element={<EventsTest/>}/>
                 <Route path={AppRoutesPaths.publicationsTest} element={<PublicationsTest/>}/>
 
-                {/* Autres routes protégées */}
+
+
+                {/* Route pour les Simples utilisateurs */}
                 <Route
                     path={AppRoutesPaths.createSyndicat}
                     element={
@@ -156,9 +155,22 @@ export function AppRoute() {
                     }
                 />
                 <Route
-                    path={AppRoutesPaths.syndicatApp}
-                    element={<SyndicatApp/>}
+                    path={AppRoutesPaths.userHomePage}
+                    element={
+                        <AuthGuard>
+                            <HomePage/>
+                        </AuthGuard>
+                    }
                 />
+                <Route
+                    path={AppRoutesPaths.userSyndicatApp}
+                    element={
+                        <AuthGuard>
+                            <SyndicatApp/>
+                        </AuthGuard>
+                    }
+                />
+
             </Routes>
         </React.Suspense>
     );

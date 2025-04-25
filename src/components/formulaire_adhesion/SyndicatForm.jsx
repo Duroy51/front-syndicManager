@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Camera } from 'lucide-react'
-
+import { useTranslation } from 'react-i18next'
 const SyndicatForm = () => {
   const [photo, setPhoto] = useState(null)
   const [idFront, setIdFront] = useState(null)
@@ -9,7 +9,7 @@ const SyndicatForm = () => {
   const [motivation, setMotivation] = useState('')
   const videoRef = useRef(null)
   const [showCamera, setShowCamera] = useState(false)
-
+  const {t}= useTranslation()
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true })
@@ -42,7 +42,7 @@ const SyndicatForm = () => {
       <div className="mt-2">
         <img 
           src={typeof file === 'string' ? file : URL.createObjectURL(file)} 
-          alt="Aperçu" 
+          alt={t("apercu")} 
           className="w-32 h-32 object-cover rounded-lg"
         />
       </div>

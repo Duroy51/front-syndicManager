@@ -197,19 +197,19 @@ export default function ChatInterface() {
                     >
                         <h1 className="text-3xl font-bold text-blue-600 mb-6 flex items-center">
                             <MessageCircle className="w-10 h-10 mr-3 text-blue-600" />
-                            Messages
+                            {t("signaler")}
                         </h1>
                         <div className="mb-4 relative">
                             <Input
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="Rechercher une conversation..."
+                                placeholder={t("recherher_une_conversation")}
                                 className="pl-10"
                             />
                             <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         </div>
                         <ScrollArea className="flex-grow">
-                            <h2 className="text-xl font-semibold mb-3 text-blue-600 border-b-2 border-blue-200 pb-2">Chat de Groupe</h2>
+                            <h2 className="text-xl font-semibold mb-3 text-blue-600 border-b-2 border-blue-200 pb-2">{t("chat_de_groupe")}</h2>
                             {filteredChats.filter(chat => chat.isGroup).map(chat => (
                                 <ChatListItem
                                     key={chat.id}
@@ -275,7 +275,7 @@ export default function ChatInterface() {
                         {!activeChat.isGroup && (
                             <div className="bg-green-100 text-green-800 px-4 py-2 mb-4 rounded-md flex items-center">
                                 <Lock className="w-4 h-4 mr-2" />
-                                <span className="text-sm">Les messages sont chiffrés de bout en bout</span>
+                                <span className="text-sm">{t("les_messages_sont_chiffres_de_bout_en_bout")}</span>
                             </div>
                         )}
                         <ScrollArea className="flex-grow  px-4">
@@ -322,13 +322,13 @@ export default function ChatInterface() {
                             <Button variant="ghost" onClick={() => setView('list')} className="mr-2">
                                 <ArrowLeft className="w-6 h-6" />
                             </Button>
-                            <h2 className="text-xl font-semibold">Nouvelle discussion</h2>
+                            <h2 className="text-xl font-semibold">{t("nouvelle_discussion")}</h2>
                         </div>
                         <div className="mb-4 relative">
                             <Input
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="Rechercher un membre..."
+                                placeholder={t("rechercher_un_membre")}
                                 className="pl-10"
                             />
                             <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />

@@ -9,6 +9,10 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { fakeUsers } from "../../../services/FakeUsers.js";
 import { generateFakeJWT } from "../../../services/FakeAuth.js";
+import {AppRoutesPaths} from "../../../router/AppRoutesPaths.js";
+import {getRoleFromToken} from "@/services/AccountService.js";
+import { useTranslation } from 'react-i18next';
+
 
 export const AppleID = "P3WHTNR897.gloswitch";
 
@@ -64,10 +68,107 @@ export const LoginPage = () => {
     const { register, handleSubmit, formState: { errors }, setError } = useForm();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
+    const {t} =useTranslation();
 
     // Configuration Google (si vous l'utilisez)
     const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com';
     const CLIENT_SECRET = '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';
+
+    useEffect(() => {
+        console.log('Début du chargement du SDK Apple');
+        const script = document.createElement('script');
+        script.src = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js';
+        script.async = true;
+        script.onload = () => {
+            console.log('SDK Apple chargé, window.AppleID:', window.AppleID);
+            setIsSDKLoaded(true);
+        };
+        document.body.appendChild(script);
+
+        return () => {
+            console.log('Nettoyage : suppression du script Apple');
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isSDKLoaded) {
+            initializeAppleSignIn();
+        }
+    }, [isSDKLoaded]);
+
+    const initializeAppleSignIn = () => {
+        if (window.AppleID && window.AppleID.auth) {
+            console.log('Initialisation de Apple Sign In');
+            try {
+                window.AppleID.auth.init({
+                    clientId: 'com.bandesoft.dev-gloswitch',
+                    scope: 'name email',
+                    redirectURI: 'https://front-syndic-manager-2fmn.vercel.app/login',
+                    state: 'origin:web',
+                    usePopup: true
+                });
+                console.log('Apple Sign In initialisé avec succès');
+                setIsInitialized(true);
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation de Apple Sign In:', error);
+            }
+        } else {
+            console.error("window.AppleID.auth n'est pas disponible lors de l'initialisation");
+            setError("Le SDK Apple n'est pas chargé correctement.");
+        }
+    };
+
+    const handleAppleSignIn = async () => {
+        if (!window.AppleID || !window.AppleID.auth) {
+            console.error('Apple Sign In SDK not loaded properly');
+            setError("Apple Sign In SDK not loaded properly. Please refresh the page.");
+            return;
+        }
+        try {
+            const data = await window.AppleID.auth.signIn();
+            console.log('Apple Sign In réussi', data);
+
+            console.log('Envoi du code d\'autorisation au backend');
+
+            console.log('data',data);
+            console.log('data.authorization',data.authorization);
+
+            console.log('data.authorization.code',data.authorization.code);
+
+
+
+            const backendResponse = await axios.post(
+                'http://localhost:8001/user/oauth/apple/login',
+                {
+                    authorizationCode: data.authorization.code,
+                    type: "LONG"
+                }
+            );
+
+            console.log('Backend response:', backendResponse.data);
+
+            if (backendResponse.status === 200) {
+                localStorage.setItem('token', backendResponse.data.data["Bearer Infos"].Bearer);
+                console.log('bla', backendResponse.data.data["Bearer Infos"].Bearer);
+                localStorage.setItem('expiresIn', backendResponse.data.data["Bearer Infos"].ExpireAt);
+                localStorage.setItem('refreshToken', backendResponse.data.data["Bearer Infos"].RefreshToken);
+                localStorage.setItem('role', backendResponse.data.data.role);
+
+                navigate(AppRoutesPaths.homePage
+                );
+            } else {
+                setError("Échec de l'authentification");
+            }
+        } catch (error) {
+            console.error('Erreur pendant Apple Sign In:', error);
+            if (error.error === 'user_trigger_new_signin_flow') {
+                console.log("L'utilisateur a déclenché un nouveau flux de connexion.");
+            }
+        }
+    };
 
     const handleAxiosError = useCallback((error) => {
         if (error.response?.status === 422) {
@@ -135,41 +236,43 @@ export const LoginPage = () => {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            // Ici, nous simulons la connexion en recherchant l'utilisateur dans fakeUsers
-            const user = fakeUsers.find(
-                (u) => u.email === data.email && u.password === data.password
+
+            const response = await axios.post(
+                '/auth-api/auth-service/auth/login',
+                {
+                    username: data.email,
+                    password: data.password
+                }
             );
 
-            if (!user) {
-                throw new Error("Identifiants invalides");
-            }
+            console.log('Réponse de l\'API:', response.data);
 
-            // Génération du token JWT fictif avec la structure souhaitée
-            const jwt = generateFakeJWT(user);
-            // Stockage du token (la propriété Bearer contient le JWT)
-            localStorage.setItem("token", jwt.Bearer);
-            localStorage.setItem("user", JSON.stringify({
-                id: user.id,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-            }));
+            // Stockage des données utilisateur et du token
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            // Affichage d'un pop-up de succès et redirection
+            // Affichage du pop-up de succès et redirection
             Swal.fire({
                 icon: 'success',
-                title: 'Connexion réussie !',
-                text: 'Vous allez être redirigé.',
+                title: t("connexion_reussie"),
+                text: t("vous_allez_etre_redirige"),
                 confirmButtonText: 'Ok',
             }).then(() => {
-                navigate('/home');
+
+                navigate('/user/home');
             });
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
+
+            // Gestion spécifique des erreurs d'API
+            const errorMessage = error.response?.data?.message ||
+                error.message ||
+                'Une erreur est survenue. Veuillez réessayer.';
+
             Swal.fire({
                 icon: 'error',
                 title: 'Erreur',
-                text: error.message || 'Une erreur est survenue. Veuillez réessayer.',
+                text: errorMessage,
                 confirmButtonText: 'Ok',
             });
         } finally {
@@ -178,11 +281,11 @@ export const LoginPage = () => {
     };
 
     const animatedTexts = [
-        "Bienvenue sur SyndicManager",
-        "Gérez votre syndicat efficacement",
-        "Simplifiez vos processus administratifs",
-        "Restez connecté avec vos membres",
-        "Prenez des décisions éclairées"
+        t("bienvenue_sur_syndic_manager"),
+        t("gerez_votre_syndicat_efficacement"),
+        t("simplifiez_vos_processus_administratifs"),
+        t("restez_connecte_avec_vos_membres"),
+        t("prenez_des_decisions_eclairees")
     ];
 
     return (
@@ -214,7 +317,7 @@ export const LoginPage = () => {
                     transition={{ duration: 0.5 }}
                 >
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-                        Connexion à SyndicManager
+                        {t("connexion_a_syndic_manager")}
                     </h2>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <Input
@@ -249,34 +352,36 @@ export const LoginPage = () => {
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
-                                    Se souvenir de moi
+                                    {t("se_souvenir_de_moi")}
                                 </label>
                             </div>
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                                    Mot de passe oublié ?
+                                    {t("mot_de_passe_oublie")} ?
                                 </a>
                             </div>
                         </div>
 
                         <Button type="submit" disabled={isLoading}>
-                            {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+                            {isLoading ? 'Connexion en cours...' : t("se_connecter")}
                         </Button>
                     </form>
 
                     <div className="mt-6 text-center">
-                        <p className="text-gray-600 mb-4">Ou connectez-vous avec</p>
-                        <Button className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
+                        <p className="text-gray-600 mb-4">{t("ou_connectez_vous_avec")}</p>
+                        <Button
+                            className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                            onClick={() => handleAppleSignIn()}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
-                            Se connecter avec Google
+                            {t("se_connecter_avec_google")}
                         </Button>
                     </div>
 
                     <div className="mt-8 text-center">
                         <p className="text-gray-600">
-                            Pas encore de compte ?{' '}
+                            {t("pas_encore_de_compte")}?{' '}
                             <a href="/register" className="text-blue-500 hover:underline">
-                                Inscrivez-vous ici
+                                {t("inscrivez_vous_ici")}
                             </a>
                         </p>
                     </div>

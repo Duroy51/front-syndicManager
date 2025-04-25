@@ -13,6 +13,7 @@ import {
     Award,
     TrendingUp
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const VoteCard = ({ vote }) => {
     const [userVote, setUserVote] = useState(null);
@@ -157,6 +158,7 @@ const VoteCard = ({ vote }) => {
 };
 
 export const VotesList = () => {
+    const {t}=useTranslation()
     const votes = [
         {
             id: 1,
@@ -190,10 +192,10 @@ export const VotesList = () => {
                     className="text-center mb-12"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                        Votes & Décisions
+                        {t("votes_decisions")}
                     </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Participez aux décisions importantes qui façonnent notre avenir collectif.
+                        {t("participez_aux_decisions_importantes_qui_faconnent_notre_avenir_collectif")}
                     </p>
                 </motion.div>
 
@@ -202,21 +204,21 @@ export const VotesList = () => {
                         <div className="flex items-center px-4 py-2 bg-white rounded-xl shadow-sm">
                             <BarChart className="w-5 h-5 text-blue-500 mr-2" />
                             <div>
-                                <div className="text-sm text-gray-600">Votes actifs</div>
+                                <div className="text-sm text-gray-600">{t("votes_actifs")}</div>
                                 <div className="font-bold text-gray-800">{votes.length}</div>
                             </div>
                         </div>
                         <div className="flex items-center px-4 py-2 bg-white rounded-xl shadow-sm">
                             <Users className="w-5 h-5 text-green-500 mr-2" />
                             <div>
-                                <div className="text-sm text-gray-600">Participants</div>
+                                <div className="text-sm text-gray-600">{t("participants")}</div>
                                 <div className="font-bold text-gray-800">125</div>
                             </div>
                         </div>
                         <div className="flex items-center px-4 py-2 bg-white rounded-xl shadow-sm">
                             <TrendingUp className="w-5 h-5 text-purple-500 mr-2" />
                             <div>
-                                <div className="text-sm text-gray-600">Taux de participation</div>
+                                <div className="text-sm text-gray-600">{t("taux_de_participation")}</div>
                                 <div className="font-bold text-gray-800">78%</div>
                             </div>
                         </div>
@@ -227,7 +229,7 @@ export const VotesList = () => {
                         className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl inline-flex items-center transition duration-200 shadow-lg"
                     >
                         <Plus className="mr-2 h-5 w-5" />
-                        Nouveau vote
+                        {t("nouveau_vote")}
                     </motion.button>
                 </div>
 

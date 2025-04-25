@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
+import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line react/prop-types
 const Alert = ({ children }) => (
     <div className="flex items-center p-2 mt-1 text-sm text-red-800 bg-red-100 rounded-md">
@@ -116,7 +117,7 @@ export const RegisterPage = () => {
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const password = watch('password', '')
-
+    const{t}=useTranslation()
     const CLIENT_ID = '137734019377-nnq12325retn9n23nfnis326j008u2pm.apps.googleusercontent.com'
     const CLIENT_SECRET = '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'
 
@@ -210,63 +211,51 @@ export const RegisterPage = () => {
         setIsLoading(true);
 
         try {
-            // Envoi de la requête au serveur
-            const response = await axios.post('http://localhost:9005/api/register', {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                dateOfBirth: data.dateOfBirth,
-                password: data.password,
-            });
+            const response = await fetch(
+                '/auth-api/auth-service/auth/register',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: data.email,
+                        name: data.firstName + ' ' + data.lastName,
+                        email: data.email,
+                        dateOfBirth: data.dateOfBirth,
+                        password: data.password,
+                        phone_number: null,
+                    })
+                }
+            );
 
-            console.log('Réponse complète du serveur:', response);
+            // Parser le JSON renvoyé
+            const result = await response.json();
+            console.log(result)
+            if (response.ok) {
+                console.log('Utilisateur créé :', result);
 
-            const responseData = response?.data;
-            const tokenData = responseData?.data?.token;
-
-            if (tokenData?.Bearer) {
-                const token = tokenData.Bearer;
-
-                saveUserSession(data.email, token);
-
-                // Affichage d'un pop-up de succès
-                Swal.fire({
+                await Swal.fire({
                     icon: 'success',
-                    title: 'Inscription réussie !',
-                    text: responseData.text || 'Votre compte a été créé avec succès.',
+                    title: 'Inscription réussie!',
+                    text: `Bienvenue, ${result.name}! Votre compte a été créé.`,
                     confirmButtonText: 'Ok',
-                }).then(() => {
-                    // Affichage d'un second pop-up de chargement
-                    Swal.fire({
-                        title: 'Redirection en cours...',
-                        text: 'Veuillez patienter un instant.',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        willOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
-
-                    // Ajout d'un délai avant la redirection
-                    setTimeout(() => {
-                        Swal.close(); // Fermer le pop-up de chargement
-                        navigate('/home'); // Redirection
-                    }, 2000); // 2 secondes
                 });
-            } else {
-                // Si le token est absent
-                throw new Error('Le token est manquant dans la réponse du serveur.');
-            }
-        } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error);
 
-            // Gestion des erreurs avec un pop-up d'erreur
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: error.response?.data?.text || 'Une erreur est survenue. Veuillez réessayer.',
-                confirmButtonText: 'Ok',
-            });
+                navigate('/login');
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: result.errors.email || 'Une erreur est survenue. Veuillez réessayer.',
+                    confirmButtonText: 'Ok',
+                });
+                throw new Error(result.message || 'Échec de l\'inscription');
+            }
+
+        } catch (error) {
+            console.error('Erreur lors de l\'inscription :', error);
+
         } finally {
             setIsLoading(false);
         }
@@ -320,10 +309,10 @@ export const RegisterPage = () => {
                     </div>
                     <h1 className="text-5xl font-bold mb-8">SyndicManager</h1>
                     <AnimatedText texts={[
-                        "Gérez votre syndicat efficacement",
-                        "Simplifiez vos processus administratifs",
-                        "Restez connecté avec vos membres",
-                        "Prenez des décisions éclairées",
+                        t("gerez_votre_syndicat_efficacement"),
+                        t("simplifiez_vos_processus_administratifs"),
+                        t("restez_connecte_avec_vos_membres"),
+                        t("prenez_des_decisions_eclairees"),
                         "Optimisez votre organisation syndicale"
                     ]} />
                 </motion.div>
@@ -344,7 +333,7 @@ export const RegisterPage = () => {
                         <Input
                             icon={User}
                             type="text"
-                            placeholder="Nom"
+                            placeholder={t("nom")}
                             error={errors.lastName?.message}
                             {...register("lastName", {
                                 required: "Le nom est requis",
@@ -358,7 +347,7 @@ export const RegisterPage = () => {
                         <Input
                             icon={User}
                             type="text"
-                            placeholder="Prénom"
+                            placeholder={t("prenom")}
                             error={errors.firstName?.message}
                             {...register("firstName", {
                                 required: "Le prénom est requis",

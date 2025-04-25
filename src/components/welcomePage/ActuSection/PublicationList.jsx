@@ -2,7 +2,12 @@
 import { motion } from "framer-motion"
 import { Heart, MessageCircle, Clock, Share2 } from "lucide-react"
 
-const PublicationCard = ({ publication }) => (
+import { useTranslation } from "react-i18next";
+
+import i18n from "../../../i18n";
+const PublicationCard = ({ publication }) => {
+    const { t } = useTranslation();
+    return(
     <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -33,7 +38,7 @@ const PublicationCard = ({ publication }) => (
         <div className="flex justify-between text-sm text-gray-500">
       <span className="flex items-center">
         <Heart className="w-4 h-4 mr-1 text-red-500" />
-          {publication.likes} J'aime
+          {publication.likes} {t("jaime")}
       </span>
             <span className="flex items-center">
         <MessageCircle className="w-4 h-4 mr-1 text-blue-500" />
@@ -41,13 +46,15 @@ const PublicationCard = ({ publication }) => (
       </span>
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="flex items-center text-blue-600">
                 <Share2 className="w-4 h-4 mr-1" />
-                Partager
+                {t("partager")}
             </motion.button>
         </div>
     </motion.div>
-)
+);
+};
 
 export const Publications = ({ limit = 3 }) => {
+
     const publications = [
         {
             id: 1,

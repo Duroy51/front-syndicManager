@@ -15,6 +15,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MemberManagement } from "../../Membres/Membres";
 import { Publications } from "../s'exprimer/Publication";
 
+import { useTranslation } from "react-i18next";
+import i18n from '../../../i18n';
+
+
 // Composant d'affichage du badge de notification
 const NotificationBadge = ({ count }) => (
     <motion.div
@@ -70,6 +74,7 @@ const NotificationCard = ({ icon: Icon, title, message, time, type }) => {
  */
 export const SyndicatApp = () => {
     // Au lieu de masquer totalement la sidebar, on la replie en ne gardant visibles que les icônes.
+    const { t } = useTranslation();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
     const [activeSection, setActiveSection] = useState('événements');
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -78,14 +83,14 @@ export const SyndicatApp = () => {
     const { bannerImage, organisationName } = location.state || {};
 
     const navItems = [
-        { id: 'membres', icon: Users, label: 'Membres', badge: 12 },
-        { id: 'événements', icon: Calendar, label: 'Événements', badge: 3 },
-        { id: 'exprimer', icon: MessageCircle, label: "S'exprimer" },
-        { id: 'chat', icon: MessageSquare, label: 'Chat', badge: 5 },
-        { id: 'votes', icon: Vote, label: 'Votes', badge: 2 },
-        { id: 'contributions', icon: CreditCard, label: 'Cotisations' },
-        { id: 'partnerships', icon: Handshake, label: 'Partenariats' },
-        { id: 'about', icon: Info, label: 'À propos' },
+        { id: 'membres', icon: Users, label: t("membres"), badge: 12 },
+        { id: 'événements', icon: Calendar, label: t("evenements"), badge: 3 },
+        { id: 'exprimer', icon: MessageCircle, label: t("s_exprimer") },
+        { id: 'chat', icon: MessageSquare, label: t("chat"), badge: 5 },
+        { id: 'votes', icon: Vote, label: t("votes"), badge: 2 },
+        { id: 'contributions', icon: CreditCard, label: t("cotisations") },
+        { id: 'partnerships', icon: Handshake, label: t("partenariats") },
+        { id: 'about', icon: Info, label: t("a_propos") },
     ];
 
     const notifications = [
@@ -137,9 +142,9 @@ export const SyndicatApp = () => {
                             className="text-center mb-12"
                         >
                             <Shield className="w-16 h-16 text-blue-500 mx-auto mb-6" />
-                            <h1 className="text-4xl font-bold text-gray-800 mb-4">À propos de SyndicManager</h1>
+                            <h1 className="text-4xl font-bold text-gray-800 mb-4">{t("a_propos_de_syndic_manager")}</h1>
                             <p className="text-gray-600 max-w-2xl mx-auto">
-                                Votre plateforme de gestion syndicale moderne et efficace.
+                                {t("votre_plateforme_de_gestion_syndicale_moderne_et_efficace")}
                             </p>
                         </motion.div>
                     </div>
@@ -153,7 +158,7 @@ export const SyndicatApp = () => {
                             className="text-center"
                         >
                             <Building className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-                            <h2 className="text-2xl font-bold text-gray-800">Bienvenue sur SyndicManager</h2>
+                            <h2 className="text-2xl font-bold text-gray-800">t("bienvenue_sur_syndic_manager")</h2>
                             <p className="text-gray-600 mt-2">Sélectionnez une section pour commencer</p>
                         </motion.div>
                     </div>
@@ -302,13 +307,13 @@ export const SyndicatApp = () => {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => navigate('/home')}
+                            onClick={() => navigate('/user/home')}
                             className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             <Home className="h-4 w-4" />
                             {!isSidebarCollapsed && (
                                 <>
-                                    <span className="ml-2">Acceuil</span>
+                                    <span className="ml-2">{t("accueil")}</span>
                                     <ChevronRight className="ml-2 h-4 w-4" />
                                 </>
                             )}
@@ -360,7 +365,7 @@ export const SyndicatApp = () => {
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">{t("notifications")}</h3>
                                         <p className="text-sm text-gray-500">Vous avez 3 nouvelles notifications</p>
                                     </div>
                                     <motion.button
@@ -384,7 +389,7 @@ export const SyndicatApp = () => {
                                     whileTap={{ scale: 0.98 }}
                                     className="w-full mt-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                                 >
-                                    Voir toutes les notifications
+                                    {t("voir_toutes_les_notifications")}
                                 </motion.button>
                             </div>
                         </motion.div>

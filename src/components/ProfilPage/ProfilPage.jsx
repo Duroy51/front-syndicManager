@@ -30,6 +30,8 @@ import markerShadow from "/marker-shadow.png"
 import markerIcon from "../../../public/marker-icon.png"
 import { Button, Alert } from "antd"
 
+import { useTranslation } from "react-i18next"
+
 
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -395,7 +397,7 @@ export const SyndicatProfile = ({ syndicat }) => {
     const [currentPage, setCurrentPage] = useState(1)
     const membersPerPage = 4
     const totalPages = Math.ceil(members.length / membersPerPage)
-
+    const{t}=useTranslation()
     const paginatedMembers = members.slice((currentPage - 1) * membersPerPage, currentPage * membersPerPage)
 
     // Nouvelle section : Historique du syndicat
@@ -454,7 +456,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                     onClick={() => navigate("/register")}
                 >
                     <LogIn className="h-6 w-6 transition-transform group-hover:rotate-12" />
-                    <span className="font-semibold">Espace Membre</span>
+                    <span className="font-semibold">{t("notre_mission")}</span>
                 </motion.button>
             </div>
 
@@ -470,7 +472,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         >
                             <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                 <HeartHandshake className="h-8 w-8 mr-3 text-blue-600" />
-                                Notre Mission
+                                {t("notre_mission")}
                             </h2>
                             <p className="text-lg text-gray-700 leading-relaxed">{syndicatData.description}</p>
                         </motion.section>
@@ -493,7 +495,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <FileText className="h-8 w-8 mr-3 text-blue-600" />
-                                Notre Histoire
+                                {t("notre_histoire")}
                             </h2>
                             <div className="relative pl-8 border-l-2 border-blue-100 space-y-8">
                                 {timeline.map((item, index) => (
@@ -513,7 +515,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                             <div className="p-8 pb-0">
                                 <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                     <MapPin className="h-8 w-8 mr-3 text-blue-600" />
-                                    Nos Implantations
+                                    {t("nos_implantations")}
                                 </h2>
                             </div>
                             <BranchOfficesMap />
@@ -523,7 +525,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <Calendar className="h-8 w-8 mr-3 text-blue-600" />
-                                Agenda Syndical
+                                {t("agenda_syndical")}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {activities.map((activity) => (
@@ -553,7 +555,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <Package className="h-8 w-8 mr-3 text-blue-600" />
-                                Nos Services
+                                {t("nos_services")}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {services.map((service) => (
@@ -576,7 +578,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                                                 whileTap={{ scale: 0.95 }}
                                             >
                                                 <Phone className="h-4 w-4 mr-2" />
-                                                Contacter un conseiller
+                                                {t("contacter_un_conseiller")}
                                             </motion.button>
                                         </div>
                                     </motion.div>
@@ -588,7 +590,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <ShoppingBag className="h-8 w-8 mr-3 text-blue-600" />
-                                Boutique du Syndicat
+                                {t("boutique_du_syndicat")}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {products.map((product) => (
@@ -612,7 +614,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                                                     whileHover={{ scale: 1.05 }}
                                                     whileTap={{ scale: 0.95 }}
                                                 >
-                                                    Commander
+                                                    {t("commander")}
                                                 </motion.button>
                                             </div>
                                         </div>
@@ -628,7 +630,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                 <Mail className="h-8 w-8 mr-3 text-blue-600" />
-                                Nous Contacter
+                                {t("nous_contacter")}
                             </h2>
                             <div className="space-y-5">
                                 {[
@@ -663,7 +665,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                 <Users className="h-8 w-8 mr-3 text-blue-600" />
-                                Équipe Directrice
+                                {t("equipe_directrice")}
                             </h2>
                             <div className="grid grid-cols-1 gap-4">
                                 {paginatedMembers.map((member) => (
@@ -714,7 +716,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                 <Newspaper className="h-8 w-8 mr-3 text-blue-600" />
-                                Dernières Actualités
+                                {t("dernieres_actualites")}
                             </h2>
                             <div className="space-y-6">
                                 <article className="group relative overflow-hidden rounded-xl">
@@ -737,7 +739,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                 <FileText className="h-8 w-8 mr-3 text-blue-600" />
-                                Documents Officiels
+                                {t("documents_officiels")}
                             </h2>
                             <div className="space-y-4">
                                 {["Statuts du syndicat", "Règlement intérieur", "Rapport annuel"].map((doc, index) => (
