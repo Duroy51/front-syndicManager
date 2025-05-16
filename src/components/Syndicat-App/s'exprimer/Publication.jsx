@@ -5,11 +5,16 @@ import {
     Send, X, Plus, Paperclip, MapPin, Camera
 } from 'lucide-react';
 import profile from '../../../images/bproo.png';
-import {VideoPreview} from './PublicationComponents/VideoPreview.jsx'
-import {Post} from './PublicationComponents/Post.jsx'
+import { VideoPreview } from './PublicationComponents/VideoPreview.jsx';
+import { Post } from './PublicationComponents/Post.jsx';
 import { useTranslation } from 'react-i18next';
+// === SERVICES ===
+import { createReview, getReviews } from '../../../services/ReviewService';
+import { uploadMedia } from '../../../services/MediaService';
 
 
+
+import PropTypes from 'prop-types'; // Validation des props en français
 
 const Button = ({ children, onClick, className = "", variant = "default" }) => {
     const baseStyle = "px-4 py-2 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200";
@@ -45,7 +50,7 @@ const TextArea = ({ value, onChange, placeholder, className = "" }) => (
 
 
 
-export const Publications = () => {
+export const Publications = (props) => {
     const{t}=useTranslation()
     const [posts, setPosts] = useState([
         {
@@ -96,23 +101,34 @@ export const Publications = () => {
     const [newPostImage, setNewPostImage] = useState(null);
     const fileInputRef = useRef(null);
 
-    const handleNewPost = () => {
-        if (newPostContent.trim() || newPostImage) {
-            const newPost = {
-                id: posts.length + 1,
-                author: { 
-                    name: "Vous", 
-                    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop"
-                },
-                content: newPostContent,
-                image: newPostImage,
-                timestamp: "À l'instant",
-                createdAt: new Date(),
-                likes: 0,
-                comments: []
+    const handleNewPost = async () => {
+        if (!newPostContent.trim() && !newPostImage) return;
+        try {
+            if (newPostImage) {
+                const formData = new FormData();
+                formData.append('file', newPostImage);
+                await uploadMedia(formData); // Suppression de mediaUrl non utilisé
+            }
+            // Récupération de l'utilisateur connecté
+            const user = JSON.parse(localStorage.getItem('user'));
+            // Récupération dynamique de l'identifiant du syndicat cible (exemple via une prop ou un contexte)
+            const targe_id = props?.syndicatId || null; // À adapter selon votre logique métier
+            const reviewData = {
+                user_id: user?.id, // ID utilisateur connecté
+                targe_id, // ID du syndicat cible (ou autre cible selon le contexte)
+                rating: 0, // Note par défaut, à adapter si besoin
+                comment: newPostContent
+                // mediaUrl peut être ajouté ici si l'API le permet
             };
-            setPosts([newPost, ...posts]);
+            // Création de l'avis via l'API
+            await createReview(reviewData);
+            // Rafraîchissement des publications depuis l'API
+            const res = await getReviews();
+            setPosts(res.data);
             handleCancelPost();
+        } catch (error) {
+            console.error(error);
+            alert('Erreur lors de la publication');
         }
     };
 
@@ -126,11 +142,7 @@ export const Publications = () => {
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setNewPostImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+            setNewPostImage(file);
         }
     };
 

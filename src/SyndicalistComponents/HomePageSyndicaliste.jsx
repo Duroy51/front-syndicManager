@@ -8,7 +8,7 @@ import { Explorer } from "../components/HomePage/ExploreSection.jsx"
 import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js"
 import {ProfilUser} from "../components/HomePage/ProfilUser/ProfilUser.jsx";
 import {OrganisationNavigationTabs} from "./OrganisationGestion/OrganisationSection.jsx";
-import {BusinessNavigationTabs} from "./BusinessSection/BusinessSection.jsx";
+import {BusinessNavigationTabs} from "./BusinessSection/BusinessNavigationTabs.jsx";
 import timeAgo from '../utils/timeAgo';
 import profile from '../images/bproo.png';
 

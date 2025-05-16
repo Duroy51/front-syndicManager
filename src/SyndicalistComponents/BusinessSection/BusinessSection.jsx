@@ -1,18 +1,16 @@
-
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Calendar, MapPin, BookOpen, ShoppingBag } from "lucide-react"
 import {PlanningManagement} from "./planing/PlaningManagement.jsx";
 import {ReservationManagement} from "./Reservation/ReservationManagement.jsx";
 
-
-export const BusinessNavigationTabs = () => {
+const BusinessNavigationTabs = () => {
     // État initial : le premier onglet est actif
     const [activeTab, setActiveTab] = useState("planing")
 
     const tabs = [
         { key: "planing", icon: <Calendar className="inline-block mr-2" />, label: "Planning" },
-        { key: "evenement", icon: <MapPin className="inline-block mr-2" />, label: t("evenements") },
+        { key: "evenement", icon: <MapPin className="inline-block mr-2" />, label: "Événements" },
         { key: "reservation", icon: <BookOpen className="inline-block mr-2" />, label: "Réservation" },
     ];
 
@@ -63,9 +61,30 @@ export const BusinessNavigationTabs = () => {
             </div>
 
             {/* Zone de contenu qui change selon l'onglet actif */}
-            <div className="mt-8">
-                {renderComponent(activeTab)}
-            </div>
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-8"
+                >
+                    {renderComponent(activeTab)}
+                </motion.div>
+            </AnimatePresence>
         </div>
     )
 }
+
+export { BusinessNavigationTabs };
+
+export const BusinessSection = () => {
+    return (
+        <div className="container mx-auto px-4">
+            <BusinessNavigationTabs />
+        </div>
+    )
+}
+
+export default BusinessSection;

@@ -2,8 +2,8 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Users, MapPin, Building, ShoppingBag } from "lucide-react"
-import {MembersManagement} from "./Members/MemberManagement.jsx";
-import {BranchManagement} from "./Branches/BranchManagement.jsx";
+import {MemberManagement} from ".././OrganisationGestion/Members/MemberManagement.jsx";
+import {BranchManagement} from ".././OrganisationGestion/Branches/BranchManagement.jsx";
 import {ProductsServicesManagement} from "./Product-Services/ProductServiceManagement.jsx";
 
 
@@ -22,7 +22,7 @@ export const OrganisationNavigationTabs = () => {
     const renderComponent = (tabKey) => {
         switch (tabKey) {
             case "members":
-                return <MembersManagement/>
+                return <MemberManagement/>
             case "branches":
                 return <BranchManagement/>
             case "agencies":

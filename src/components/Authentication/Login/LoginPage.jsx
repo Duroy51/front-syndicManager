@@ -259,7 +259,7 @@ export const LoginPage = () => {
                 confirmButtonText: 'Ok',
             }).then(() => {
 
-                navigate('/user/home');
+                navigate('/business/home');
             });
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);

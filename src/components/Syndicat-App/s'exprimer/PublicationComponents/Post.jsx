@@ -3,7 +3,7 @@ import timeAgo from "@/utils/timeAgo.js";
 import {motion} from "framer-motion";
 import {Bookmark, Clock, Flag, Heart, MessageCircle} from "lucide-react";
 import {CommentModal} from "@/components/Syndicat-App/s'exprimer/CommentComponent/Principal_Comment.jsx";
-
+import { ajouterLike, retirerLike, ajouterCommentaire } from "@/services/ReactionService.js";
 import { useTranslation } from "react-i18next";
 
 export const Post = ({ post, onUpdatePost }) => {
@@ -21,22 +21,56 @@ export const Post = ({ post, onUpdatePost }) => {
         }, 60000);
 
         return () => clearInterval(interval);
-    }, [post.createdAt]);
+    }, [post.createdAt]);}
 
-    const handleLike = () => {
-        setLiked(!liked);
-        onUpdatePost({
-            ...post,
-            likes: post.likes + (liked ? -1 : 1),
-        });
+    // Gestion du like via l'API
+    const handleLike = async () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user?.id) {
+            alert("Vous devez être connecté pour aimer une publication.");
+            return;
+        }
+        try {
+            if (!liked) {
+                await ajouterLike(post.id, user.id);
+                setLiked(true);
+                onUpdatePost({
+                    ...post,
+                    likes: post.likes + 1,
+                });
+            } else {
+                await retirerLike(post.id, user.id);
+                setLiked(false);
+                onUpdatePost({
+                    ...post,
+                    likes: post.likes - 1,
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erreur lors de la mise à jour du like.");
+        }
     };
 
-    const handleAddComment = (newComment) => {
-        onUpdatePost({
-            ...post,
-            comments: [...post.comments, newComment],
-        });
-    };
+    // Gestion de l'ajout de commentaire via l'API
+    const handleAddComment = async (newComment) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user?.id) {
+            alert("Vous devez être connecté pour commenter.");
+            return;
+        }
+        try {
+            await ajouterCommentaire(post.id, newComment, user.id);
+            onUpdatePost({
+                ...post,
+                comments: [...post.comments, { author: { name: user.firstName + ' ' + user.lastName, avatar: user.avatar || '' }, content: newComment }],
+            });
+        } catch (error) {
+            console.error(error);
+            alert("Erreur lors de l'ajout du commentaire.");
+        }
+    ;
+
 
     return (
         <>

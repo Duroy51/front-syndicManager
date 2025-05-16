@@ -1,11 +1,11 @@
-import  { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Users,TrendingUp,Calendar,DollarSign,Clock,CheckCircle,AlertTriangle,BarChart2,PieChart,  Activity,
-    ArrowUp,ArrowDown, MessageSquare, FileText, Award, Truck, MapPin, CreditCard, Star
-} from "lucide-react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title } from 'chart.js';
-import { Pie, Bar, Line } from 'react-chartjs-2';
 
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Users, TrendingUp, Calendar, DollarSign, Clock, CheckCircle, AlertTriangle, BarChart2, PieChart, Activity, ArrowUp, ArrowDown, MessageSquare, FileText, Award, Truck, MapPin, CreditCard, Star } from "lucide-react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Filler } from 'chart.js';
+import { Pie, Bar, Line } from 'react-chartjs-2';
+import './../i18n';
+import { getFirstNameToken, getLastNameToken } from "../services/AccountService.js";
 
 // Register ChartJS components
 ChartJS.register(
@@ -17,7 +17,8 @@ ChartJS.register(
     BarElement, 
     PointElement, 
     LineElement,
-    Title
+    Title,
+    Filler
 );
 
 // Composant pour les cartes de statistiques
