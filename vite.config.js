@@ -9,10 +9,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/auth-api': {
+      '/api': {
         target: 'https://gateway.yowyob.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/auth-api/, '')
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   },

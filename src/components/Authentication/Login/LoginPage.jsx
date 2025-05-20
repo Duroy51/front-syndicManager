@@ -193,52 +193,15 @@ export const LoginPage = () => {
         };
     }, [handleAxiosError]);
 
-    const handleGoogleSignIn = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            console.log('Google login successful', tokenResponse);
-            try {
-                const tokens = await axios.post('https://oauth2.googleapis.com/token', {
-                    code: tokenResponse.code,
-                    client_id: CLIENT_ID,
-                    client_secret: CLIENT_SECRET,
-                    redirect_uri: window.location.origin,
-                    grant_type: 'authorization_code',
-                });
-                console.log('Tokens:', tokens.data);
-                const backendResponse = await axios.post('http://localhost:9005/api/google-login', {
-                    tokenId: tokens.data.id_token
-                });
-                console.log('Backend response:', backendResponse.data);
-                if (backendResponse.data.token) {
-                    saveUserSession(backendResponse.data.user, backendResponse.data.token);
-                    toast.success('Connexion réussie ! Redirection...');
-                    setTimeout(() => navigate('/dashboard'), 2000);
-                }
-            } catch (error) {
-                console.error('Erreur lors de la connexion Google:', error);
-                toast.error('Erreur lors de la connexion Google. Veuillez réessayer.');
-            }
-        },
-        flow: 'auth-code',
-    });
 
-    const saveUserSession = (userData, token) => {
-        const encryptedToken = btoa(token);
-        localStorage.setItem('token', encryptedToken);
-        localStorage.setItem('user', JSON.stringify({
-            id: userData.id,
-            email: userData.email,
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-        }));
-    };
+
 
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
 
             const response = await axios.post(
-                '/auth-api/auth-service/auth/login',
+                '/api/auth-service/auth/login',
                 {
                     username: data.email,
                     password: data.password

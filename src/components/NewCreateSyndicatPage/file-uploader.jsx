@@ -75,7 +75,7 @@ export const FileUploader = ({
                     <div>
                         <Upload className="mx-auto mb-4 text-gray-400" size={48} />
                         <p className="text-gray-500">
-                            {t("glissez_et_deposez_votre_fichier_ici_ou_cliquer_pour_selectionner")}
+                           Glissez et déposez votre fichier ici ou cliquez pour sélectionner un fichier.
                         </p>
                     </div>
                 )}

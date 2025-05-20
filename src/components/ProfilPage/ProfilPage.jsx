@@ -20,6 +20,12 @@ import {
     HeartHandshake,
     ShoppingBag,
     Package,
+    Building2,
+    Clock,
+    HashIcon,
+    DollarSign,
+    Briefcase,
+    Tag
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet"
@@ -29,9 +35,9 @@ import markerIcon2x from "/marker-icon-2x.png"
 import markerShadow from "/marker-shadow.png"
 import markerIcon from "../../../public/marker-icon.png"
 import { Button, Alert } from "antd"
+import { SyndicatDefaultAvatar } from "../HomePage/localcomponent/SyndicatDefaultAvatar.jsx"
 
 import { useTranslation } from "react-i18next"
-
 
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -70,7 +76,7 @@ const GeolocationControl = ({ onLocationUpdate }) => {
             map.off("locationfound", handleLocationFound)
             map.off("locationerror", handleLocationError)
         }
-    }, [map]) // Removed handleLocationFound and handleLocationError
+    }, [map])
 
     return (
         <div className="absolute top-4 right-4 z-[1000]">
@@ -108,7 +114,7 @@ const BranchOfficesMap = () => {
             const closest = getClosestOffice()
             setSelectedOffice(closest)
         }
-    }, [userLocation]) // Removed getClosestOffice
+    }, [userLocation])
 
     const defaultCenter = [4.6125, 13.1535] // Centre du Cameroun
 
@@ -191,25 +197,7 @@ const BranchOfficesMap = () => {
     )
 }
 
-// --- Données fictives ---
-
-const syndicatData = {
-    id: 1,
-    name: "Syndicat Des Taxi Du Cameroun",
-    logo: "/placeholder.svg",
-    coverImage:
-        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
-    description:
-        "Le Syndicat National de l'Éducation est dédié à la protection des droits et à l'amélioration des conditions de travail des chauffeurs dans tout le pays.",
-    members: 250000,
-    foundedYear: 1950,
-    category: "Transport",
-    website: "www.TaxiCam.fr",
-    email: "contact@sne-education.fr",
-    phone: "+237 99 52 02 21",
-    address: "123 Rue Melen, Emia",
-}
-
+// --- Données fictives pour les sections non couvertes par l'API ---
 const stats = [
     { name: "Membres actifs", value: "250K" },
     { name: "Délégués", value: "5,000" },
@@ -314,27 +302,6 @@ const services = [
         description: "Veste élégante pour événements officiels du syndicat.",
         image: "https://images.unsplash.com/photo-1551488831-00ddcb626696?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         price: 129.99
-    },
-    {
-        id: 5,
-        name: "Gilet de Sécurité",
-        description: "Gilet haute visibilité pour interventions techniques.",
-        image: "https://images.unsplash.com/photo-1583885376563-8d99a48b8a0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        price: 49.95
-    },
-    {
-        id: 6,
-        name: "Casquette Fonctionnelle",
-        description: "Casquette anti-UV avec logo du syndicat brodé.",
-        image: "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        price: 29.99
-    },
-    {
-        id: 7,
-        name: "Chaussures de Sécurité",
-        description: "Chaussures de travail renforcées normes CE.",
-        image: "https://images.unsplash.com/photo-1549298916-f52d724204b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        price: 159.95
     }
 ]
 
@@ -368,58 +335,140 @@ const products = [
         description: "Veste élégante pour événements officiels du syndicat.",
         image: "https://images.unsplash.com/photo-1551488831-00ddcb626696?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         price: 129.99
-    },
-    {
-        id: 5,
-        name: "Gilet de Sécurité",
-        description: "Gilet haute visibilité pour interventions techniques.",
-        image: "https://images.unsplash.com/photo-1583885376563-8d99a48b8a0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        price: 49.95
-    },
-    {
-        id: 6,
-        name: "Casquette Fonctionnelle",
-        description: "Casquette anti-UV avec logo du syndicat brodé.",
-        image: "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        price: 29.99
-    },
-    {
-        id: 7,
-        name: "Chaussures de Sécurité",
-        description: "Chaussures de travail renforcées normes CE.",
-        image: "https://images.unsplash.com/photo-1549298916-f52d724204b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        price: 159.95
     }
 ]
+
+// Correspondance des types d'organisation pour l'affichage
+const organizationTypes = {
+    "SOLE_PROPRIETORSHIP": "Entreprise individuelle",
+    "LIMITED_LIABILITY_COMPANY": "SARL",
+    "CORPORATION": "Société anonyme",
+    "COOPERATIVE": "Coopérative",
+    "ASSOCIATION": "Association"
+};
+
+// Images de couverture par défaut selon le type d'organisation
+const defaultCoverImages = {
+    "SOLE_PROPRIETORSHIP": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
+    "LIMITED_LIABILITY_COMPANY": "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
+    "CORPORATION": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
+    "COOPERATIVE": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
+    "ASSOCIATION": "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80"
+};
 
 export const SyndicatProfile = ({ syndicat }) => {
     const navigate = useNavigate()
     const [currentPage, setCurrentPage] = useState(1)
     const membersPerPage = 4
     const totalPages = Math.ceil(members.length / membersPerPage)
-    const{t}=useTranslation()
+    const { t } = useTranslation()
     const paginatedMembers = members.slice((currentPage - 1) * membersPerPage, currentPage * membersPerPage)
 
-    // Nouvelle section : Historique du syndicat
-    const timeline = [
-        { year: 1950, event: "Fondation du syndicat" },
-        { year: 1972, event: "Première convention collective nationale" },
-        { year: 1998, event: "Ouverture de la première antenne régionale" },
-        { year: 2015, event: "Adoption de la charte écologique" },
-    ]
+    // Obtenir une date lisible à partir d'une date ISO
+    const formatDate = (isoDate) => {
+        if (!isoDate) return "N/A";
+        const date = new Date(isoDate);
+
+        // Si la conversion échoue ou date invalide
+        if (isNaN(date.getTime())) return isoDate;
+
+        return date.toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+    // Obtenir uniquement l'année à partir d'une date ISO
+    const getYearFromDate = (isoDate) => {
+        if (!isoDate) return "N/A";
+        const date = new Date(isoDate);
+
+        // Si la conversion échoue ou date invalide
+        if (isNaN(date.getTime())) return isoDate;
+
+        return date.getFullYear();
+    };
+
+    // Génération de contenu pour l'historique du syndicat basé sur les données disponibles
+    const generateTimeline = () => {
+        const timeline = [];
+
+        if (syndicat.year_founded) {
+            timeline.push({
+                year: getYearFromDate(syndicat.year_founded),
+                event: "Fondation du syndicat"
+            });
+        }
+
+        if (syndicat.registration_date && syndicat.registration_date !== syndicat.year_founded) {
+            timeline.push({
+                year: getYearFromDate(syndicat.registration_date),
+                event: "Enregistrement officiel"
+            });
+        }
+
+        // Ajouter des événements fictifs pour compléter la timeline
+        if (timeline.length < 4) {
+            const baseYear = timeline.length > 0
+                ? parseInt(timeline[0].year)
+                : 2000;
+
+            const placeholders = [
+                { offset: 10, event: "Première convention collective" },
+                { offset: 15, event: "Ouverture de la première antenne régionale" },
+                { offset: 20, event: "Adoption de la charte éthique" }
+            ];
+
+            placeholders.forEach((item, index) => {
+                if (timeline.length < 4) {
+                    timeline.push({
+                        year: baseYear + item.offset,
+                        event: item.event
+                    });
+                }
+            });
+        }
+
+        // Trier par année
+        return timeline.sort((a, b) => a.year - b.year);
+    };
+
+    const timeline = generateTimeline();
+
+    // Détermine l'image de couverture à utiliser
+    const getCoverImage = () => {
+        // Si le syndicat a une image de logo, l'utiliser comme coverImage
+        if (syndicat.logo_url) return syndicat.logo_url;
+
+        // Sinon utiliser une image par défaut en fonction du type d'organisation
+        return defaultCoverImages[syndicat.type] || "https://images.unsplash.com/photo-1554774853-aae0a22c8aa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80";
+    };
+
+    // Convertir les types d'organisation pour l'affichage
+    const getDisplayType = (type) => {
+        return organizationTypes[type] || type;
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
             {/* En-tête amélioré */}
             <div className="relative h-96 w-full overflow-hidden">
-                <motion.img
-                    src={syndicat.image || syndicatData.coverImage}
-                    alt="Cover"
-                    className="w-full h-full object-cover"
+                <motion.div
+                    className="w-full h-full"
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8 }}
-                />
+                >
+                    {/* Image de couverture */}
+                    <img
+                        src={getCoverImage()}
+                        alt="Cover"
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                </motion.div>
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end pb-12">
                     <div className="container mx-auto px-4 relative">
                         <motion.div
@@ -428,21 +477,35 @@ export const SyndicatProfile = ({ syndicat }) => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                         >
-                            <img
-                                src={syndicat.image || syndicatData.coverImage || "/placeholder.svg"}
-                                alt="Logo"
-                                className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl"
-                            />
+                            {/* Logo ou avatar par défaut */}
+                            <div className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl overflow-hidden">
+                                {syndicat.logo_url ? (
+                                    <img
+                                        src={syndicat.logo_url}
+                                        alt="Logo"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <SyndicatDefaultAvatar
+                                        name={syndicat.long_name || syndicat.short_name}
+                                        size={128}
+                                        className="w-full h-full"
+                                    />
+                                )}
+                            </div>
+
                             <div className="text-white">
-                                <h1 className="text-4xl font-bold mb-2">{syndicat.name || syndicatData.name}</h1>
-                                <div className="flex items-center space-x-4">
-                  <span className="px-4 py-1 bg-blue-600/80 rounded-full text-sm">
-                    {syndicat.category || syndicatData.category}
-                  </span>
-                                    <span className="flex items-center">
-                    <Trophy className="h-5 w-5 mr-2" />
-                    Membre d'or depuis 2018
-                  </span>
+                                <h1 className="text-4xl font-bold mb-2">{syndicat.long_name}</h1>
+                                <div className="flex flex-wrap items-center gap-4">
+                                    <span className="px-4 py-1 bg-blue-600/80 rounded-full text-sm">
+                                        {getDisplayType(syndicat.type)}
+                                    </span>
+                                    {syndicat.status === "ACTIVE" && (
+                                        <span className="flex items-center">
+                                            <Trophy className="h-5 w-5 mr-2" />
+                                            Organisation active
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
@@ -456,7 +519,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                     onClick={() => navigate("/register")}
                 >
                     <LogIn className="h-6 w-6 transition-transform group-hover:rotate-12" />
-                    <span className="font-semibold">{t("notre_mission")}</span>
+                    <span className="font-semibold">{t("rejoindre")}</span>
                 </motion.button>
             </div>
 
@@ -474,7 +537,100 @@ export const SyndicatProfile = ({ syndicat }) => {
                                 <HeartHandshake className="h-8 w-8 mr-3 text-blue-600" />
                                 {t("notre_mission")}
                             </h2>
-                            <p className="text-lg text-gray-700 leading-relaxed">{syndicatData.description}</p>
+                            <p className="text-lg text-gray-700 leading-relaxed">
+                                {syndicat.description || "Aucune description disponible pour cette organisation."}
+                            </p>
+
+                            {/* Affichage des mots-clés s'ils existent */}
+                            {syndicat.keywords && syndicat.keywords.length > 0 && (
+                                <div className="mt-6">
+                                    <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                        <Tag className="h-5 w-5 mr-2 text-blue-600" />
+                                        Mots-clés
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {syndicat.keywords.map((keyword, index) => (
+                                            <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                                                {keyword}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </motion.section>
+
+                        {/* Section d'informations supplémentaires sur l'organisation */}
+                        <motion.section
+                            className="bg-white rounded-2xl shadow-xl p-8"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                        >
+                            <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
+                                <Building2 className="h-8 w-8 mr-3 text-blue-600" />
+                                Informations de l'organisation
+                            </h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                {syndicat.business_registration_number && (
+                                    <div className="flex items-start">
+                                        <HashIcon className="h-5 w-5 mr-3 text-blue-500 mt-1" />
+                                        <div>
+                                            <h3 className="font-medium text-gray-900">Numéro d'immatriculation</h3>
+                                            <p className="text-gray-600">{syndicat.business_registration_number}</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {syndicat.tax_number && (
+                                    <div className="flex items-start">
+                                        <FileText className="h-5 w-5 mr-3 text-blue-500 mt-1" />
+                                        <div>
+                                            <h3 className="font-medium text-gray-900">Numéro fiscal</h3>
+                                            <p className="text-gray-600">{syndicat.tax_number}</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {syndicat.capital_share !== null && syndicat.capital_share !== undefined && (
+                                    <div className="flex items-start">
+                                        <DollarSign className="h-5 w-5 mr-3 text-blue-500 mt-1" />
+                                        <div>
+                                            <h3 className="font-medium text-gray-900">Capital social</h3>
+                                            <p className="text-gray-600">{syndicat.capital_share.toLocaleString()} €</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {syndicat.ceo_name && (
+                                    <div className="flex items-start">
+                                        <Briefcase className="h-5 w-5 mr-3 text-blue-500 mt-1" />
+                                        <div>
+                                            <h3 className="font-medium text-gray-900">Dirigeant</h3>
+                                            <p className="text-gray-600">{syndicat.ceo_name}</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {syndicat.registration_date && (
+                                    <div className="flex items-start">
+                                        <Calendar className="h-5 w-5 mr-3 text-blue-500 mt-1" />
+                                        <div>
+                                            <h3 className="font-medium text-gray-900">Date d'immatriculation</h3>
+                                            <p className="text-gray-600">{formatDate(syndicat.registration_date)}</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {syndicat.year_founded && (
+                                    <div className="flex items-start">
+                                        <Clock className="h-5 w-5 mr-3 text-blue-500 mt-1" />
+                                        <div>
+                                            <h3 className="font-medium text-gray-900">Année de fondation</h3>
+                                            <p className="text-gray-600">{getYearFromDate(syndicat.year_founded)}</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </motion.section>
 
                         {/* Statistiques enrichies */}
@@ -491,7 +647,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                             ))}
                         </section>
 
-                        {/* Nouvelle section Timeline */}
+                        {/* Timeline de l'organisation */}
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <FileText className="h-8 w-8 mr-3 text-blue-600" />
@@ -551,7 +707,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                             </div>
                         </section>
 
-                        {/* New Services Catalog Section */}
+                        {/* Services Catalog Section */}
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <Package className="h-8 w-8 mr-3 text-blue-600" />
@@ -586,7 +742,7 @@ export const SyndicatProfile = ({ syndicat }) => {
                             </div>
                         </section>
 
-                        {/* New Products Catalog Section */}
+                        {/* Products Catalog Section */}
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-8 flex items-center">
                                 <ShoppingBag className="h-8 w-8 mr-3 text-blue-600" />
@@ -633,35 +789,43 @@ export const SyndicatProfile = ({ syndicat }) => {
                                 {t("nous_contacter")}
                             </h2>
                             <div className="space-y-5">
-                                {[
-                                    { icon: Mail, value: syndicatData.email, type: "email" },
-                                    { icon: Phone, value: syndicatData.phone, type: "tel" },
-                                    { icon: MapPin, value: syndicatData.address },
-                                    { icon: ExternalLink, value: syndicatData.website, type: "website" },
-                                ].map((item, index) => (
+                                {syndicat.email && (
                                     <motion.a
-                                        key={index}
-                                        href={
-                                            item.type === "email"
-                                                ? `mailto:${item.value}`
-                                                : item.type === "tel"
-                                                    ? `tel:${item.value}`
-                                                    : item.type === "website"
-                                                        ? `https://${item.value}`
-                                                        : "#"
-                                        }
+                                        href={`mailto:${syndicat.email}`}
                                         className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors"
                                         whileHover={{ x: 5 }}
                                     >
-                                        <item.icon className="h-6 w-6 text-blue-600 mr-4" />
-                                        <span className="text-gray-700">{item.value}</span>
+                                        <Mail className="h-6 w-6 text-blue-600 mr-4" />
+                                        <span className="text-gray-700">{syndicat.email}</span>
                                     </motion.a>
-                                ))}
+                                )}
+
+                                {syndicat.website_url && (
+                                    <motion.a
+                                        href={syndicat.website_url.startsWith('http') ? syndicat.website_url : `https://${syndicat.website_url}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors"
+                                        whileHover={{ x: 5 }}
+                                    >
+                                        <ExternalLink className="h-6 w-6 text-blue-600 mr-4" />
+                                        <span className="text-gray-700">{syndicat.website_url}</span>
+                                    </motion.a>
+                                )}
+
+                                {syndicat.social_network && (
+                                    <motion.div
+                                        className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors"
+                                        whileHover={{ x: 5 }}
+                                    >
+                                        <Users className="h-6 w-6 text-blue-600 mr-4" />
+                                        <span className="text-gray-700">{syndicat.social_network}</span>
+                                    </motion.div>
+                                )}
                             </div>
                         </section>
 
                         {/* Membres clés améliorés */}
-
                         <section className="bg-white rounded-2xl shadow-xl p-8">
                             <h2 className="text-3xl font-bold text-blue-800 mb-6 flex items-center">
                                 <Users className="h-8 w-8 mr-3 text-blue-600" />
@@ -698,8 +862,8 @@ export const SyndicatProfile = ({ syndicat }) => {
                                         <ChevronLeft className="h-6 w-6 text-gray-600" />
                                     </motion.button>
                                     <span className="text-sm font-medium text-gray-600">
-                    Page {currentPage} / {totalPages}
-                  </span>
+                                        Page {currentPage} / {totalPages}
+                                    </span>
                                     <motion.button
                                         className="p-2 rounded-lg hover:bg-gray-100"
                                         onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
@@ -764,4 +928,3 @@ export const SyndicatProfile = ({ syndicat }) => {
         </div>
     )
 }
-
