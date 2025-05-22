@@ -12,7 +12,7 @@ import { generateFakeJWT } from "../../../services/FakeAuth.js";
 import {AppRoutesPaths} from "../../../router/AppRoutesPaths.js";
 import {getRoleFromToken} from "@/services/AccountService.js";
 
-export const AppleID = "P3WHTNR897.gloswitch";
+export const AppleID = "P3WHTNR897.com.gloswitchapp.bandesoft";
 
 const Input = React.forwardRef(({ icon: Icon, ...props }, ref) => (
     <div className="relative mb-4">
