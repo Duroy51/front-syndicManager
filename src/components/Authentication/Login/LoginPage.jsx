@@ -102,7 +102,7 @@ export const LoginPage = () => {
             console.log('Initialisation de Apple Sign In');
             try {
                 window.AppleID.auth.init({
-                    clientId: 'com.bandesoft.dev-gloswitch',
+                    clientId: 'com.gloswitchapp.bandesoft',
                     scope: 'name email',
                     redirectURI: 'https://front-syndic-manager-2fmn.vercel.app/login',
                     state: 'origin:web',
