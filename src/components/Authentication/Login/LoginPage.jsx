@@ -73,8 +73,49 @@ export const LoginPage = () => {
     const {t} =useTranslation();
 
     // Configuration Google (si vous l'utilisez)
-    const CLIENT_ID = '635685522425-ftpv8h91ho1s9p5h721p2jelm5uad70d.apps.googleusercontent.com';
-    const CLIENT_SECRET = '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';
+    const CLIENT_ID = '137734019377-nnq12325retn9n23nfnis326j008u2pm.apps.googleusercontent.com';
+    const CLIENT_SECRET = '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';
+
+
+
+
+    const login = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            console.log('Google login successful', tokenResponse);
+            try {
+                const tokens = await axios.post('https://oauth2.googleapis.com/token', {
+                    code: tokenResponse.code,
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                    redirect_uri: window.location.origin,
+                    grant_type: 'authorization_code',
+                });
+                console.log('Tokens:', tokens.data);
+                const backendResponse = await axios.post('http://localhost:9005/api/google-login', {
+                    tokenId: tokens.data.id_token
+                });
+                console.log('Backend response:', backendResponse.data);
+                if (backendResponse.data.token) {
+
+                    toast.success('Connexion réussie ! Redirection...');
+                    setTimeout(() => navigate('/dashboard'), 2000);
+                }
+            } catch (error) {
+                console.error('Erreur lors de la connexion Google:', error);
+                toast.error('Erreur lors de la connexion Google. Veuillez réessayer.');
+            }
+        },
+        flow: 'auth-code',
+    });
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         console.log('Début du chargement du SDK Apple');
@@ -334,7 +375,7 @@ export const LoginPage = () => {
                         <p className="text-gray-600 mb-4">{t("ou_connectez_vous_avec")}</p>
                         <Button
                             className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                            onClick={() => handleAppleSignIn()}>
+                            onClick={login}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2 inline-block" />
                             {t("se_connecter_avec_google")}
                         </Button>
