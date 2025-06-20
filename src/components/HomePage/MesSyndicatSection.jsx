@@ -28,6 +28,7 @@ import {SyndicatCard} from "./MesSyndicatSection/SyndicatCard.jsx";
 import {fakeData} from "../../fakeData/mySyndicatFake.js";
 import { useTranslation } from "react-i18next";
 import i18n from '../../i18n.js';
+import {Layout} from "../HomePage/localcomponent/Layout.jsx";
 
 const containerVariants = {
     hidden: { opacity: 0 },

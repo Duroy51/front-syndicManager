@@ -241,34 +241,40 @@ export const LoginPage = () => {
         setIsLoading(true);
         try {
 
+            const basicAuth = 'Basic ' + btoa('test-client:secret');
+
             const response = await axios.post(
-                '/api/auth-service/auth/login',
+                '/api/login',
                 {
                     username: data.email,
                     password: data.password
+                },
+                {
+                    headers: {
+                        'Authorization': basicAuth,
+                        'Content-Type': 'application/json'
+                    }
                 }
             );
 
             console.log('Réponse de l\'API:', response.data);
 
-            // Stockage des données utilisateur et du token
+            // Stockage du token et des données utilisateur
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            // Affichage du pop-up de succès et redirection
+            // Pop-up succès et redirection
             Swal.fire({
                 icon: 'success',
                 title: t("connexion_reussie"),
                 text: t("vous_allez_etre_redirige"),
                 confirmButtonText: 'Ok',
             }).then(() => {
-
                 navigate('/user/home');
             });
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
 
-            // Gestion spécifique des erreurs d'API
             const errorMessage = error.response?.data?.message ||
                 error.message ||
                 'Une erreur est survenue. Veuillez réessayer.';

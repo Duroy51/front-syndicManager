@@ -26,6 +26,7 @@ import {
     getUserIdFromToken
 } from "../../services/AccountService.js"
 import { CreateSyndicatForm } from "../NewCreateSyndicatPage/CreateSyndicatForm.jsx"
+import {Layout} from "./localcomponent/Layout.jsx";
 
 
 const stats = [

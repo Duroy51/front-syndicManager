@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Routes } from "react-router-dom"
+import {Navigate, Route, Routes} from "react-router-dom"
 import AuthGuard from '../helpers/AuthGuard.jsx';
 import {getRoleFromToken} from "../services/AccountService.js";
 import {AppRoutesPaths} from "./AppRoutesPaths.js";
@@ -18,9 +18,9 @@ const WelcomePage = React.lazy(async () => ({
 const HomePage = React.lazy(async () => ({
     default: (await import("../components/HomePage/HomePage")).HomePage
 }))
-const SimpleUserHomePage = React.lazy(async () => ({
+React.lazy(async () => ({
     default: (await import("../SimpleUserComponent/HomePageSimpleUser.jsx")).SimpleUserHomePage
-}))
+}));
 const SyndicalistHomePage = React.lazy(async () => ({
     default: (await import("../SyndicalistComponents/HomePageSyndicaliste.jsx")).SyndicalistHomePage
 }))
@@ -35,6 +35,18 @@ const Profil = React.lazy(async () => ({
 }))
 
 
+const UserAcceuil = React.lazy(async () => ({
+    default: (await import("../components/HomePage/AcceuilSection.jsx")).AcceuilSection
+}))
+const UserSyndicats = React.lazy(async () => ({
+    default: (await import("../components/HomePage/MesSyndicatSection.jsx")).MesSyndicats
+}))
+const UserExplorer = React.lazy(async () => ({
+    default: (await import("../components/HomePage/ExploreSection.jsx")).default
+}))
+const Layout = React.lazy(async () => ({
+    default: (await import("../components/HomePage/localcomponent/Layout.jsx")).Layout
+}))
 
 
 
@@ -42,9 +54,7 @@ const Profil = React.lazy(async () => ({
 
 
 export function AppRoute() {
-
-    const userRole = getRoleFromToken();
-
+    getRoleFromToken();
     return (
         <React.Suspense fallback={<CenteredSpinner/>}>
             <Routes>
@@ -53,6 +63,22 @@ export function AppRoute() {
                 <Route path={AppRoutesPaths.registerPage} element={<RegisterPage/>}/>
                 <Route path={AppRoutesPaths.welcomePage} element={<WelcomePage/>}/>
                 <Route path={AppRoutesPaths.profil} element={<Profil/>}/>
+
+
+                <Route path={AppRoutesPaths.userPage} element={
+
+                        <Layout/>
+
+                }>
+                    {/* Route par défaut - redirige vers dashboard */}
+                    <Route index element={<Navigate to={AppRoutesPaths.userHomePage} replace />} />
+
+                    {/* Routes enfants du Layout */}
+                    <Route path={AppRoutesPaths.userHomePage} element={<UserAcceuil/>}/>
+                    <Route path={AppRoutesPaths.userSyndicat} element={<UserSyndicats/>}/>
+                    <Route path={AppRoutesPaths.userExplorer} element={<UserExplorer/>}/>
+
+                </Route>
 
 
 
@@ -75,14 +101,6 @@ export function AppRoute() {
                     element={
                         <AuthGuard>
                             <CreateSyndicat/>
-                        </AuthGuard>
-                    }
-                />
-                <Route
-                    path={AppRoutesPaths.userHomePage}
-                    element={
-                        <AuthGuard>
-                            <HomePage/>
                         </AuthGuard>
                     }
                 />

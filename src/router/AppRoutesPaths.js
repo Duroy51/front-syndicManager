@@ -4,10 +4,14 @@ export const AppRoutesPaths = {
     welcomePage: "/",
 
 
-    userHomePage: "/user/home",
-    createSyndicat: "/home/createSyndicat",
-    userSyndicatApp: "/user/syndicat-app",
-    userProfil: "/user/profile",
+    userPage: "/user",
+    userHomePage: "home",
+    createSyndicat: "createSyndicat",
+    userSyndicatApp: "syndicat-app",
+    userProfil: "profile",
+    userSyndicat: "syndicats",
+    userSyndicatDetails: "syndicat/:id",
+    userExplorer: "explorer",
 
 
     syndicalistHomePage: "/business/home",

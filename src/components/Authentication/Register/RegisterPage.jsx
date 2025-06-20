@@ -212,7 +212,7 @@ export const RegisterPage = () => {
 
         try {
             const response = await fetch(
-                '/api/auth-service/auth/register',
+                '/api/register',
                 {
                     method: 'POST',
                     headers: {

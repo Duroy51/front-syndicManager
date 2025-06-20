@@ -1,4 +1,4 @@
-import {Compass, Home, Settings, Users} from "lucide-react";
+import { Compass, Home, Settings, Users } from "lucide-react";
 
 export const navItems = [
     {
@@ -7,6 +7,7 @@ export const navItems = [
         label: "Accueil",
         gradient: "from-blue-500 to-indigo-600",
         description: "Actualité",
+        route: "/user/home"
     },
     {
         id: "syndicats",
@@ -14,6 +15,7 @@ export const navItems = [
         label: "Mes Syndicats",
         gradient: "from-blue-500 to-indigo-600",
         description: "Gérer vos organisations",
+        route: "/user/syndicats"
     },
     {
         id: "explorer",
@@ -21,6 +23,7 @@ export const navItems = [
         label: "Explorer",
         gradient: "from-blue-500 to-indigo-600",
         description: "Découvrir de nouveaux syndicats",
+        route: "/user/explorer"
     },
     {
         id: "parametres",
@@ -28,5 +31,6 @@ export const navItems = [
         label: "Paramètres",
         gradient: "from-blue-500 to-indigo-600",
         description: "Configuration du compte",
+        route: "/parametres"
     },
-]
+];
